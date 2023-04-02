@@ -85,7 +85,7 @@ function Customdrawer(props) {
           <Text style={styles.icon}>
             <FontAwesome5 name="tags" size={30} color="#bfbfbf" />
           </Text>
-          <Text style={styles.text}>TAGSEARCH</Text>
+          <Text style={styles.text}>TAG SEARCH</Text>
         </View>
       </TouchableOpacity>
       <TouchableOpacity
@@ -123,6 +123,22 @@ function Customdrawer(props) {
             />
           </Text>
           <Text style={styles.text}>PHONE</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {}} style={{ marginVertical: "10%" }}>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.icon}>
+            <AntDesign name="poweroff" size={30} color="#bfbfbf" />
+          </Text>
+          <Text style={styles.text}>RECENT CHATS</Text>
+        </View>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {}} style={{ marginVertical: "10%" }}>
+        <View style={{ flexDirection: "row" }}>
+          <Text style={styles.icon}>
+            <AntDesign name="poweroff" size={30} color="#bfbfbf" />
+          </Text>
+          <Text style={styles.text}>LOG OUT</Text>
         </View>
       </TouchableOpacity>
     </DrawerContentScrollView>

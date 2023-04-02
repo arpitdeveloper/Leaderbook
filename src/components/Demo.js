@@ -1,26 +1,9 @@
 import React from "react";
-
-import {
-  Entypo,
-  Feather,
-  AntDesign,
-  SimpleLineIcons,
-  Ionicons,
-  Octicons,
-  FontAwesome,
-  FontAwesome5,
-  EvilIcons,
-  MaterialIcons,
-  Foundation,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
 import {
   SafeAreaView,
   Dimensions,
   Text,
   View,
-  TextInput,
-  TouchableOpacity,
   StyleSheet,
 } from "react-native";
 
@@ -30,7 +13,7 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 function Demo() {
-    const navigation = useNavigation();
+   
   return (
     <SafeAreaView style={styles.container}>
       
@@ -105,7 +88,6 @@ header: {
     fontSize: 20,
     marginTop:"7%",textAlign:"center"
   },
-  fp: {},
   fp_text: {
     fontSize: 15,
     color: "black",

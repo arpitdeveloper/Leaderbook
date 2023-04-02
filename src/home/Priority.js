@@ -1,37 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Dimensions,
   TouchableOpacity,
-  Image,
-  ScrollView,
-  Linking,
   FlatList,
 } from "react-native";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 import {
-  Entypo,
-  Feather,
-  AntDesign,
-  SimpleLineIcons,
   Ionicons,
   Octicons,
-  FontAwesome,
-  FontAwesome5,
-  EvilIcons,
-  MaterialIcons,
-  MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
-import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 export default function Priority({ navigation }) {
-  const [selected_data, setSelected_data] = useState([]);
-  const [d, setd] = useState(false);
 
   const DATA = [
     {
@@ -166,13 +151,13 @@ const styles = StyleSheet.create({
     borderColor: "rgba(0,0,0,0.2)",
     alignItems: "center",
     justifyContent: "center",
-    width: "19%",
+    width: 60,
     position: "absolute",
     bottom: "10%",
     right: "8%",
-    height: "11%",
+    height: 60,
     backgroundColor: "orange",
-    borderRadius: 100,
+    borderRadius: 30,
   },
   btn1: {
     flexDirection: "row",

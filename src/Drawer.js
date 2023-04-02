@@ -3,32 +3,9 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
-  Text,
-  TextInput,
-  useColorScheme,
-  View,
   Dimensions,
-  Button,
-  TouchableOpacity,
 } from "react-native";
-import {
-  Entypo,
-  Feather,
-  AntDesign,
-  SimpleLineIcons,
-  Ionicons,
-  Octicons,
-  FontAwesome,
-  FontAwesome5,
-  EvilIcons,
-  MaterialIcons,
-  Foundation,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
-
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Customdrawer from "./components/Custom_Drawer";
 import Home from "./home/Home_screen";

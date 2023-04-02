@@ -5,12 +5,8 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  Image,
-  ScrollView,
-  Linking,
   FlatList,
 } from "react-native";
-import {NavigationContainer, DrawerActions} from '@react-navigation/native';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 import {
@@ -236,9 +232,7 @@ export default function Recent({ navigation }) {
           </View>
         )}
       />
-      <TouchableOpacity style={styles.floating_btn}
-      
-      >
+      <TouchableOpacity style={styles.floating_btn}>
         <Ionicons name="person-add" size={40} color="white" />
       </TouchableOpacity>
       <View
@@ -288,13 +282,13 @@ const styles = StyleSheet.create({
     borderColor: "rgba(0,0,0,0.2)",
     alignItems: "center",
     justifyContent: "center",
-    width: "19%",
+    width: 60,
     position: "absolute",
     bottom: "10%",
     right: "8%",
-    height: "11%",
+    height: 60,
     backgroundColor: "orange",
-    borderRadius: 100,
+    borderRadius: 30,
   },
   btn1: {
     flexDirection: "row",

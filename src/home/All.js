@@ -137,13 +137,6 @@ export default function All({ navigation }) {
             Select All
           </Text>
         </TouchableOpacity>
-        {/* <BouncyCheckbox
-          disableBuiltInState
-          isChecked={hasAlldataselected}
-          fillColor={"green"}
-          unfillColor={"#FFFFFF"}
-          onPress={selectAlldata}
-        /> */}
       </View>
 
       <FlatList
@@ -286,13 +279,13 @@ const styles = StyleSheet.create({
     borderColor: "rgba(0,0,0,0.2)",
     alignItems: "center",
     justifyContent: "center",
-    width: "19%",
+    width: 60,
     position: "absolute",
     bottom: "10%",
     right: "8%",
-    height: "11%",
+    height: 60,
     backgroundColor: "orange",
-    borderRadius: 100,
+    borderRadius: 30,
   },
   btn1: {
     flexDirection: "row",
@@ -306,11 +299,27 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 20,
   },
-  phone_icon: { flex: 0.17, marginStart: "5%", marginTop: "5%" },
-  voice_icon: { flex: 0.17, marginStart: "5%", marginTop: "5%" },
-  email_icon: { flex: 0.16, marginStart: "5%", marginTop: "5%" },
-  icon: { marginTop: "5%" },
-  icon1: { marginTop: "5%" },
+  phone_icon: {
+    flex: 0.17,
+    marginStart: "5%",
+    marginTop: "5%",
+  },
+  voice_icon: {
+    flex: 0.17,
+    marginStart: "5%",
+    marginTop: "5%",
+  },
+  email_icon: {
+    flex: 0.16,
+    marginStart: "5%",
+    marginTop: "5%",
+  },
+  icon: {
+    marginTop: "5%",
+  },
+  icon1: {
+    marginTop: "5%",
+  },
   name: {
     fontSize: 23,
     marginTop: "5%",
@@ -371,7 +380,6 @@ const styles = StyleSheet.create({
   button: {
     height: height * 0.025,
     width: width * 0.5,
-
     padding: 10,
     alignSelf: "center",
     backgroundColor: "#003366",
@@ -390,13 +398,14 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: "white",
     padding: 10,
-
     width: width * 0.8,
     marginTop: "0%",
     marginBottom: "0%",
     marginEnd: "5%",
     elevation: 5,
   },
-
-  container: { backgroundColor: "#e6e6e6", flex: 1 },
+  container: {
+    backgroundColor: "#e6e6e6",
+    flex: 1,
+  },
 });

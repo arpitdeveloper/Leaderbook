@@ -1,16 +1,5 @@
 import {
   Entypo,
-  Feather,
-  AntDesign,
-  SimpleLineIcons,
-  Ionicons,
-  Octicons,
-  FontAwesome,
-  FontAwesome5,
-  EvilIcons,
-  MaterialIcons,
-  Foundation,
-  MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
 import {

@@ -1,39 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
 
 import {
   SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  TextInput,
-  useColorScheme,
   View,
   Dimensions,
-  Button,
   TouchableOpacity,
 } from "react-native";
 import {
   Entypo,
-  Feather,
-  AntDesign,
-  SimpleLineIcons,
   Ionicons,
-  Octicons,
-  FontAwesome,
-  FontAwesome5,
-  EvilIcons,
-  MaterialIcons,
-  Foundation,
-  MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import Login_screen from "../Login";
-import Forgot_pasword from "../Password";
 import Recent from "./Recent";
 import Priority from "./Priority";
 import All from "./All";
-import All_Settings from "./l";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -54,7 +35,7 @@ export default function Home({ navigation }) {
           <Text style={styles.headertxt2}>Leads</Text>
           <TouchableOpacity
             style={styles.headertxt3}
-            onPress={() => navigation.toggleDrawer()}
+            // onPress={() => navigation.toggleDrawer()}
           >
             <Ionicons name="search" size={30} color="white" />
           </TouchableOpacity>

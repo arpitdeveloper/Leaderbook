@@ -92,12 +92,6 @@ const styles = StyleSheet.create({
     marginStart: "3%",
     fontWeight: "400",
   },
-  //   header: {
-  //     height: height * 0.1,
-  //     backgroundColor: "#003366",
-  //     justifyContent: "space-between",
-  //     alignItems: "center",flexDirection:"row",
-  //   },
   header: {
     height: height * 0.12,
     backgroundColor: "#003366",

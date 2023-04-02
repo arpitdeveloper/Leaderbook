@@ -24,28 +24,18 @@ export default function App () {
   return (
     <NavigationContainer>
       
-      <Stack.Navigator>
+      <Stack.Navigator screenOptions={{headerShown:false}}>
        
-        <Stack.Screen name="Login" component={Login_screen} 
-        options={{headerShown:false}} />
-        <Stack.Screen name="Forgot_password" component={Forgot_pasword} 
-        options={{headerShown:false}} />
-        <Stack.Screen name="drawer" component={Drawer_screen} 
-        options={{headerShown:false}} />
-         <Stack.Screen name="demo" component={Demo} 
-        options={{headerShown:false}} />
-         <Stack.Screen name="recent" component={Recent} 
-        options={{headerShown:false}} />
-        <Stack.Screen name="priority" component={Priority} 
-        options={{headerShown:false}} />
-        <Stack.Screen name="All" component={All} 
-        options={{headerShown:false}} />
-        <Stack.Screen name="l" component={All_Settings} 
-        options={{headerShown:false}} />
-        <Stack.Screen name="p" component={Profile} 
-        options={{headerShown:false}} />
-        <Stack.Screen name="k" component={K} 
-        options={{headerShown:false}} />
+        <Stack.Screen name="Login" component={Login_screen} />
+        <Stack.Screen name="Forgot_password" component={Forgot_pasword} />
+        <Stack.Screen name="drawer" component={Drawer_screen} />
+         <Stack.Screen name="demo" component={Demo} />
+         <Stack.Screen name="recent" component={Recent}/>
+        <Stack.Screen name="priority" component={Priority} />
+        <Stack.Screen name="All" component={All} />
+        <Stack.Screen name="l" component={All_Settings} />
+        <Stack.Screen name="p" component={Profile}/>
+        <Stack.Screen name="k" component={K}/>
         {/* <Stack.Screen name="Home1" component={Home1} 
         options={{headerShown:false}} /> */}
       </Stack.Navigator>

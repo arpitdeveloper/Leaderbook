@@ -10,32 +10,19 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 import {
-  Entypo,
   Feather,
   AntDesign,
   SimpleLineIcons,
-  Ionicons,
-  Octicons,
-  FontAwesome,
   FontAwesome5,
-  EvilIcons,
-  MaterialIcons,
-  Foundation,
   MaterialCommunityIcons,
   Fontisto,
 } from "@expo/vector-icons";
 
 import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
   StyleSheet,
   Text,
-  TextInput,
-  useColorScheme,
   View,
   Dimensions,
-  Button,
   TouchableOpacity,
 } from "react-native";
 

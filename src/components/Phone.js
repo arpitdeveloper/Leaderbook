@@ -2,24 +2,13 @@ import React from "react";
 
 import {
   Entypo,
-  Feather,
-  AntDesign,
-  SimpleLineIcons,
   Ionicons,
-  Octicons,
-  FontAwesome,
-  FontAwesome5,
-  EvilIcons,
-  MaterialIcons,
-  Foundation,
-  MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import {
   SafeAreaView,
   Dimensions,
   Text,
   View,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
@@ -109,12 +98,6 @@ const styles = StyleSheet.create({
     fontSize: 21,marginStart:"3%",fontWeight:"400"
     
   },
-//   header: {
-//     height: height * 0.1,
-//     backgroundColor: "#003366",
-//     justifyContent: "space-between",
-//     alignItems: "center",flexDirection:"row",
-//   },
 header: {
     height: height * 0.12,
     backgroundColor: "#003366",

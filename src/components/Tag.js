@@ -13,9 +13,6 @@ import {
 } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
-import Recent from "../home/Recent";
-import Priority from "../home/Priority";
-import Demo from "./Demo";
 import User_tag from "./taglist/User_tag";
 import System_tag from "./taglist/System_tag";
 // import Icon from 'react-native-vector-icons/FontAwesome';

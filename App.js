@@ -2,7 +2,7 @@ import * as React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Login_screen from './src/Login';
-import Forgot_pasword from './src/Password';
+import Forgot_pasword from './src/ForgotPassword';
 import Home_screen from './src/Drawer';
 import Forgot from './src/components/Demo';
 import Demo from './src/components/Demo';
@@ -21,6 +21,7 @@ import Home1 from './src/components/Home1';
 const Stack = createStackNavigator();
 
 export default function App () {
+
   return (
     <NavigationContainer>
       

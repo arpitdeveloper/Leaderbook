@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import base64 from 'react-native-base64'
+import base64 from "react-native-base64";
 
 import {
   SafeAreaView,
@@ -10,7 +10,8 @@ import {
   TextInput,
   View,
   Dimensions,
-  TouchableOpacity,Alert
+  TouchableOpacity,
+  Alert,
 } from "react-native";
 import { LOGIN, send_sign_up } from "./Services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -20,37 +21,51 @@ const width = Dimensions.get("window").width;
 
 function Login_screen() {
   const navigation = useNavigation();
-  const [value1, onChangeText1] = React.useState("");
-  const [value2, onChangeText2] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  React.useEffect(()=>{
+(async()=>{
+const user = await AsyncStorage.getItem("userInfo")
+if(user){
+navigation.navigate("drawer")
+}
+})()
+},[])
 
-  
+
   const login_method = async () => {
-    try {
-      setLoading(true);
-      LOGIN()
-        .then((response) => response.json())
-        .then((result) => {
-          // console.log(result.data.userinfo.email)
-          // console.log(base64.encode(value1))
-          var email = result.data.userinfo.email
-          // var password = result.data.userinfo.password
-          // console.log(email,password)
-          if(email === value1    )
-          {  
-          setLoading(false);
-           
-           AsyncStorage.setItem("user_email", JSON.stringify(email));
-          //  AsyncStorage.setItem("user_password", JSON.stringify(password));
-           navigation.navigate("drawer")
-
-          }else{"invalid user_email or password"}
-          // console.log(result.data.userinfo.email);
-          
-          // navigation.navigate("Login")
-        });
-    } catch (error) {
-      console.log("error==>" + error);
+    if (email == "") {
+      alert("Please enter email");
+    } else if (password == "") {
+      alert("Please enter password");
+    } else {
+      try {
+        setLoading(true);
+const pwd = await  base64.encode(password)
+        const data = {
+          email: email,
+          password: pwd,
+        };
+        LOGIN(data)
+          .then((response) => response.json())
+          .then((result) => {
+            setLoading(false);
+if(result.status == 1){
+            AsyncStorage.setItem("userInfo", JSON.stringify(result.data))
+              .then(() => {
+                navigation.navigate("drawer");
+              })
+              .catch((e) => alert(e));
+         
+      }else{
+alert(result.message)
+}
+ });
+      } catch (error) {
+        console.log("error==>" + error);
+        alert(error);
+      }
     }
   };
 
@@ -63,22 +78,19 @@ function Login_screen() {
         <TextInput
           style={styles.input}
           placeholder="Email"
-          onChangeText={(value1) => onChangeText1(value1)}
+          onChangeText={(txt) => setEmail(txt)}
+          value={email}
           placeholderTextColor={"#bfbfbf"}
           maxLength={40}
           keyboardType="email-address"
-          // onChangeText={onChangeText}
-          // value={text}
         />
         <TextInput
           style={styles.input}
           placeholder="Password"
-          onChangeText={(value2) => onChangeText2(value2)}
+          onChangeText={(value2) => setPassword(value2)}
           placeholderTextColor={"#bfbfbf"}
-          maxLength={5}
           secureTextEntry={true}
-          // onChangeText={onChangeText}
-          // value={text}
+          value={password}
         />
         <TouchableOpacity
           // onPress={() => navigation.navigate("drawer")}

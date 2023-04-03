@@ -102,7 +102,6 @@ export default function Priority({ navigation }) {
     // <ScrollView style={{  }}>
     <View style={styles.container}>
       <FlatList
-        style={{}}
         data={DATA}
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (

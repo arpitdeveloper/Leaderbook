@@ -5,7 +5,6 @@ import {
   DrawerItem,
 } from "@react-navigation/drawer";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import Forgot_pasword from "../Password";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 

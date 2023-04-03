@@ -8,14 +8,47 @@ import {
   TextInput,
   View,
   Dimensions,
-  TouchableOpacity,
+  TouchableOpacity,Alert
 } from "react-native";
+import { LOGIN, send_sign_up } from "./Services";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 function Login_screen() {
   const navigation = useNavigation();
+  const [value1, onChangeText1] = React.useState("");
+  const [value2, onChangeText2] = React.useState("");
+  const [loading, setLoading] = React.useState(false);
+
+  
+  const login_method = async () => {
+    try {
+      setLoading(true);
+      LOGIN()
+        .then((response) => response.json())
+        .then((result) => {
+          var email = result.data.userinfo.email
+          var password = result.data.userinfo.email
+          if(value1 === email &&   value2 === password)
+          {  
+          setLoading(false);
+           
+           AsyncStorage.setItem("user_email", JSON.stringify(email));
+           AsyncStorage.setItem("user_password", JSON.stringify(password));
+           navigation.navigate("drawer")
+
+          }else{"invalid user_email or password"}
+          // console.log(result.data.userinfo.email);
+          
+          // navigation.navigate("Login")
+        });
+    } catch (error) {
+      console.log("error==>" + error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
@@ -25,6 +58,7 @@ function Login_screen() {
         <TextInput
           style={styles.input}
           placeholder="Email"
+          onChangeText={(value1) => onChangeText1(value1)}
           placeholderTextColor={"#bfbfbf"}
           maxLength={40}
           keyboardType="email-address"
@@ -34,6 +68,7 @@ function Login_screen() {
         <TextInput
           style={styles.input}
           placeholder="Password"
+          onChangeText={(value2) => onChangeText2(value2)}
           placeholderTextColor={"#bfbfbf"}
           maxLength={5}
           secureTextEntry={true}
@@ -41,7 +76,8 @@ function Login_screen() {
           // value={text}
         />
         <TouchableOpacity
-          onPress={() => navigation.navigate("drawer")}
+          // onPress={() => navigation.navigate("drawer")}
+          onPress={login_method}
           style={styles.button}
         >
           <Text style={styles.login1}>Login</Text>

@@ -30,8 +30,6 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
-import { Keyboard } from "react-native";
-
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
 export default function User_tag({ navigation }) {
@@ -144,21 +142,7 @@ export default function User_tag({ navigation }) {
   const [arr, setarr] = useState(DATA);
   const [notes, setmynotes] = useState("");
   const searchref = useRef();
-  const [keyboardIsVisible, setKeyboardIsVisible] = useState(false);
 
-  useEffect(() => {
-    const showListener = Keyboard.addListener("keyboardDidShow", () => {
-      setKeyboardIsVisible(false);
-    });
-    const hideListener = Keyboard.addListener("keyboardDidHide", () => {
-      setKeyboardIsVisible(true);
-    });
-
-    return () => {
-      showListener.remove();
-      hideListener.remove();
-    };
-  }, []);
   
   const up_down = (item) => {
     const newitem = selected_data.map((val) => {
@@ -172,7 +156,7 @@ export default function User_tag({ navigation }) {
   };
   const Delete = (i) => {
     const newPeople = selected_data.filter((person) => person.id !== i.id);
-
+    
     setSelected_data(newPeople);
     setarr(newPeople);
   };
@@ -188,21 +172,22 @@ export default function User_tag({ navigation }) {
     }
   };
 
-  const submit = () => {
-    var newdata = {
-      id: new Date(),
-      name: notes,
-      s: false,
-    };
-    arr.push(newdata);
-    //  setSelected_data([...arr,newdata]);
-  };
+  const submit =()=>{
+   var newdata={
+    id:new Date(),
+    name:notes,
+    s:false
+   }
+   arr.push(newdata)
+  //  setSelected_data([...arr,newdata]);
+  }
 
   return (
     // <ScrollView style={{  }}>
     <View style={styles.container}>
       <View style={styles.input}>
         <TextInput
+        
           ref={searchref}
           style={{}}
           onChangeText={(text) => {
@@ -325,17 +310,13 @@ export default function User_tag({ navigation }) {
           </View>
         )}
       />
-      {keyboardIsVisible && (
-        <TouchableOpacity
-          onPress={() => {
-            setModalVisible(true);
-          }}
-          style={styles.floating_btn}
-        >
-          <Ionicons name="person-add" size={40} color="white" />
-        </TouchableOpacity>
-      )}
-
+      <TouchableOpacity 
+       onPress={() => {
+        setModalVisible(true);
+      }}
+      style={styles.floating_btn}>
+        <Ionicons name="person-add" size={40} color="white" />
+      </TouchableOpacity>
       <View style={styles.centeredView}>
         <Modal
           animationType="slide"
@@ -348,24 +329,22 @@ export default function User_tag({ navigation }) {
         >
           <View style={styles.centeredView}>
             <View style={styles.modalView}>
-              <View style={styles.input}>
-                <TextInput
-                  // ref={searchref}
-                  style={{}}
-                  onChangeText={(value) => {
-                    setmynotes(value);
-                  }}
-                  value={notes}
-                  underlineColorAndroid="transparent"
-                  placeholder="Search Here"
-                />
-                <EvilIcons name="search" size={24} color="black" />
-              </View>
+            <View style={styles.input}>
+        <TextInput
+          // ref={searchref}
+          style={{}}
+          onChangeText={(value) => {setmynotes(value)
+           ;
+          }}
+          value={notes}
+          underlineColorAndroid="transparent"
+          placeholder="Search Here"
+        />
+        <EvilIcons name="search" size={24} color="black" />
+      </View>
               <Pressable
                 style={[styles.button, styles.buttonClose]}
-                onPress={() => {
-                  setModalVisible(!modalVisible), submit();
-                }}
+                onPress={() => {setModalVisible(!modalVisible),submit()}}
               >
                 <Text style={styles.textStyle}>Hide Modal</Text>
               </Pressable>
@@ -396,7 +375,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 15,
   },
   centeredView: {
-    flex: 1,
+    flex:1,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 0,
@@ -443,13 +422,13 @@ const styles = StyleSheet.create({
     borderColor: "rgba(0,0,0,0.2)",
     alignItems: "center",
     justifyContent: "center",
-    width: 60,
+    width: "19%",
     position: "absolute",
     bottom: "10%",
     right: "8%",
-    height: 60,
+    height: "11%",
     backgroundColor: "orange",
-    borderRadius: 30,
+    borderRadius: 100,
   },
   btn1: {
     flexDirection: "row",

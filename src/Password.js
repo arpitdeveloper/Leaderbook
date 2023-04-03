@@ -25,24 +25,46 @@ import {
 } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { Forgot_password } from "./Services";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 function Forgot_pasword() {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
+  const [loading, setLoading] = React.useState(false);
+
+  const forgot_method = async () => {
+    try {
+      setLoading(true);
+      Forgot_password()
+        .then((response) => response.json())
+        .then((result) => {
+          console.log(result);
+          setLoading(false);
+          navigation.navigate("Login")
+        });
+    } catch (error) {
+      console.log("error==>" + error);
+    }
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
-      <View style={styles.header}>
-        <TouchableOpacity
-          style={styles.headertxt1}
-          onPress={() => navigation.goBack()}
-        >
-          <MaterialCommunityIcons name="keyboard-backspace" size={30} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headertxt2}>Forgot Password</Text>
-      </View>
+        <View style={styles.header}>
+          <TouchableOpacity
+            style={styles.headertxt1}
+            onPress={() => navigation.goBack()}
+          >
+            <MaterialCommunityIcons
+              name="keyboard-backspace"
+              size={30}
+              color="white"
+            />
+          </TouchableOpacity>
+          <Text style={styles.headertxt2}>Forgot Password</Text>
+        </View>
         {/* <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>
             <View style={{margin:"5%"}}>
@@ -65,7 +87,7 @@ function Forgot_pasword() {
           // value={text}
         />
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity onPress={forgot_method} style={styles.button}>
           <Text style={styles.login}>Reset my Password</Text>
         </TouchableOpacity>
       </View>
@@ -109,31 +131,32 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-//   header: {
-//     height: height * 0.1,
-//     backgroundColor: "#003366",
-//     justifyContent: "space-between",
-//     alignItems: "center",flexDirection:"row",
-//   },
-header: {
+  //   header: {
+  //     height: height * 0.1,
+  //     backgroundColor: "#003366",
+  //     justifyContent: "space-between",
+  //     alignItems: "center",flexDirection:"row",
+  //   },
+  header: {
     height: height * 0.12,
     backgroundColor: "#003366",
     alignItems: "center",
-   
+
     // marginTop: 25,
     flexDirection: "row",
   },
   headertxt1: {
-   
     fontSize: 16,
-    marginStart: "8%",marginTop:"7%",flex:0.5
+    marginStart: "8%",
+    marginTop: "7%",
+    flex: 0.5,
   },
 
   headertxt2: {
     color: "white",
     fontWeight: "bold",
     fontSize: 20,
-    marginTop:"7%"
+    marginTop: "7%",
   },
   fp: {},
   fp_text: {

@@ -1,6 +1,8 @@
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
+import base64 from 'react-native-base64'
+
 import {
   SafeAreaView,
   StyleSheet,
@@ -29,14 +31,17 @@ function Login_screen() {
       LOGIN()
         .then((response) => response.json())
         .then((result) => {
+          // console.log(result.data.userinfo.email)
+          // console.log(base64.encode(value1))
           var email = result.data.userinfo.email
-          var password = result.data.userinfo.email
-          if(value1 === email &&   value2 === password)
+          // var password = result.data.userinfo.password
+          // console.log(email,password)
+          if(email === value1    )
           {  
           setLoading(false);
            
            AsyncStorage.setItem("user_email", JSON.stringify(email));
-           AsyncStorage.setItem("user_password", JSON.stringify(password));
+          //  AsyncStorage.setItem("user_password", JSON.stringify(password));
            navigation.navigate("drawer")
 
           }else{"invalid user_email or password"}

@@ -115,13 +115,13 @@ export default function Recent({ navigation }) {
         style={{
           flexDirection: "row",
           alignSelf: "center",
-          height: height * 0.05,
+          height: height * 0.04,
           width: width * 0.45,
           backgroundColor: d == true ? "orange" : null,
-          margin: "5%",
+          margin: "3%",
           alignItems: "center",
           justifyContent: "center",
-          borderWidth: 2,
+          borderWidth: 1,
           borderRadius: 20,
         }}
       >
@@ -129,7 +129,7 @@ export default function Recent({ navigation }) {
           style={{ alignItems: "center" }}
           onPress={selectAlldata}
         >
-          <Text style={{ color: d == true ? "white" : "black", fontSize: 25 }}>
+          <Text style={{ color: d == true ? "white" : "#b3b3b3", fontSize: 20 }}>
             Select All
           </Text>
         </TouchableOpacity>
@@ -308,10 +308,10 @@ const styles = StyleSheet.create({
   icon: { marginTop: "5%" },
   icon1: { marginTop: "5%" },
   name: {
-    fontSize: 23,
+    fontSize: 20,
     marginTop: "5%",
     color: "#808080",
-    fontWeight: "500",
+    fontWeight: "400",
     flex: 1.1,
   },
   number: {
@@ -338,17 +338,17 @@ const styles = StyleSheet.create({
 
   circleview: { marginStart: "1%", marginEnd: "3%" },
   circle: {
-    height: height * 0.1,
-    width: width * 0.2,
+    height: height * 0.08,
+    width: width * 0.17,
     backgroundColor: "#e6e6e6",
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
   },
   circle_text: {
-    fontSize: 25,
-    fontWeight: "400",
-    color: "gray",
+    fontSize: 30,
+    fontWeight: "600",
+    color: "#bfbfbf",
   },
   bouncy: { marginStart: "10%", marginRight: "-4%" },
   line: {

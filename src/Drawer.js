@@ -14,6 +14,9 @@ import Tag from "./components/Tag";
 import Tasks from "./components/Tasks";
 import Appointments from "./components/Appointments";
 import Phone from "./components/Phone";
+import Last_logged_users from "./components/home1_data/Last_logged_users";
+import Most_active_users from "./components/home1_data/Most_active_users";
+import Edit_profile from "./components/home1_data/Edit_profile";
 
 const Drawer = createDrawerNavigator();
 
@@ -57,6 +60,9 @@ function Drawer_screen() {
         <Drawer.Screen name="tasks" component={Tasks} />
         <Drawer.Screen name="Appointments" component={Appointments} />
         <Drawer.Screen name="phone" component={Phone} />
+        <Drawer.Screen name="last" component={Last_logged_users}  />
+        <Drawer.Screen name="Most" component={Most_active_users}  />
+        <Drawer.Screen name="edit_profile" component={Edit_profile}  />
       </Drawer.Navigator>
     </SafeAreaView>
   );

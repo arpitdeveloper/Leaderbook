@@ -30,7 +30,7 @@ function Home1() {
         <Text style={styles.headertxt2}>Home</Text>
       </View>
       <TouchableOpacity
-        // onPress={() => navigation.navigate("drawer")}
+        onPress={() => navigation.navigate("last")}
         style={styles.button}
       >
         <View style={{ flexDirection: "row", marginStart: "2%" }}>
@@ -39,7 +39,7 @@ function Home1() {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        // onPress={() => navigation.navigate("drawer")}
+        onPress={() => navigation.navigate("Most")}
         style={styles.button}
       >
         <View style={{ flexDirection: "row", marginStart: "2%" }}>
@@ -48,7 +48,7 @@ function Home1() {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        // onPress={() => navigation.navigate("drawer")}
+        onPress={() => navigation.goBack()}
         style={styles.button}
       >
         <View style={{ flexDirection: "row", marginStart: "2%" }}>
@@ -57,7 +57,7 @@ function Home1() {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        // onPress={() => navigation.navigate("drawer")}
+        onPress={() => navigation.navigate("edit_profile")}
         style={styles.button}
       >
         <View style={{ flexDirection: "row", marginStart: "2%" }}>

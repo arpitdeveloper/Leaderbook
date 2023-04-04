@@ -5,12 +5,8 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  Image,
-  ScrollView,
-  Linking,
   FlatList,
 } from "react-native";
-
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 import {
@@ -29,7 +25,7 @@ import {
 
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
-export default function All({ navigation }) {
+export default function Recent({ navigation }) {
   const [selected_data, setSelected_data] = useState([]);
   const [d, setd] = useState(false);
 
@@ -119,13 +115,13 @@ export default function All({ navigation }) {
         style={{
           flexDirection: "row",
           alignSelf: "center",
-          height: height * 0.05,
+          height: height * 0.04,
           width: width * 0.45,
           backgroundColor: d == true ? "orange" : null,
-          margin: "5%",
+          margin: "3%",
           alignItems: "center",
           justifyContent: "center",
-          borderWidth: 2,
+          borderWidth: 1,
           borderRadius: 20,
         }}
       >
@@ -133,10 +129,17 @@ export default function All({ navigation }) {
           style={{ alignItems: "center" }}
           onPress={selectAlldata}
         >
-          <Text style={{ color: d == true ? "white" : "black", fontSize: 25 }}>
+          <Text style={{ color: d == true ? "white" : "#b3b3b3", fontSize: 20 }}>
             Select All
           </Text>
         </TouchableOpacity>
+        {/* <BouncyCheckbox
+          disableBuiltInState
+          isChecked={hasAlldataselected}
+          fillColor={"green"}
+          unfillColor={"#FFFFFF"}
+          onPress={selectAlldata}
+        /> */}
       </View>
 
       <FlatList
@@ -299,32 +302,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderRadius: 20,
   },
-  phone_icon: {
-    flex: 0.17,
-    marginStart: "5%",
-    marginTop: "5%",
-  },
-  voice_icon: {
-    flex: 0.17,
-    marginStart: "5%",
-    marginTop: "5%",
-  },
-  email_icon: {
-    flex: 0.16,
-    marginStart: "5%",
-    marginTop: "5%",
-  },
-  icon: {
-    marginTop: "5%",
-  },
-  icon1: {
-    marginTop: "5%",
-  },
+  phone_icon: { flex: 0.17, marginStart: "5%", marginTop: "5%" },
+  voice_icon: { flex: 0.17, marginStart: "5%", marginTop: "5%" },
+  email_icon: { flex: 0.16, marginStart: "5%", marginTop: "5%" },
+  icon: { marginTop: "5%" },
+  icon1: { marginTop: "5%" },
   name: {
-    fontSize: 23,
+    fontSize: 20,
     marginTop: "5%",
     color: "#808080",
-    fontWeight: "500",
+    fontWeight: "400",
     flex: 1.1,
   },
   number: {
@@ -351,17 +338,17 @@ const styles = StyleSheet.create({
 
   circleview: { marginStart: "1%", marginEnd: "3%" },
   circle: {
-    height: height * 0.1,
-    width: width * 0.2,
+    height: height * 0.08,
+    width: width * 0.17,
     backgroundColor: "#e6e6e6",
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",
   },
   circle_text: {
-    fontSize: 25,
-    fontWeight: "400",
-    color: "gray",
+    fontSize: 30,
+    fontWeight: "600",
+    color: "#bfbfbf",
   },
   bouncy: { marginStart: "10%", marginRight: "-4%" },
   line: {
@@ -380,6 +367,7 @@ const styles = StyleSheet.create({
   button: {
     height: height * 0.025,
     width: width * 0.5,
+
     padding: 10,
     alignSelf: "center",
     backgroundColor: "#003366",
@@ -398,14 +386,13 @@ const styles = StyleSheet.create({
   item: {
     backgroundColor: "white",
     padding: 10,
+
     width: width * 0.8,
     marginTop: "0%",
     marginBottom: "0%",
     marginEnd: "5%",
     elevation: 5,
   },
-  container: {
-    backgroundColor: "#e6e6e6",
-    flex: 1,
-  },
+
+  container: { backgroundColor: "#e6e6e6", flex: 1 },
 });

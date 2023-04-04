@@ -41,4 +41,3 @@ export const Forgot_password = (email) => {
 
   return fetch(`${BASE_URI}/forgotpassword`, requestOptions);
 };
-

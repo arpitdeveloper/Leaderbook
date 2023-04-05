@@ -18,6 +18,7 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 function Last_logged_users() {
     const navigation = useNavigation();
+    const [d, setd] = useState(false);
    
   return (
     <SafeAreaView style={styles.container}>
@@ -35,6 +36,30 @@ function Last_logged_users() {
           </TouchableOpacity>
           <Text style={styles.headertxt2}>Last logged users</Text>
         </View>
+        <View
+        style={{
+          flexDirection: "row",
+          alignSelf: "center",
+          height: height * 0.04,
+          width: width * 0.45,
+          backgroundColor: d == true ? "orange" : null,
+          margin: "3%",
+          alignItems: "center",
+          justifyContent: "center",
+          borderWidth: 1,
+          borderRadius: 20,
+        }}
+      >
+        <TouchableOpacity
+          style={{ alignItems: "center" }}
+          // onPress={selectAlldata}
+        >
+          <Text style={{ color: d == true ? "white" : "#b3b3b3", fontSize: 20 }}>
+            Select All
+          </Text>
+        </TouchableOpacity>
+        
+      </View>
     </SafeAreaView>
   );
 }

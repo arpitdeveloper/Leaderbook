@@ -16,9 +16,8 @@ import {
   Modal,
   Pressable,
 } from "react-native";
-import { LOGIN, send_sign_up } from "./Services";
+import { LOGIN } from "./Services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { object, string, number, date, InferType } from "yup";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -32,14 +31,14 @@ function Login_screen() {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
   const [modalVisible3, setModalVisible3] = useState(false);
-    React.useEffect(()=>{
-  (async()=>{
-  const user = await AsyncStorage.getItem("userInfo")
-  if(user){
-  navigation.navigate("drawer")
-  }
-  })()
-  },[])
+  React.useEffect(() => {
+    (async () => {
+      const user = await AsyncStorage.getItem("userInfo");
+      if (user) {
+        navigation.navigate("drawer");
+      }
+    })();
+  }, []);
 
   const login_method = async () => {
     if (email == "") {

@@ -111,7 +111,7 @@ function Edit_profile() {
               <View style={{ paddingHorizontal: "6%", marginBottom: "5%" }}>
                 <Text style={styles.name_txt}> First Name</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Firstname"
                   style={styles.input}
                   defaultValue={item.userinfo.first_name}
                   onChangeText={(txt) => setFirst_name(txt)}
@@ -119,56 +119,56 @@ function Edit_profile() {
                 {/* {console.log(First_name)} */}
                 <Text style={styles.name_txt}> Last Name</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Lastname"
                   style={styles.input}
                   defaultValue={item.userinfo.last_name}
                   onChangeText={(txt) => setlast_name(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> Email</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Email"
                   style={styles.input}
                   defaultValue={item.userinfo.email}
                   onChangeText={(txt) => setemail(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> Job Title/Designation</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Job title"
                   style={styles.input}
                   defaultValue={item.userinfo.title}
                   onChangeText={(txt) => settitle(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> Company Name</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Company name"
                   style={styles.input}
                   defaultValue={item.userinfo.company}
                   onChangeText={(txt) => setcompany(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> Phone</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Phone"
                   style={styles.input}
                   defaultValue={item.userinfo.phone}
                   onChangeText={(txt) => setphone(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> Office Street Address</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Address"
                   style={styles.input}
                   defaultValue={item.userinfo.address}
                   onChangeText={(txt) => setaddress(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> City</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="City"
                   style={styles.input}
                   defaultValue={item.userinfo.city}
                   onChangeText={(txt) => setcity(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> Province/State/Postal Code</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Province/State/Postal Code"
                   style={styles.input}
                   defaultValue={item.userinfo.affiliate_code}
                   onChangeText={(txt) => setprovince(txt)}

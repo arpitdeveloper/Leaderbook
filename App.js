@@ -15,6 +15,7 @@ import Profile from './src/home/p';
 import k from './src/home/l';
 import K from './src/home/l';
 import Home1 from './src/components/Home1';
+import { ScreenNames } from './src/constant/ScreenNames';
 
 
 
@@ -27,8 +28,8 @@ export default function App () {
       
       <Stack.Navigator screenOptions={{headerShown:false}}>
        
-        <Stack.Screen name="Login" component={Login_screen} />
-        <Stack.Screen name="Forgot_password" component={Forgot_pasword} />
+        <Stack.Screen name={ScreenNames.LOGIN} component={Login_screen} />
+        <Stack.Screen name={ScreenNames.FORGOT_PASSWORD} component={Forgot_pasword} />
         <Stack.Screen name="drawer" component={Drawer_screen} />
          <Stack.Screen name="demo" component={Demo} />
          <Stack.Screen name="recent" component={Recent}/>

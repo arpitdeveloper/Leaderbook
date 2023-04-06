@@ -22,6 +22,7 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
+import * as Linking from "expo-linking"
 
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
@@ -203,7 +204,9 @@ export default function Recent({ navigation }) {
                   <View style={styles.phone_icon}>
                     <Feather name="phone" size={28} color="black" />
                   </View>
-                  <Text style={styles.number}>{item.Number}</Text>
+                  <Text onPress={()=>{
+Linking.openURL(`tel:${item.Number}`)
+}} style={styles.number}>{item.Number}</Text>
                   <Text style={styles.icon}>
                     <FontAwesome5 name="sms" size={30} color="black" />
                   </Text>

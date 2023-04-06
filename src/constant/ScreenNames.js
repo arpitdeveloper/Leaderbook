@@ -1,0 +1,5 @@
+export const ScreenNames={
+LOGIN:"LOGIN",
+FORGOT_PASSWORD:"FORGOT_PASSWORD",
+HOME:"HOME",
+}

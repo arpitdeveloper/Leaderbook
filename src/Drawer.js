@@ -1,15 +1,10 @@
 import React from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 
-import {
-  SafeAreaView,
-  StyleSheet,
-  Dimensions,
-} from "react-native";
+import { SafeAreaView, StyleSheet, Dimensions } from "react-native";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Customdrawer from "./components/Custom_Drawer";
-import Home from "./home/Home_screen";
-import Home1 from "./components/Home1";
+
 import Tag from "./components/Tag";
 import Tasks from "./components/Tasks";
 import Appointments from "./components/Appointments";
@@ -17,34 +12,14 @@ import Phone from "./components/Phone";
 import Last_logged_users from "./components/home1_data/Last_logged_users";
 import Most_active_users from "./components/home1_data/Most_active_users";
 import Edit_profile from "./components/home1_data/Edit_profile";
+import Main_Screen from "./Main/Main_screen";
+import Home from "./components/Home";
+import { ScreenNames } from "./constant/ScreenNames";
 
 const Drawer = createDrawerNavigator();
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
-
-// function NotificationsScreen({ navigation }) {
-//   return (
-//     // <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-//     //   <Button onPress={() => navigation.toggleDrawer()} title="Go back home" />
-//     // </View>
-//     <View style={styles.header}>
-//         <TouchableOpacity
-//           style={styles.headertxt1}
-//           onPress={() => navigation.toggleDrawer()}
-//         >
-//           <Entypo name="menu" size={30} color="white" />
-//         </TouchableOpacity>
-//         <Text style={styles.headertxt2}>Leads</Text>
-//         <TouchableOpacity
-//           style={styles.headertxt3}
-//           onPress={() => navigation.toggleDrawer()}
-//         >
-//           <Ionicons name="search" size={30} color="white" />
-//         </TouchableOpacity>
-//       </View>
-//   );
-// }
 
 function Drawer_screen() {
   const navigation = useNavigation();
@@ -54,15 +29,15 @@ function Drawer_screen() {
         screenOptions={{ headerShown: false }}
         drawerContent={(props) => <Customdrawer {...props} />}
       >
-        <Drawer.Screen name="home" component={Home} />
-        <Drawer.Screen name="h" component={Home1} />
-        <Drawer.Screen name="tag" component={Tag} />
-        <Drawer.Screen name="tasks" component={Tasks} />
-        <Drawer.Screen name="Appointments" component={Appointments} />
-        <Drawer.Screen name="phone" component={Phone} />
-        <Drawer.Screen name="last" component={Last_logged_users}  />
-        <Drawer.Screen name="Most" component={Most_active_users}  />
-        <Drawer.Screen name="edit_profile" component={Edit_profile}  />
+        <Drawer.Screen name={ScreenNames.MAIN_SCREEN} component={Main_Screen} />
+        <Drawer.Screen name={ScreenNames.HOME} component={Home} />
+        <Drawer.Screen name={ScreenNames.TAG} component={Tag} />
+        <Drawer.Screen name={ScreenNames.TASKS} component={Tasks} />
+        <Drawer.Screen name={ScreenNames.APPOINTMENTS} component={Appointments}/>
+        <Drawer.Screen name={ScreenNames.PHONE} component={Phone} />
+        <Drawer.Screen name={ScreenNames.LAST_LOGGED_USERS}  component={Last_logged_users}  />
+        <Drawer.Screen  name={ScreenNames.MOST_ACTIVE_USERS} component={Most_active_users}  />
+        <Drawer.Screen  name={ScreenNames.EDIT_PROFILE}  component={Edit_profile}  />
       </Drawer.Navigator>
     </SafeAreaView>
   );
@@ -144,5 +119,3 @@ const styles = StyleSheet.create({
 });
 
 export default Drawer_screen;
-
-

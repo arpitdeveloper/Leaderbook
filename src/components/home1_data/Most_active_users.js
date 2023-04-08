@@ -13,6 +13,7 @@ import {
 } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { ScreenNames } from "../../constant/ScreenNames";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -26,7 +27,7 @@ function Most_active_users() {
       <View style={styles.header}>
           <TouchableOpacity
             style={styles.headertxt1}
-            onPress={() => navigation.navigate("h")}
+            onPress={() => navigation.navigate(ScreenNames.HOME)}
           >
             <MaterialCommunityIcons
               name="keyboard-backspace"

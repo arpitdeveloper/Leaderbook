@@ -18,6 +18,7 @@ import {
 } from "react-native";
 import { LOGIN } from "./Services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ScreenNames } from "./constant/ScreenNames";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -35,7 +36,7 @@ function Login_screen() {
     (async () => {
       const user = await AsyncStorage.getItem("userInfo");
       if (user) {
-        navigation.navigate("drawer");
+        navigation.navigate(ScreenNames.DRAWER);
       }
     })();
   }, []);
@@ -62,6 +63,7 @@ function Login_screen() {
             setLoading(false);
             if (result.status == 1) {
               AsyncStorage.setItem("userInfo", JSON.stringify(result.data))
+              AsyncStorage.setItem("user_data", JSON.stringify(data))
                 .then(() => {
                   navigation.navigate("drawer");
                 })
@@ -109,7 +111,7 @@ function Login_screen() {
         </TouchableOpacity>
 
         <TouchableOpacity
-          onPress={() => navigation.navigate("Forgot_password")}
+          onPress={() => navigation.navigate(ScreenNames.FORGOT_PASSWORD)}
           style={styles.fp}
         >
           <Text style={styles.fp_text}>Forgot Password?</Text>

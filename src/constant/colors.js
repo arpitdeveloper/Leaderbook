@@ -1,5 +1,6 @@
 export const Colors={
-BLUE:"blue",
+MAIN_COLOR:"#003366",
 ORANGE:"orange",
 WHITE:"white",
+LINE:"#ffcc00"
 }

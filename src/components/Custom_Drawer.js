@@ -24,6 +24,7 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
+import { ScreenNames } from "../constant/ScreenNames";
 
 function Customdrawer(props) {
   const navigation = useNavigation();
@@ -42,7 +43,7 @@ function Customdrawer(props) {
         </View>
       </View>
       <TouchableOpacity
-        onPress={() => navigation.navigate("h")}
+        onPress={() => navigation.navigate(ScreenNames.HOME)}
         style={{ marginVertical: "10%" }}
       >
         <View style={{ flexDirection: "row" }}>
@@ -53,7 +54,7 @@ function Customdrawer(props) {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("home")}
+        onPress={() => navigation.navigate(ScreenNames.MAIN_SCREEN)}
         style={{ marginVertical: "10%" }}
       >
         <View style={{ flexDirection: "row" }}>
@@ -64,7 +65,7 @@ function Customdrawer(props) {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("tag")}
+        onPress={() => navigation.navigate(ScreenNames.TAG)}
         style={{ marginVertical: "10%" }}
       >
         <View style={{ flexDirection: "row" }}>
@@ -75,7 +76,7 @@ function Customdrawer(props) {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("tasks")}
+        onPress={() => navigation.navigate(ScreenNames.TASKS)}
         style={{ marginVertical: "10%" }}
       >
         <View style={{ flexDirection: "row" }}>
@@ -86,7 +87,7 @@ function Customdrawer(props) {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("Appointments")}
+        onPress={() => navigation.navigate(ScreenNames.APPOINTMENTS)}
         style={{ marginVertical: "10%" }}
       >
         <View style={{ flexDirection: "row" }}>
@@ -97,7 +98,7 @@ function Customdrawer(props) {
         </View>
       </TouchableOpacity>
       <TouchableOpacity
-        onPress={() => navigation.navigate("phone")}
+        onPress={() => navigation.navigate(ScreenNames.PHONE)}
         style={{ marginVertical: "10%" }}
       >
         <View style={{ flexDirection: "row" }}>

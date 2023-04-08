@@ -23,6 +23,8 @@ const dt = [
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { edit_profile } from "../../Services";
+import { ScreenNames } from "../../constant/ScreenNames";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 function Edit_profile() {
@@ -36,39 +38,66 @@ function Edit_profile() {
   const [title, settitle] = React.useState("");
   const [company, setcompany] = React.useState("");
   const [phone, setphone] = React.useState("");
-  const [address, setaddress] = React.useState("");
+  const [state, setstate] = React.useState("");
   const [city, setcity] = React.useState("");
-  const [province, setprovince] = React.useState("");
-  const [address_tag, setaddress_tag] = React.useState("");
+  const [text_sign, settext_sign] = React.useState("");
+  const [country_id, setcountry_id] = React.useState("");
+  const [address, setaddress] = React.useState("");
+  const [drop, setdrop] = React.useState("");
 
   useEffect(() => {
     (async () => {
-      const u = await AsyncStorage.getItem("userInfo");
-      const d = JSON.parse(u);
+      const user_data = await AsyncStorage.getItem("user_data");
+      const drop_data = await AsyncStorage.getItem("dropdown_data");
+      const d = JSON.parse(user_data);
+      const dr = JSON.parse(drop_data);
+      setdrop(dr);
+      // console.log(dr)
+      const data = {
+        email: d.email,
+        password: d.password,
+      };
+      edit_profile(data)
+        .then((response) => response.json())
+        .then((result) => {
+          var Array = [];
+
+          Array.push(result.data.profile_data_arr.Profile);
+          setdata(Array);
+
+          // console.log(result.data.profile_data_arr.Profile.country_id)
+          setcountry_id(result.data.profile_data_arr.Profile.country_id);
+        })
+        .catch((error) => console.log("error", error));
+
       // console.log(d);
 
-      var array = [];
-      array.push(d);
+      // var array = [];
+      // array.push(d);
 
-      setdata(array);
+      // setdata(array);
     })();
   }, []);
 
+  // console.log(typeof(country_id))
+
   const postdata = async () => {
     try {
-      user_update(
-        First_name,
-        last_name,
-        email,
-        title,
-        country,
-        address,
-        address_tag,
-        city,
-        phone,
-        province,
-        company
-      ).then((response) => {
+      const data = {
+        "first_name": First_name,
+        "last_name": last_name,
+        "email": email,
+        "title": title,
+        "country_id": country_id,
+        "state": state,
+        "address_tag": address_tag,
+        "city": city,
+        "phone": phone,
+        "text_sign": text_sign,
+        "company": company,
+        "address": address,
+      };
+      user_update(data).then((response) => {
         response.json().then((data) => {
           console.log(data);
           // Alert.alert(data.msg);
@@ -85,7 +114,7 @@ function Edit_profile() {
       <View style={styles.header}>
         <TouchableOpacity
           style={styles.headertxt1}
-          onPress={() => navigation.navigate("h")}
+          onPress={() => navigation.navigate(ScreenNames.HOME)}
         >
           <MaterialCommunityIcons
             name="keyboard-backspace"
@@ -109,71 +138,71 @@ function Edit_profile() {
           renderItem={({ item, index }) => (
             <View>
               <View style={{ paddingHorizontal: "6%", marginBottom: "5%" }}>
-                <Text style={styles.name_txt}> First Name</Text>
+                <Text style={styles.name_txt}> {item.first_name.label}</Text>
                 <TextInput
                   placeholder="Firstname"
                   style={styles.input}
-                  defaultValue={item.userinfo.first_name}
+                  defaultValue={item.first_name.value}
                   onChangeText={(txt) => setFirst_name(txt)}
                 ></TextInput>
                 {/* {console.log(First_name)} */}
-                <Text style={styles.name_txt}> Last Name</Text>
+                <Text style={styles.name_txt}> {item.last_name.label}</Text>
                 <TextInput
                   placeholder="Lastname"
                   style={styles.input}
-                  defaultValue={item.userinfo.last_name}
+                  defaultValue={item.last_name.value}
                   onChangeText={(txt) => setlast_name(txt)}
                 ></TextInput>
-                <Text style={styles.name_txt}> Email</Text>
+                <Text style={styles.name_txt}> {item.email.label}</Text>
                 <TextInput
                   placeholder="Email"
                   style={styles.input}
-                  defaultValue={item.userinfo.email}
+                  defaultValue={item.email.value}
                   onChangeText={(txt) => setemail(txt)}
                 ></TextInput>
-                <Text style={styles.name_txt}> Job Title/Designation</Text>
+                <Text style={styles.name_txt}> {item.title.label}</Text>
                 <TextInput
                   placeholder="Job title"
                   style={styles.input}
-                  defaultValue={item.userinfo.title}
+                  defaultValue={item.title.value}
                   onChangeText={(txt) => settitle(txt)}
                 ></TextInput>
-                <Text style={styles.name_txt}> Company Name</Text>
+                <Text style={styles.name_txt}> {item.company.label}</Text>
                 <TextInput
                   placeholder="Company name"
                   style={styles.input}
-                  defaultValue={item.userinfo.company}
+                  defaultValue={item.company.value}
                   onChangeText={(txt) => setcompany(txt)}
                 ></TextInput>
-                <Text style={styles.name_txt}> Phone</Text>
+                <Text style={styles.name_txt}> {item.phone.label}</Text>
                 <TextInput
                   placeholder="Phone"
                   style={styles.input}
-                  defaultValue={item.userinfo.phone}
+                  defaultValue={item.phone.value}
                   onChangeText={(txt) => setphone(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> Office Street Address</Text>
                 <TextInput
                   placeholder="Address"
                   style={styles.input}
-                  defaultValue={item.userinfo.address}
+                  defaultValue={item.address.value}
                   onChangeText={(txt) => setaddress(txt)}
                 ></TextInput>
-                <Text style={styles.name_txt}> City</Text>
+                <Text style={styles.name_txt}> {item.city.label}</Text>
                 <TextInput
                   placeholder="City"
                   style={styles.input}
-                  defaultValue={item.userinfo.city}
+                  defaultValue={item.city.value}
                   onChangeText={(txt) => setcity(txt)}
                 ></TextInput>
-                <Text style={styles.name_txt}> Province/State/Postal Code</Text>
+                <Text style={styles.name_txt}>{item.state.label}</Text>
                 <TextInput
                   placeholder="Province/State/Postal Code"
                   style={styles.input}
-                  defaultValue={item.userinfo.affiliate_code}
-                  onChangeText={(txt) => setprovince(txt)}
+                  defaultValue={item.state.value}
+                  onChangeText={(txt) => setstate(txt)}
                 ></TextInput>
-                <Text style={styles.name_txt}> Country</Text>
+                <Text style={styles.name_txt}> {item.country_id.label}</Text>
                 {/* {renderLabel()} */}
                 <Dropdown
                   style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
@@ -181,19 +210,22 @@ function Edit_profile() {
                   selectedTextStyle={styles.selectedTextStyle}
                   // inputSearchStyle={styles.inputSearchStyle}
                   // iconStyle={styles.iconStyle}
-                  data={dt}
+                  data={item.country_id.dropdown_arr}
                   search={false}
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  // placeholder={!isFocus ? "Select item" : "..."}
-                  // searchPlaceholder="Search..."
+                  placeholder={drop}
                   value={value}
-                  // onFocus={() => setIsFocus(true)}
-                  // onBlur={() => setIsFocus(false)}
-                  onChange={(item) => {
-                    setValue(item.value);
-                    // setIsFocus(false);
+                  onFocus={() => setIsFocus(true)}
+                  onBlur={() => setIsFocus(false)}
+                  onChange={(i) => {
+                    setValue(i.value);
+                    AsyncStorage.setItem(
+                      "dropdown_data",
+                      JSON.stringify(i.label)
+                    );
+                    setIsFocus(false);
                   }}
                   renderRightIcon={() => (
                     <AntDesign
@@ -204,12 +236,12 @@ function Edit_profile() {
                     />
                   )}
                 />
-                <Text style={styles.name_txt}> Address Tag Line</Text>
+                <Text style={styles.name_txt}> {item.text_sign.label}</Text>
                 <TextInput
                   placeholder="name"
                   style={styles.input}
-                  defaultValue={item.userinfo.text_sign}
-                  onChangeText={(txt) => setaddress_tag(txt)}
+                  defaultValue={item.text_sign.value}
+                  onChangeText={(txt) => settext_sign(txt)}
                 ></TextInput>
               </View>
             </View>

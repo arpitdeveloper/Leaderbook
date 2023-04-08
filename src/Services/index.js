@@ -41,39 +41,29 @@ export const Forgot_password = (email) => {
   return fetch(`${BASE_URI}/forgotpassword`, requestOptions);
 };
 
-// export const edit_profile = (data) => {
+export const edit_profile = (data) => {
 
-//   var myHeaders = new Headers();
-//   myHeaders.append("Cookie", "PHPSESSID=6ff92dd70ed17687f0ee2c3a77d5a865");
+  var myHeaders = new Headers();
+  myHeaders.append("Cookie", "PHPSESSID=6ff92dd70ed17687f0ee2c3a77d5a865");
 
-//   var formdata = new FormData();
-//   formdata.append("hash", hash);
-//   formdata.append("key", key);
-//   formdata.append("email",data.email);
-//   formdata.append("password", data.password);
+  var formdata = new FormData();
+  formdata.append("hash", hash);
+  formdata.append("key", key);
+  formdata.append("email",data.email);
+  formdata.append("password", data.password);
 
-//   var requestOptions = {
-//     method: 'POST',
-//     headers: myHeaders,
-//     body: formdata,
-//     redirect: 'follow'
-//   };
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: formdata,
+    redirect: 'follow'
+  };
 
-// return fetch(`${BASE_URI}/edit_profile_data_set`, requestOptions);
-// };
+return fetch(`${BASE_URI}/edit_profile_data_set`, requestOptions);
+};
 
 export const user_update = (
-  data,
-  First_name,
-  last_name,
-  phone,
-  address,
-  city,
-  state,
-  title,
-  company,
-  text_sign,
-  email
+  data
 ) => {
   var myHeaders = new Headers();
   myHeaders.append("Cookie", "PHPSESSID=6ff92dd70ed17687f0ee2c3a77d5a865");
@@ -88,18 +78,18 @@ export const user_update = (
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      'first_name': First_name,
-      'last_name': last_name,
-      'phone': phone,
-      'address': address,
-      'city': city,
-      'state': state,
+      'first_name': data.first_name,
+      'last_name': data.last_name,
+      'phone': data.phone,
+      'address': data.address,
+      'city': data.city,
+      'state': data.state,
       'title': title,
-      'company': company,
-      'text_sign': text_sign,
-      'email': email,
+      'company': data.company,
+      'text_sign': data.text_sign,
+      'email': data.email,
     }),
   };
 
-  return fetch(`${BASE_URI}/edit_profile_data_set`, requestOptions);
+  return fetch(`${BASE_URI}/update_profile`, requestOptions);
 };

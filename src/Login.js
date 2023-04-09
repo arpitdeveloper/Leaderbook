@@ -65,7 +65,7 @@ function Login_screen() {
               AsyncStorage.setItem("userInfo", JSON.stringify(result.data))
               AsyncStorage.setItem("user_data", JSON.stringify(data))
                 .then(() => {
-                  navigation.navigate("drawer");
+                  navigation.navigate(ScreenNames.DRAWER);
                 })
                 .catch((e) => alert(e));
             } else {

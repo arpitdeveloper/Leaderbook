@@ -42,29 +42,6 @@ export const Forgot_password = (email) => {
 };
 
 export const edit_profile = (data) => {
-
-  var myHeaders = new Headers();
-  myHeaders.append("Cookie", "PHPSESSID=6ff92dd70ed17687f0ee2c3a77d5a865");
-
-  var formdata = new FormData();
-  formdata.append("hash", hash);
-  formdata.append("key", key);
-  formdata.append("email",data.email);
-  formdata.append("password", data.password);
-
-  var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: formdata,
-    redirect: 'follow'
-  };
-
-return fetch(`${BASE_URI}/edit_profile_data_set`, requestOptions);
-};
-
-export const user_update = (
-  data
-) => {
   var myHeaders = new Headers();
   myHeaders.append("Cookie", "PHPSESSID=6ff92dd70ed17687f0ee2c3a77d5a865");
 
@@ -74,21 +51,53 @@ export const user_update = (
   formdata.append("email", data.email);
   formdata.append("password", data.password);
 
+  var requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: formdata,
+    redirect: "follow",
+  };
+
+  return fetch(`${BASE_URI}/edit_profile_data_set`, requestOptions);
+};
+
+export const user_update = (data) => {
+  var myHeaders = new Headers();
+  myHeaders.append("Cookie", "PHPSESSID=6ff92dd70ed17687f0ee2c3a77d5a865");
+
+  var formdata = new FormData();
+  formdata.append("hash", hash);
+  formdata.append("key", key);
+  // formdata.append("email", data.email);
+  formdata.append("password", data.password);
+  formdata.append("first_name", data.first_name);
+  formdata.append("last_name", data.last_name);
+  formdata.append("email", data.email);
+  formdata.append("phone", data.phone);
+  formdata.append("address", data.address);
+  formdata.append("city", data.city);
+  formdata.append("state", data.state);
+  formdata.append("title", data.title);
+  formdata.append("company", data.company);
+  formdata.append("text_sign", data.text_sign);
+  console.log(formdata);
   const requestOptions = {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      'first_name': data.first_name,
-      'last_name': data.last_name,
-      'phone': data.phone,
-      'address': data.address,
-      'city': data.city,
-      'state': data.state,
-      'title': title,
-      'company': data.company,
-      'text_sign': data.text_sign,
-      'email': data.email,
-    }),
+    body: formdata,
+ redirect: "follow",
+    // JSON.stringify({
+    //       first_name: data.first_name,
+    //       last_name: data.last_name,
+    //       phone: data.phone,
+    //       address: data.address,
+    //       city: data.city,
+    //       state: data.state,
+    //       title: data.title,
+    //       company: data.company,
+    //       text_sign: data.text_sign,
+    //       email: data.email,
+    //     }),
   };
 
   return fetch(`${BASE_URI}/update_profile`, requestOptions);

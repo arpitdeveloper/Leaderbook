@@ -23,27 +23,28 @@ const dt = [
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { edit_profile } from "../../Services";
+import { edit_profile, user_update } from "../../Services";
 import { ScreenNames } from "../../constant/ScreenNames";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 function Edit_profile() {
   const navigation = useNavigation();
   const [data, setdata] = useState([]);
-  const [value, setValue] = useState(null);
+  const [value, setValue] = useState(0);
   const [isFocus, setIsFocus] = useState(false);
   const [First_name, setFirst_name] = React.useState("");
-  const [last_name, setlast_name] = React.useState("");
-  const [email, setemail] = React.useState("");
-  const [title, settitle] = React.useState("");
-  const [company, setcompany] = React.useState("");
-  const [phone, setphone] = React.useState("");
+  const [last_name, setLast_name] = React.useState("");
+  const [email, setEmail] = React.useState("");
+  const [title, setTitle] = React.useState("");
+  const [company, setCompany] = React.useState("");
+  const [phone, setPhone] = React.useState("");
   const [state, setstate] = React.useState("");
-  const [city, setcity] = React.useState("");
-  const [text_sign, settext_sign] = React.useState("");
-  const [country_id, setcountry_id] = React.useState("");
-  const [address, setaddress] = React.useState("");
-  const [drop, setdrop] = React.useState("");
+  const [city, setCity] = React.useState("");
+  const [text_sign, setText_sign] = React.useState("");
+  const [country_id, setCountry_id] = React.useState("");
+  const [address, setAddress] = React.useState("");
+  const [drop, setDrop] = React.useState("");
+const [id, setId] = React.useState("")
 
   useEffect(() => {
     (async () => {
@@ -51,7 +52,7 @@ function Edit_profile() {
       const drop_data = await AsyncStorage.getItem("dropdown_data");
       const d = JSON.parse(user_data);
       const dr = JSON.parse(drop_data);
-      setdrop(dr);
+      setDrop(dr);
       // console.log(dr)
       const data = {
         email: d.email,
@@ -62,11 +63,23 @@ function Edit_profile() {
         .then((result) => {
           var Array = [];
 
-          Array.push(result.data.profile_data_arr.Profile);
+          var item = result?.data?.profile_data_arr?.Profile;
+          setFirst_name(item?.first_name?.value);
+          setLast_name(item?.last_name?.value);
+          setEmail(item?.email?.value);
+          setTitle(item?.title?.value);
+          setCompany(item?.company?.value);
+          setPhone(item?.phone?.value);
+          setAddress(item?.city?.value);
+          setCity(item?.city?.value);
+          setText_sign(item?.text_sign?.value);
+          setstate(item?.state?.value);
+          Array.push(item);
           setdata(Array);
-
-          // console.log(result.data.profile_data_arr.Profile.country_id)
-          setcountry_id(result.data.profile_data_arr.Profile.country_id);
+setId(item.id)
+setValue(item.country_id.value)
+          console.log(result.data.profile_data_arr.Profile)
+          setCountry_id(item.country_id);
         })
         .catch((error) => console.log("error", error));
 
@@ -83,19 +96,25 @@ function Edit_profile() {
 
   const postdata = async () => {
     try {
+const user_data = await AsyncStorage.getItem("user_data");
+      // const drop_data = await AsyncStorage.getItem("dropdown_data");
+      const d = JSON.parse(user_data);
       const data = {
-        "first_name": First_name,
-        "last_name": last_name,
-        "email": email,
-        "title": title,
-        "country_id": country_id,
-        "state": state,
-        "address_tag": address_tag,
-        "city": city,
-        "phone": phone,
-        "text_sign": text_sign,
-        "company": company,
-        "address": address,
+        first_name: First_name,
+        last_name: last_name,
+        email: email,
+        title: title,
+        country_id: value,
+        state: state,
+        address_tag: text_sign,
+        city: city,
+        phone: phone,
+        text_sign: text_sign,
+        company: company,
+        address: address,
+id:id,
+        password: d.password,
+
       };
       user_update(data).then((response) => {
         response.json().then((data) => {
@@ -123,10 +142,7 @@ function Edit_profile() {
           />
         </TouchableOpacity>
         <Text style={styles.headertxt2}>Profile</Text>
-        <TouchableOpacity
-          style={styles.headertxt3}
-          // onPress={() => navigation.navigate("h")}
-        >
+        <TouchableOpacity style={styles.headertxt3} onPress={() => postdata()}>
           <Text style={styles.save}>save</Text>
         </TouchableOpacity>
       </View>
@@ -142,7 +158,7 @@ function Edit_profile() {
                 <TextInput
                   placeholder="Firstname"
                   style={styles.input}
-                  defaultValue={item.first_name.value}
+                  value={First_name}
                   onChangeText={(txt) => setFirst_name(txt)}
                 ></TextInput>
                 {/* {console.log(First_name)} */}
@@ -150,56 +166,56 @@ function Edit_profile() {
                 <TextInput
                   placeholder="Lastname"
                   style={styles.input}
-                  defaultValue={item.last_name.value}
-                  onChangeText={(txt) => setlast_name(txt)}
+                  value={last_name}
+                  onChangeText={(txt) => setLast_name(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> {item.email.label}</Text>
                 <TextInput
                   placeholder="Email"
                   style={styles.input}
-                  defaultValue={item.email.value}
-                  onChangeText={(txt) => setemail(txt)}
+                  value={email}
+                  onChangeText={(txt) => setEmail(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> {item.title.label}</Text>
                 <TextInput
                   placeholder="Job title"
                   style={styles.input}
-                  defaultValue={item.title.value}
-                  onChangeText={(txt) => settitle(txt)}
+                  defaultValue={title}
+                  onChangeText={(txt) => setTitle(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> {item.company.label}</Text>
                 <TextInput
                   placeholder="Company name"
                   style={styles.input}
-                  defaultValue={item.company.value}
-                  onChangeText={(txt) => setcompany(txt)}
+                  value={company}
+                  onChangeText={(txt) => setCompany(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> {item.phone.label}</Text>
                 <TextInput
                   placeholder="Phone"
                   style={styles.input}
-                  defaultValue={item.phone.value}
-                  onChangeText={(txt) => setphone(txt)}
+                  value={phone}
+                  onChangeText={(txt) => setPhone(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> Office Street Address</Text>
                 <TextInput
                   placeholder="Address"
                   style={styles.input}
-                  defaultValue={item.address.value}
-                  onChangeText={(txt) => setaddress(txt)}
+                  value={address}
+                  onChangeText={(txt) => setAddress(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> {item.city.label}</Text>
                 <TextInput
                   placeholder="City"
                   style={styles.input}
-                  defaultValue={item.city.value}
-                  onChangeText={(txt) => setcity(txt)}
+                  value={city}
+                  onChangeText={(txt) => setCity(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}>{item.state.label}</Text>
                 <TextInput
                   placeholder="Province/State/Postal Code"
                   style={styles.input}
-                  defaultValue={item.state.value}
+                  value={state}
                   onChangeText={(txt) => setstate(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}> {item.country_id.label}</Text>
@@ -240,8 +256,8 @@ function Edit_profile() {
                 <TextInput
                   placeholder="name"
                   style={styles.input}
-                  defaultValue={item.text_sign.value}
-                  onChangeText={(txt) => settext_sign(txt)}
+                  value={text_sign}
+                  onChangeText={(txt) => setText_sign(txt)}
                 ></TextInput>
               </View>
             </View>

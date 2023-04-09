@@ -22,7 +22,7 @@ import {
   MaterialIcons,
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
-import * as Linking from "expo-linking"
+import * as Linking from "expo-linking";
 
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 
@@ -130,7 +130,9 @@ export default function Recent({ navigation }) {
           style={{ alignItems: "center" }}
           onPress={selectAlldata}
         >
-          <Text style={{ color: d == true ? "white" : "#b3b3b3", fontSize: 20 }}>
+          <Text
+            style={{ color: d == true ? "white" : "#b3b3b3", fontSize: 20 }}
+          >
             Select All
           </Text>
         </TouchableOpacity>
@@ -204,9 +206,14 @@ export default function Recent({ navigation }) {
                   <View style={styles.phone_icon}>
                     <Feather name="phone" size={28} color="black" />
                   </View>
-                  <Text onPress={()=>{
-Linking.openURL(`tel:${item.Number}`)
-}} style={styles.number}>{item.Number}</Text>
+                  <Text
+                    onPress={() => {
+                      Linking.openURL(`tel:${item.Number}`);
+                    }}
+                    style={styles.number}
+                  >
+                    {item.Number}
+                  </Text>
                   <Text style={styles.icon}>
                     <FontAwesome5 name="sms" size={30} color="black" />
                   </Text>
@@ -220,7 +227,14 @@ Linking.openURL(`tel:${item.Number}`)
                       color="black"
                     />
                   </View>
-                  <Text style={styles.email}>{item.email}</Text>
+                  <Text
+                    style={styles.email}
+                    onPress={() => {
+                      Linking.openURL(`mailto:${item.email}`);
+                    }}
+                  >
+                    {item.email}
+                  </Text>
                 </View>
                 <View style={styles.line2}></View>
                 <View style={{ flexDirection: "row" }}>

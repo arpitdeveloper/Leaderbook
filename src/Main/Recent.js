@@ -187,7 +187,7 @@ export default function Recent({ navigation }) {
 
                   elevation: 5,
                   alignSelf: "center",
-                  justifyContent: "center",
+                  justifyContent: "center",borderRadius:5,shadowColor:"white"
                 }}
               >
                 <View style={{ flexDirection: "row" }}>
@@ -274,15 +274,15 @@ export default function Recent({ navigation }) {
                 style={{ alignItems: "center" }}
                 // onPress={selectAlldata}
               >
-                <Text style={{ color: "white", fontSize: 18 }}>Select All</Text>
+                <Text style={{ color: "white", fontSize: 18 }}>Voice Call</Text>
               </TouchableOpacity>
             </View>
-            <View style={styles.btn1}>
+            <View style={styles.btn2}>
               <TouchableOpacity
                 style={{ alignItems: "center" }}
                 // onPress={selectAlldata}
               >
-                <Text style={{ color: "white", fontSize: 18 }}>Select All</Text>
+                <Text style={{ color: "white", fontSize: 18 }}>Add Tags</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -312,11 +312,23 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     height: height * 0.045,
     width: width * 0.32,
+    backgroundColor: "brown",
+    margin: "5%",
+    alignItems: "center",
+    justifyContent: "center",
+    
+    borderRadius: 20,
+  },
+  btn2: {
+    flexDirection: "row",
+    alignSelf: "center",
+    height: height * 0.045,
+    width: width * 0.32,
     backgroundColor: "orange",
     margin: "5%",
     alignItems: "center",
     justifyContent: "center",
-    borderWidth: 2,
+    
     borderRadius: 20,
   },
   phone_icon: { flex: 0.17, marginStart: "5%", marginTop: "5%" },
@@ -370,13 +382,15 @@ const styles = StyleSheet.create({
   bouncy: { marginStart: "10%", marginRight: "-4%" },
   line: {
     backgroundColor: "#cccccc",
-    height: 2,
-    marginVertical: "2%",
+    height: 0.5,
+    marginVertical: "3%",
+    
     width: "100%",
   },
   line2: {
     backgroundColor: "#cccccc",
-    height: 1,
+    height: 0.5,
+    
     marginVertical: "4%",
     width: "95%",
     marginStart: "5%",

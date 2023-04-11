@@ -15,6 +15,7 @@ import Edit_profile from "./components/home1_data/Edit_profile";
 import Main_Screen from "./Main/Main_screen";
 import Home from "./components/Home";
 import { ScreenNames } from "./constant/ScreenNames";
+import Add_appointment from "./components/taglist/Appointment/Add_appointment";
 
 const Drawer = createDrawerNavigator();
 
@@ -38,6 +39,7 @@ function Drawer_screen() {
         <Drawer.Screen name={ScreenNames.LAST_LOGGED_USERS}  component={Last_logged_users}  />
         <Drawer.Screen  name={ScreenNames.MOST_ACTIVE_USERS} component={Most_active_users}  />
         <Drawer.Screen  name={ScreenNames.EDIT_PROFILE}  component={Edit_profile}  />
+        <Drawer.Screen  name={ScreenNames.ADD_APPOINTMENT}  component={Add_appointment}  />
       </Drawer.Navigator>
     </SafeAreaView>
   );

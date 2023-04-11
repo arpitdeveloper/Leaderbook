@@ -106,17 +106,17 @@ export default function Priority({ navigation }) {
         keyExtractor={(item) => item.id}
         renderItem={({ item, index }) => (
           <View>
-            <View style={{ flexDirection: "row" }}>
+            <View style={{ flexDirection: "row" ,}}>
               <View
                 style={{
                   width: "100%",
 
-                  elevation: 5,
+                 
                   alignSelf: "center",
-                  justifyContent: "center",
+                  justifyContent: "center",backgroundColor:"white"
                 }}
               >
-                <View style={{ flexDirection: "row" }}>
+                <View style={{ flexDirection: "row" ,marginTop:"2%"}}>
                   <Text style={styles.number}>{item.Number}</Text>
                 </View>
                 <View style={{ flexDirection: "row", marginStart: "5%" }}>
@@ -125,8 +125,8 @@ export default function Priority({ navigation }) {
                   <Text style={{}}>
                     <Ionicons
                       name="ios-chevron-forward"
-                      size={25}
-                      color="#808080"
+                      size={20}
+                      color="#cccccc"
                     />
                   </Text>
                 </View>
@@ -137,7 +137,7 @@ export default function Priority({ navigation }) {
         )}
       />
       <TouchableOpacity style={styles.floating_btn}>
-        <Ionicons name="person-add" size={40} color="white" />
+        <Ionicons name="person-add" size={30} color="white" />
       </TouchableOpacity>
     </View>
     // </ScrollView>
@@ -176,17 +176,17 @@ const styles = StyleSheet.create({
   icon: { marginTop: "5%" },
   icon1: { marginTop: "5%" },
   name: {
-    fontSize: 22,
+    fontSize: 17,
 
     color: "#808080",
     flex: 0.95,
-    marginTop: "3%",
+    marginTop: "1%",fontWeight:"300"
   },
   number: {
-    fontSize: 25,
+    fontSize: 20,
 
-    fontWeight: "400",
-    color: "black",
+    fontWeight: "500",
+    color: "#737373",
     marginLeft: "5%",
   },
   email: {
@@ -221,8 +221,8 @@ const styles = StyleSheet.create({
   bouncy: { marginStart: "10%", marginRight: "-4%" },
   line: {
     backgroundColor: "#cccccc",
-    height: 2,
-    marginVertical: "5%",
+    height: 0.5,
+    marginTop: "5%",
     width: "100%",
   },
   line2: {
@@ -260,5 +260,5 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 
-  container: { flex: 1, marginTop: "3%" },
+  container: { flex: 1 ,backgroundColor:"white"},
 });

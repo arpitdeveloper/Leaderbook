@@ -44,7 +44,7 @@ function Edit_profile() {
   const [country_id, setCountry_id] = React.useState("");
   const [address, setAddress] = React.useState("");
   const [drop, setDrop] = React.useState("");
-const [id, setId] = React.useState("")
+  const [id, setId] = React.useState("");
 
   useEffect(() => {
     (async () => {
@@ -70,16 +70,17 @@ const [id, setId] = React.useState("")
           setTitle(item?.title?.value);
           setCompany(item?.company?.value);
           setPhone(item?.phone?.value);
-          setAddress(item?.city?.value);
+          setAddress(item?.address?.value);
           setCity(item?.city?.value);
           setText_sign(item?.text_sign?.value);
           setstate(item?.state?.value);
           Array.push(item);
           setdata(Array);
-setId(item.id)
-setValue(item.country_id.value)
-          console.log(result.data.profile_data_arr.Profile)
-          setCountry_id(item.country_id);
+          setId(item.id);
+          setValue(item.country_id.value);
+          // console.log(result.data.profile_data_arr.Profile.country_id)
+          setCountry_id(item?.country_id);
+          // console.log("new",First_name)
         })
         .catch((error) => console.log("error", error));
 
@@ -96,7 +97,7 @@ setValue(item.country_id.value)
 
   const postdata = async () => {
     try {
-const user_data = await AsyncStorage.getItem("user_data");
+      const user_data = await AsyncStorage.getItem("user_data");
       // const drop_data = await AsyncStorage.getItem("dropdown_data");
       const d = JSON.parse(user_data);
       const data = {
@@ -112,21 +113,22 @@ const user_data = await AsyncStorage.getItem("user_data");
         text_sign: text_sign,
         company: company,
         address: address,
-id:id,
+        id: id,
         password: d.password,
-
       };
       user_update(data).then((response) => {
         response.json().then((data) => {
-          console.log(data);
+          // console.log(data);
           // Alert.alert(data.msg);
-          // navigation.goBack();
+          navigation.goBack();
         });
       });
     } catch (error) {
       console.error(error);
     }
   };
+
+  // console.log(value)
 
   return (
     <SafeAreaView style={styles.container}>
@@ -143,7 +145,7 @@ id:id,
         </TouchableOpacity>
         <Text style={styles.headertxt2}>Profile</Text>
         <TouchableOpacity style={styles.headertxt3} onPress={() => postdata()}>
-          <Text style={styles.save}>save</Text>
+          <Text style={styles.add}>save</Text>
         </TouchableOpacity>
       </View>
       <ScrollView>
@@ -358,9 +360,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   headertxt3: {
-    fontSize: 16,
-    marginStart: "8%",
-    marginTop: "7%",
+    marginTop: "8%",
     flex: 0.3,
     alignItems: "center",
     justifyContent: "center",
@@ -372,7 +372,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: "7%",
     textAlign: "center",
-    flex: 0.8,
+    flex: 0.5,
   },
   headertxt1: {
     color: "white",
@@ -380,9 +380,19 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: "7%",
     textAlign: "center",
-    flex: 0.4,
+    flex: 0.2,
     marginStart: "8%",
   },
+  add: {
+    color: "yellow",
+    borderWidth: 1.3,
+    borderColor: "yellow",
+    paddingHorizontal: "2%",
+    borderRadius: 20,
+    fontWeight: "400",
+    fontSize: 20,
+  },
+
   fp_text: {
     fontSize: 15,
     color: "black",

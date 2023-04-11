@@ -184,9 +184,9 @@ export default function All({ navigation }) {
                   marginTop: "0%",
                   marginBottom: "0%",
 
-                  elevation: 5,
+                  elevation: 1,
                   alignSelf: "center",
-                  justifyContent: "center",
+                  justifyContent: "center",borderRadius:5,shadowColor:"white"
                 }}
               >
                 <View style={{ flexDirection: "row" }}>
@@ -355,13 +355,13 @@ const styles = StyleSheet.create({
   bouncy: { marginStart: "10%", marginRight: "-4%" },
   line: {
     backgroundColor: "#cccccc",
-    height: 2,
-    marginVertical: "2%",
+    height: 0.5,
+    marginVertical: "3%",
     width: "100%",
   },
   line2: {
     backgroundColor: "#cccccc",
-    height: 1,
+    height: 0.5,
     marginVertical: "4%",
     width: "95%",
     marginStart: "5%",

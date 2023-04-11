@@ -63,7 +63,7 @@ export const edit_profile = (data) => {
 
 export const user_update = (data) => {
   var myHeaders = new Headers();
-  myHeaders.append("Cookie", "PHPSESSID=6ff92dd70ed17687f0ee2c3a77d5a865");
+  myHeaders.append("Cookie", "PHPSESSID=441a746e08939731ebfa767ef7a4765f");
 
   var formdata = new FormData();
   formdata.append("hash", hash);
@@ -80,25 +80,15 @@ export const user_update = (data) => {
   formdata.append("title", data.title);
   formdata.append("company", data.company);
   formdata.append("text_sign", data.text_sign);
-  console.log(formdata);
-  const requestOptions = {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
+  formdata.append("country_id", data.country_id);
+  console.log(data);
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
     body: formdata,
- redirect: "follow",
-    // JSON.stringify({
-    //       first_name: data.first_name,
-    //       last_name: data.last_name,
-    //       phone: data.phone,
-    //       address: data.address,
-    //       city: data.city,
-    //       state: data.state,
-    //       title: data.title,
-    //       company: data.company,
-    //       text_sign: data.text_sign,
-    //       email: data.email,
-    //     }),
+    redirect: 'follow'
   };
+  
 
   return fetch(`${BASE_URI}/update_profile`, requestOptions);
 };

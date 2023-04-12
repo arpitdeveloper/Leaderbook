@@ -15,7 +15,8 @@ import Edit_profile from "./components/home1_data/Edit_profile";
 import Main_Screen from "./Main/Main_screen";
 import Home from "./components/Home";
 import { ScreenNames } from "./constant/ScreenNames";
-import Add_appointment from "./components/taglist/Appointment/Add_appointment";
+import Add_appointment from "./components/Appointment/Add_appointment";
+
 
 const Drawer = createDrawerNavigator();
 

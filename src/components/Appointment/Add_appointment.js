@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+
 import moment from "moment";
 import {
   Entypo,
@@ -19,30 +20,38 @@ import {
   StyleSheet,
   TextInput,
   Button,
-  Modal,
   Pressable,
+  Keyboard,
+  Modal,
+  Alert,
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { ScreenNames } from "../../../constant/ScreenNames";
+import { ScreenNames } from "../../constant/ScreenNames";
 import { ScrollView } from "react-native-gesture-handler";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const dt = [
-  { label: "ghj", value: "1" },
-  { label: "", value: "2" },
+  { label: "ok", value: "1" },
+  { label: "okay", value: "2" },
 ];
 
 function Add_appointment() {
   const navigation = useNavigation();
-  const [value, setValue] = useState();
+  const [value1, setValue1] = useState();
+  const [value2, setValue2] = useState();
+  const [value3, setValue3] = useState();
+  const [value4, setValue4] = useState();
+  const [value5, setValue5] = useState();
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [istimePickerVisible, settimePickerVisibility] = useState(false);
-
+  const [date, setdate] = useState("");
+  const [date1, setdate1] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
-
+  const [modalVisible2, setModalVisible2] = useState(false);
+  const [com, setcom] = useState(false);
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -51,10 +60,19 @@ function Add_appointment() {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (date) => {
+  const handleConfirm = (i) => {
+    setdate(moment(i).format("YYYY-MM-DD "));
+
     // console.warn("A date has been picked: ", date);
     hideDatePicker();
   };
+  const handleConfirm3 = (i) => {
+    setdate1(moment(i).format("YYYY-MM-DD "));
+
+    // console.warn("A date has been picked: ", date);
+    hideDatePicker();
+  };
+  // console.log(date)
   const showtimePicker = () => {
     settimePickerVisibility(true);
   };
@@ -85,7 +103,7 @@ function Add_appointment() {
           <Text style={styles.add}>Add</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView>
+      <ScrollView >
         <View
           style={{
             paddingHorizontal: "5%",
@@ -121,12 +139,12 @@ function Add_appointment() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value}
-            value={value}
+            placeholder={value1}
+            value={value1}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
             onChange={(i) => {
-              setValue(i.value);
+              setValue1(i.value);
             }}
             renderRightIcon={() => (
               <AntDesign
@@ -166,12 +184,12 @@ function Add_appointment() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value}
-            value={value}
+            placeholder={value2}
+            value={value2}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
             onChange={(i) => {
-              setValue(i.value);
+              setValue2(i.value);
             }}
             renderRightIcon={() => (
               <AntDesign
@@ -192,10 +210,31 @@ function Add_appointment() {
             />
             <Text style={styles.name_txt2}>Start Date</Text>
           </View>
+          <View style={[styles.press]}>
+            <TouchableOpacity onPress={() => setModalVisible(true)}>
+              <TextInput
+                style={{ color: "grey", fontSize: 17 }}
+                placeholder={"Start Date"}
+                showSoftInputOnFocus={false}
+                // editable={false}
+                value={date}
+                onPressIn={() => setModalVisible(true)}
+              ></TextInput>
+            </TouchableOpacity>
+            <Text
+              onPress={() => {
+                setdate("");
+              }}
+              style={{ marginEnd: "5%" }}
+            >
+              <MaterialIcons
+                name="highlight-remove"
+                size={30}
+                color="#8c8c8c"
+              />
+            </Text>
+          </View>
 
-          <Pressable style={styles.input} onPress={() => setModalVisible(true)}>
-            <TextInput placeholder={"Start Date"} editable={false}></TextInput>
-          </Pressable>
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
             <FontAwesome
@@ -207,12 +246,30 @@ function Add_appointment() {
             <Text style={styles.name_txt2}>End Date</Text>
           </View>
 
-          <TextInput
-            placeholder="Due Date"
-            style={styles.input2}
-            //   value={text_sign}
-            //   onChangeText={(txt) => setText_sign(txt)}
-          ></TextInput>
+          <View style={[styles.press]}>
+            <TouchableOpacity onPress={() => setModalVisible2(true)}>
+              <TextInput
+                style={{ color: "grey", fontSize: 17 }}
+                placeholder={"Due Date"}
+                showSoftInputOnFocus={false}
+                // editable={false}
+                value={date1}
+                onPressIn={() => setModalVisible2(true)}
+              ></TextInput>
+            </TouchableOpacity>
+            <Text
+              onPress={() => {
+                setdate1("");
+              }}
+              style={{ marginEnd: "5%" }}
+            >
+              <MaterialIcons
+                name="highlight-remove"
+                size={30}
+                color="#8c8c8c"
+              />
+            </Text>
+          </View>
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
             <MaterialIcons
@@ -235,12 +292,12 @@ function Add_appointment() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value}
-            value={value}
+            placeholder={value3}
+            value={value3}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
             onChange={(i) => {
-              setValue(i.value);
+              setValue3(i.value);
             }}
             renderRightIcon={() => (
               <AntDesign
@@ -281,12 +338,12 @@ function Add_appointment() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value}
-            value={value}
+            placeholder={value4}
+            value={value4}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
             onChange={(i) => {
-              setValue(i.value);
+              setValue4(i.value);
             }}
             renderRightIcon={() => (
               <AntDesign
@@ -298,7 +355,9 @@ function Add_appointment() {
             )}
           />
           <View style={styles.line2}></View>
-          <Text style={styles.name_txt}>Show Time As</Text>
+          <Text style={styles.name_txt}
+          onPress={()=>{setcom(!com)}}
+          >Show Time As</Text>
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
@@ -310,12 +369,12 @@ function Add_appointment() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value}
-            value={value}
+            placeholder={value5}
+            value={value5}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
             onChange={(i) => {
-              setValue(i.value);
+              setValue5(i.value);
             }}
             renderRightIcon={() => (
               <AntDesign
@@ -345,67 +404,110 @@ function Add_appointment() {
             <View style={styles.line3}></View>
           </View>
         </View>
-        <View style={{}}>
-          <Modal
-            animationType="slide"
-            transparent={true}
-            visible={modalVisible}
-            onRequestClose={() => {
-              Alert.alert("Modal has been closed.");
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <View style={styles.centeredView}>
-              <View style={styles.modalView}>
-                <View style={styles.modal_top}>
-                  <Text style={{ flex: 0.9 }}></Text>
-                  <Text style={styles.date}>Start Date</Text>
-                  <TouchableOpacity
-                    onPress={() => setModalVisible(!modalVisible)}
-                    style={styles.done}
-                  >
-                    <Text style={{ fontSize: 18, fontWeight: "600" }}>
-                      Done
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={{ flexDirection: "row" }}>
-                  <TouchableOpacity
-                    style={styles.modal_btn}
-                    onPress={showDatePicker}
-                  >
-                    <Text style={{ fontSize: 16, fontWeight: "500" }}>
-                      {moment().utcOffset("+05:30").format("DD-MMM-YYYY ")}
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={styles.modal_btn}
-                    onPress={showtimePicker}
-                  >
-                    <Text style={{ fontSize: 16, fontWeight: "500" }}>
-                      {moment().utcOffset("+05:30").format(" hh:mm a")}
-                    </Text>
-                  </TouchableOpacity>
-                  <DateTimePickerModal
-                    isVisible={isDatePickerVisible}
-                    mode="date"
-                    onConfirm={handleConfirm}
-                    onCancel={hideDatePicker}
-                    pickerStyleIOS
-                  />
-                  <DateTimePickerModal
-                    isVisible={istimePickerVisible}
-                    mode="time"
-                    onConfirm={handleConfirm2}
-                    onCancel={hidetimePicker}
-                    pickerStyleIOS
-                  />
-                </View>
-              </View>
-            </View>
-          </Modal>
-        </View>
       </ScrollView>
+      {com  ? <View style={{height:150,width:'100%',backgroundColor:"red",}}>
+
+</View>:null }
+     
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        avoidKeyboard={true}
+        onRequestClose={() => {
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.modal_top}>
+              <Text style={{ flex: 0.9 }}></Text>
+              <Text style={styles.date}>Start Date</Text>
+              <TouchableOpacity
+                onPress={() => setModalVisible(!modalVisible)}
+                style={styles.done}
+              >
+                <Text style={{ fontSize: 18, fontWeight: "600" }}>Done</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity
+                style={styles.modal_btn}
+                onPress={showDatePicker}
+              >
+                <Text style={{ fontSize: 16, fontWeight: "500" }}>
+                  {moment().utcOffset("+05:30").format("DD-MMM-YYYY ")}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modal_btn}
+                onPress={showtimePicker}
+              >
+                <Text style={{ fontSize: 16, fontWeight: "500" }}>
+                  {moment().utcOffset("+05:30").format(" hh:mm a")}
+                </Text>
+              </TouchableOpacity>
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm}
+                onCancel={hideDatePicker}
+                pickerStyleIOS
+              />
+              <DateTimePickerModal
+                isVisible={istimePickerVisible}
+                mode="time"
+                onConfirm={handleConfirm2}
+                onCancel={hidetimePicker}
+                pickerStyleIOS
+                pickerComponentStyleIOS
+              />
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible2}
+        onRequestClose={() => {
+          setModalVisible2(!modalVisible2);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.modal_top}>
+              <Text style={{ flex: 0.9 }}></Text>
+              <Text style={styles.date}>Start Date</Text>
+              <TouchableOpacity
+                onPress={() => setModalVisible2(!modalVisible2)}
+                style={styles.done}
+              >
+                <Text style={{ fontSize: 18, fontWeight: "600" }}>Done</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity
+                style={styles.modal_btn}
+                onPress={showDatePicker}
+              >
+                <Text style={{ fontSize: 16, fontWeight: "500" }}>
+                  {moment().utcOffset("+05:30").format("DD-MMM-YYYY ")}
+                </Text>
+              </TouchableOpacity>
+             
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={handleConfirm3}
+                onCancel={hideDatePicker}
+                pickerStyleIOS
+              />
+             
+            </View>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -414,6 +516,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  
   done: { flex: 0.4, fontSize: 18, fontWeight: "bold" },
   date: { flex: 0.8, fontSize: 14, color: "#cccccc" },
   datePickerStyle: {
@@ -441,7 +544,6 @@ const styles = StyleSheet.create({
   },
   modalView: {
     height: "50%",
-    width: "100%",
 
     backgroundColor: "#e6e6e6",
     borderTopWidth: 0.5,
@@ -455,6 +557,32 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  floating_btn: {
+    backgroundColor: "#e6e6e6",
+    borderTopWidth: 0.5,
+    borderColor: "grey",
+
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
+    alignItems: "center",
+    
+    
+    position: "absolute",
+    bottom: "0%",
+   
+   
+    
+     justifyContent: "flex-end",
+    alignItems: "center",
+    marginTop: 0,
+    marginBottom: -20, height: "50%",width:"100%"
   },
   selectedTextStyle: { color: "#8c8c8c" },
   icon2: { marginTop: "8%", flex: 0.15 },
@@ -507,6 +635,16 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginTop: "4%",
     marginStart: "12%",
+  },
+  press: {
+    color: "#8c8c8c",
+
+    fontSize: 17,
+
+    marginStart: "12%",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
   },
   input3: {
     color: "#8c8c8c",

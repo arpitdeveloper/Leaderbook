@@ -25,6 +25,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { edit_profile, user_update } from "../../Services";
 import { ScreenNames } from "../../constant/ScreenNames";
+import { STYLES } from "../../constant/styles";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 function Edit_profile() {
@@ -132,9 +133,9 @@ function Edit_profile() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+      <View style={STYLES.header_box}>
         <TouchableOpacity
-          style={styles.headertxt1}
+          style={STYLES.back_button}
           onPress={() => navigation.navigate(ScreenNames.HOME)}
         >
           <MaterialCommunityIcons
@@ -143,9 +144,9 @@ function Edit_profile() {
             color="white"
           />
         </TouchableOpacity>
-        <Text style={styles.headertxt2}>Profile</Text>
-        <TouchableOpacity style={styles.headertxt3} onPress={() => postdata()}>
-          <Text style={styles.add}>save</Text>
+        <Text style={STYLES.header}>Profile</Text>
+        <TouchableOpacity style={STYLES.save_touch} onPress={() => postdata()}>
+          <Text style={STYLES.save_text}>save</Text>
         </TouchableOpacity>
       </View>
       <ScrollView>

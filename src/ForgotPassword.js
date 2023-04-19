@@ -14,6 +14,7 @@ import {
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Forgot_password } from "./Services";
+import { STYLES } from "./constant/styles";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -49,9 +50,9 @@ alert(result.message)
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <View style={styles.header}>
+        <View style={STYLES.header_box}>
           <TouchableOpacity
-            style={styles.headertxt1}
+            style={STYLES.back_button}
             onPress={() => navigation.goBack()}
           >
             <MaterialCommunityIcons
@@ -60,7 +61,7 @@ alert(result.message)
               color="white"
             />
           </TouchableOpacity>
-          <Text style={styles.headertxt2}>Forgot Password</Text>
+          <Text style={STYLES.header}>Forgot Password</Text>
         </View>
         {/* <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.navigate("Login")}>

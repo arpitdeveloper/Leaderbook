@@ -14,6 +14,7 @@ import {
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ScreenNames } from "../../constant/ScreenNames";
+import { STYLES } from "../../constant/styles";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -24,9 +25,9 @@ function Last_logged_users() {
   return (
     <SafeAreaView style={styles.container}>
       
-      <View style={styles.header}>
+      <View style={STYLES.header_box}>
           <TouchableOpacity
-            style={styles.headertxt1}
+            style={STYLES.side_bar}
             onPress={() => navigation.navigate(ScreenNames.HOME)}
           >
             <MaterialCommunityIcons
@@ -35,7 +36,7 @@ function Last_logged_users() {
               color="white"
             />
           </TouchableOpacity>
-          <Text style={styles.headertxt2}>Last logged users</Text>
+          <Text style={STYLES.bar_header}>Last logged users</Text>
         </View>
         <View
         style={{

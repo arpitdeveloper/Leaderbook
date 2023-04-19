@@ -19,6 +19,7 @@ import {
 import { LOGIN } from "./Services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScreenNames } from "./constant/ScreenNames";
+import { STYLES } from "./constant/styles";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -62,7 +63,7 @@ function Login_screen() {
           .then((result) => {
             setLoading(false);
             if (result.status == 1) {
-              AsyncStorage.setItem("userInfo", JSON.stringify(result.data))
+              AsyncStorage.setItem("userInfo", JSON.stringify(result.data));
               AsyncStorage.setItem("user_data", JSON.stringify(data))
                 .then(() => {
                   navigation.navigate(ScreenNames.DRAWER);
@@ -82,7 +83,7 @@ function Login_screen() {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <View style={styles.header}>
+        <View style={STYLES.login_box}>
           <Text style={styles.login}>Login</Text>
         </View>
         <TextInput
@@ -292,13 +293,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "500",
   },
-  header: {
-    height: height * 0.12,
-    backgroundColor: "#003366",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  fp: {},
+
   fp_text: {
     fontSize: 15,
     color: "black",

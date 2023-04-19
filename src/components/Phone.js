@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Entypo, Ionicons } from "@expo/vector-icons";
+import { Entypo, Ionicons, Feather } from "@expo/vector-icons";
 import {
   SafeAreaView,
   Dimensions,
@@ -11,6 +11,7 @@ import {
 } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { STYLES } from "../constant/styles";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -19,15 +20,33 @@ function Phone() {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+      <View style={STYLES.header_box}>
         <TouchableOpacity
-          style={styles.headertxt1}
+          style={STYLES.back_button}
           onPress={() => navigation.toggleDrawer()}
         >
-          <Entypo name="menu" size={30} color="white" />
+          <Entypo name="menu" size={35} color="white" />
         </TouchableOpacity>
-        <Text style={styles.headertxt2}>PHONE</Text>
+        <Text style={STYLES.header}>Phone</Text>
+        <TouchableOpacity style={STYLES.save_touch} onPress={() => {}}>
+          <Text style={STYLES.save_text}>SAVE</Text>
+        </TouchableOpacity>
       </View>
+      <Text style={{color:"black",fontSize:19,marginTop:"10%",marginHorizontal:"6%"}}>Choose Calling Method</Text>
+      <TouchableOpacity onPress={() => {}} style={styles.button}>
+        <Text style={styles.circle}>
+          {/* <Feather name="circle" size={24} color="black" /> */}
+        </Text>
+
+        <Text style={styles.login}>By Twilio</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => {}} style={styles.button}>
+        <Text style={styles.circle}>
+          {/* <Feather name="circle" size={24} color="black" /> */}
+        </Text>
+
+        <Text style={styles.login}>By Twilio</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 }
@@ -35,56 +54,32 @@ function Phone() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: "white",
   },
 
   button: {
-    height: height * 0.075,
-    width: width * 0.9,
-    marginTop: "5%",
-
-    alignSelf: "center",
-    backgroundColor: "#003366",
-    elevation: 1,
+    height: "7%",
+    width: "90%",
+    marginVertical: "2%",
     borderRadius: 8,
-    justifyContent: "center",
+    alignSelf: "center",
+    borderWidth: 1.5,
+    flexDirection: "row",
+    alignItems: "center",
   },
   login: {
     textAlign: "center",
-    color: "white",
-    fontSize: 21,
-    marginStart: "3%",
-    fontWeight: "400",
-  },
-  header: {
-    height: height * 0.12,
-    backgroundColor: "#003366",
-    alignItems: "center",
-
-    // marginTop: 25,
-    flexDirection: "row",
-    marginBottom: "3%",
-  },
-  headertxt1: {
-    fontSize: 16,
-    marginStart: "8%",
-    marginTop: "7%",
-    flex: 0.5,
-  },
-
-  headertxt2: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: "7%",
-  },
-  fp: {},
-  fp_text: {
-    fontSize: 15,
     color: "black",
-    textAlign: "right",
+    fontSize: 19,
+    marginStart: "5%",
     fontWeight: "500",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+  },
+  circle: {
+    marginStart: "3%",
+    height: height * 0.035,
+    width: "8%",
+    borderWidth: 1,
+    borderRadius: 15,
   },
 });
 

@@ -1,19 +1,5 @@
-import React from "react";
-
-import {
-  Entypo,
-  Feather,
-  AntDesign,
-  SimpleLineIcons,
-  Ionicons,
-  Octicons,
-  FontAwesome,
-  FontAwesome5,
-  EvilIcons,
-  MaterialIcons,
-  Foundation,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
+import React, { useState, useEffect } from "react";
 import {
   SafeAreaView,
   Dimensions,
@@ -25,22 +11,121 @@ import {
 } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
+import Complete from "./tasks/Complete";
+import InComplete from "./tasks/Incomplete";
+import { STYLES } from "../constant/styles";
+
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 function Tasks() {
+  const [com, setcom] = useState(false);
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+      <View style={STYLES.header_box}>
         <TouchableOpacity
-          style={styles.headertxt1}
+          style={STYLES.side_bar}
           onPress={() => navigation.toggleDrawer()}
         >
-          <Entypo name="menu" size={30} color="white" />
+          <Entypo name="menu" size={40} color="white" />
         </TouchableOpacity>
-        <Text style={styles.headertxt2}>TASKS</Text>
+        <Text style={STYLES.bar_header}>Tasks</Text>
+      </View>
+      <View style={{}}>
+        <View>
+          <View style={styles.tab}>
+            <TouchableOpacity
+              style={styles.ord}
+              onPress={() => {
+                setcom("MY ORDERS");
+              }}
+            >
+              <View style={styles.home_text}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: "600",
+                    color: "white",
+                    textAlign: "center",
+                  }}
+                >
+                  Incomplete
+                </Text>
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={styles.add}
+              onPress={() => {
+                setcom("MY ADDRESSES");
+              }}
+            >
+              <View style={styles.home_text}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    fontWeight: "600",
+                    color: "white",
+                    textAlign: "center",
+                  }}
+                >
+                  Complete
+                </Text>
+              </View>
+              {/* <View
+                  style={{
+                    height: 2,
+                    width: 100,
+                    backgroundColor: com == "MY ADDRESSES" ? "#ffcc00" : "#003366",
+                    marginTop: "10%",
+                  }}
+                ></View> */}
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.setting}
+              onPress={() => {
+                setcom("ALL SETTINGS");
+              }}
+            ></TouchableOpacity>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              backgroundColor: "#003366",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <View
+              style={{
+                height: 3,
+                width: width * 0.5,
+                backgroundColor: com == "MY ORDERS" ? "#ffcc00" : "#003366",
+                marginTop: "2%",
+              }}
+            ></View>
+
+            <View
+              style={{
+                height: 3,
+                width: width * 0.5,
+                backgroundColor: com == "MY ADDRESSES" ? "#ffcc00" : "#003366",
+                marginTop: "2%",
+              }}
+            ></View>
+          </View>
+        </View>
+      </View>
+      <View style={{ flex: 1 }}>
+        {com == "MY ORDERS" ? (
+          <InComplete />
+        ) : com == "MY ADDRESSES" ? (
+          <Complete />
+        ) : (
+          setcom("MY ORDERS")
+        )}
       </View>
     </SafeAreaView>
   );
@@ -51,60 +136,28 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  button: {
-    height: height * 0.075,
-    width: width * 0.9,
-    marginTop: "5%",
-
-    alignSelf: "center",
-    backgroundColor: "#003366",
-    elevation: 1,
-    borderRadius: 8,
-    justifyContent: "center",
-  },
-  login: {
-    textAlign: "center",
-    color: "white",
-    fontSize: 21,
-    marginStart: "3%",
-    fontWeight: "400",
-  },
-  //   header: {
-  //     height: height * 0.1,
-  //     backgroundColor: "#003366",
-  //     justifyContent: "space-between",
-  //     alignItems: "center",flexDirection:"row",
-  //   },
-  header: {
-    height: height * 0.12,
+  tab: {
+    flexDirection: "row",
     backgroundColor: "#003366",
     alignItems: "center",
-
-    // marginTop: 25,
-    flexDirection: "row",
-    marginBottom: "3%",
+    justifyContent: "center",
   },
-  headertxt1: {
-    fontSize: 16,
-    marginStart: "8%",
-    marginTop: "7%",
+  ord: {
+    backgroundColor: "#003366",
+    marginTop: "0%",
+    marginStart: "5%",
     flex: 0.5,
   },
-
-  headertxt2: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: "7%",
+  add: {
+    backgroundColor: "#003366",
+    marginTop: "0%",
+    flex: 0.55,
   },
-  fp: {},
-  fp_text: {
-    fontSize: 15,
-    color: "black",
-    textAlign: "right",
-    fontWeight: "500",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
+  setting: {
+    backgroundColor: "#003366",
+    marginTop: "5%",
+
+    marginBottom: 0,
   },
 });
 

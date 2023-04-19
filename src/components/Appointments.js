@@ -1,34 +1,21 @@
 import React from "react";
 
-import {
-  Entypo,
-  Feather,
-  AntDesign,
-  SimpleLineIcons,
-  Ionicons,
-  Octicons,
-  FontAwesome,
-  FontAwesome5,
-  EvilIcons,
-  MaterialIcons,
-  Foundation,
-  MaterialCommunityIcons,
-} from "@expo/vector-icons";
+import { Entypo, SimpleLineIcons, Ionicons } from "@expo/vector-icons";
 import {
   SafeAreaView,
   Dimensions,
   Text,
   View,
-  TextInput,
   TouchableOpacity,
   StyleSheet,
   FlatList,
 } from "react-native";
 
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../constant/colors";
 import { ScreenNames } from "../constant/ScreenNames";
-// import Icon from 'react-native-vector-icons/FontAwesome';
+import { STYLES } from "../constant/styles";
+
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
@@ -102,14 +89,14 @@ function Appointments() {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.header}>
+      <View style={STYLES.header_box}>
         <TouchableOpacity
-          style={styles.headertxt1}
+          style={STYLES.side_bar}
           onPress={() => navigation.toggleDrawer()}
         >
           <Entypo name="menu" size={40} color="white" />
         </TouchableOpacity>
-        <Text style={styles.headertxt2}>Appointments</Text>
+        <Text style={STYLES.bar_header}>Appointments</Text>
       </View>
       <FlatList
         style={{}}
@@ -132,25 +119,32 @@ function Appointments() {
                 <Text style={styles.text2}>{item.Number}</Text>
                 <Text style={styles.text3}>{item.voicemail}</Text>
                 <Text style={styles.text3}>{item.voicemail}</Text>
-                <View style={{flexDirection:"row",marginTop:"2%",marginStart:"2%"}}>
-              <Text style={{}}> <SimpleLineIcons name="bell" size={22} color="#b3b3b3" /></Text>
-              <Text style={styles.text5}>{item.voicemail}</Text>
-
+                <View
+                  style={{
+                    flexDirection: "row",
+                    marginTop: "2%",
+                    marginStart: "2%",
+                  }}
+                >
+                  <Text style={{}}>
+                    {" "}
+                    <SimpleLineIcons name="bell" size={22} color="#b3b3b3" />
+                  </Text>
+                  <Text style={styles.text5}>{item.voicemail}</Text>
+                </View>
               </View>
-              </View>
-              
             </View>
 
             <View style={styles.line}></View>
           </View>
         )}
       />
-      <TouchableOpacity 
+      <TouchableOpacity
         onPress={() => navigation.navigate(ScreenNames.ADD_APPOINTMENT)}
-
-      style={styles.floating_btn}>
-      {/* <Ionicons name="ios-add" size={60} color="white" /> */}
-      <Ionicons name="ios-add" size={60} color="white" />
+        style={styles.floating_btn}
+      >
+        {/* <Ionicons name="ios-add" size={60} color="white" /> */}
+        <Ionicons name="ios-add" size={60} color="white" />
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -162,41 +156,23 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
 
-  header: {
-    height: height * 0.12,
-    backgroundColor: Colors.MAIN_COLOR,
-    alignItems: "center",
-
-    // marginTop: 25,
-    flexDirection: "row",
-    marginBottom: "3%",
-  },
-  headertxt1: {
-    fontSize: 16,
-    marginStart: "5%",
-    marginTop: "7%",
-    flex: 0.5,
-  },
-
-  headertxt2: {
-    color: "white",
-    fontWeight: "500",
-    fontSize: 22,
-    marginTop: "7%",
-  },
-
   floating_btn: {
     borderWidth: 1,
     borderColor: "rgba(0,0,0,0.2)",
     alignItems: "center",
-    justifyContent: "center",alignContent:"center",
+    justifyContent: "center",
+    alignContent: "center",
     width: 60,
     position: "absolute",
-    bottom: "10%",alignSelf:"flex-end",
+    bottom: "10%",
+    alignSelf: "flex-end",
     right: "8%",
     height: 60,
     backgroundColor: Colors.MAIN_COLOR,
-    borderRadius: 30,elevation:10,shadowColor:"black",resizeMode:"contain"
+    borderRadius: 30,
+    elevation: 10,
+    shadowColor: "black",
+    resizeMode: "contain",
   },
 
   text1: {
@@ -232,10 +208,11 @@ const styles = StyleSheet.create({
   },
   text5: {
     fontSize: 18,
-   
+
     // color: "#808080",
     marginStart: "3%",
-    color: "#8c8c8c",fontWeight:"400"
+    color: "#8c8c8c",
+    fontWeight: "400",
   },
 
   circle: {

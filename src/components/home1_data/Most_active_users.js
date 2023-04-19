@@ -14,30 +14,30 @@ import {
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ScreenNames } from "../../constant/ScreenNames";
+import { STYLES } from "../../constant/styles";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 function Most_active_users() {
-    const navigation = useNavigation();
-    const [d, setd] = useState(false);
-   
+  const navigation = useNavigation();
+  const [d, setd] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
-      
-      <View style={styles.header}>
-          <TouchableOpacity
-            style={styles.headertxt1}
-            onPress={() => navigation.navigate(ScreenNames.HOME)}
-          >
-            <MaterialCommunityIcons
-              name="keyboard-backspace"
-              size={30}
-              color="white"
-            />
-          </TouchableOpacity>
-          <Text style={styles.headertxt2}>Most active users</Text>
-        </View>
-        <View
+      <View style={STYLES.header_box}>
+        <TouchableOpacity
+          style={STYLES.side_bar}
+          onPress={() => navigation.navigate(ScreenNames.HOME)}
+        >
+          <MaterialCommunityIcons
+            name="keyboard-backspace"
+            size={30}
+            color="white"
+          />
+        </TouchableOpacity>
+        <Text style={STYLES.bar_header}>Most active users</Text>
+      </View>
+      <View
         style={{
           flexDirection: "row",
           alignSelf: "center",
@@ -55,11 +55,12 @@ function Most_active_users() {
           style={{ alignItems: "center" }}
           // onPress={selectAlldata}
         >
-          <Text style={{ color: d == true ? "white" : "#b3b3b3", fontSize: 20 }}>
+          <Text
+            style={{ color: d == true ? "white" : "#b3b3b3", fontSize: 20 }}
+          >
             Select All
           </Text>
         </TouchableOpacity>
-        
       </View>
     </SafeAreaView>
   );
@@ -101,31 +102,33 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-//   header: {
-//     height: height * 0.1,
-//     backgroundColor: "#003366",
-//     justifyContent: "space-between",
-//     alignItems: "center",flexDirection:"row",
-//   },
-header: {
+  //   header: {
+  //     height: height * 0.1,
+  //     backgroundColor: "#003366",
+  //     justifyContent: "space-between",
+  //     alignItems: "center",flexDirection:"row",
+  //   },
+  header: {
     height: height * 0.12,
     backgroundColor: "#003366",
     alignItems: "center",
-   
+
     // marginTop: 25,
-    flexDirection: "row"
+    flexDirection: "row",
   },
   headertxt1: {
-   
     fontSize: 16,
-    marginStart: "8%",marginTop:"7%",flex:0.5
+    marginStart: "8%",
+    marginTop: "7%",
+    flex: 0.5,
   },
 
   headertxt2: {
     color: "white",
     fontWeight: "bold",
     fontSize: 20,
-    marginTop:"7%",textAlign:"center"
+    marginTop: "7%",
+    textAlign: "center",
   },
   fp_text: {
     fontSize: 15,

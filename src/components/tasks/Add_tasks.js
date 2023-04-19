@@ -27,8 +27,9 @@ import {
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { ScreenNames } from "../../constant/ScreenNames";
+
 import { ScrollView } from "react-native-gesture-handler";
+import { ScreenNames } from "../../constant/ScreenNames";
 import { STYLES } from "../../constant/styles";
 
 const height = Dimensions.get("window").height;
@@ -39,7 +40,7 @@ const dt = [
   { label: "okay", value: "2" },
 ];
 
-function Add_appointment() {
+function Add_task() {
   const navigation = useNavigation();
   const [value1, setValue1] = useState();
   const [value2, setValue2] = useState();
@@ -50,11 +51,29 @@ function Add_appointment() {
   const [istimePickerVisible, settimePickerVisibility] = useState(false);
   const [date, setdate] = useState("");
   const [date1, setdate1] = useState("");
+  const [date_time, setdate_time] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
+  const [modalVisible3, setModalVisible3] = useState(false);
   const [com, setcom] = useState(false);
 
-  
+  const showDatePicker2 = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker2 = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const time_date_confirm = (i) => {
+    setdate_time(
+      moment(i).format("YYYY-MM-DD ") +
+        moment().utcOffset("+05:30").format(" HH:mm") +
+        ":00"
+    );
+
+    hideDatePicker2();
+  };
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -63,13 +82,13 @@ function Add_appointment() {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (i) => {
+  const start_date_confirm = (i) => {
     setdate(moment(i).format("YYYY-MM-DD "));
 
     // console.warn("A date has been picked: ", date);
     hideDatePicker();
   };
-  const handleConfirm3 = (i) => {
+  const End_date_confirm = (i) => {
     setdate1(moment(i).format("YYYY-MM-DD "));
 
     // console.warn("A date has been picked: ", date);
@@ -90,11 +109,10 @@ function Add_appointment() {
   };
   return (
     <SafeAreaView style={styles.container}>
-      
       <View style={STYLES.header_box}>
         <TouchableOpacity
           style={STYLES.back_button}
-          onPress={() => navigation.navigate(ScreenNames.APPOINTMENTS)}
+          onPress={() => navigation.navigate(ScreenNames.TASKS)}
         >
           <MaterialCommunityIcons
             name="keyboard-backspace"
@@ -102,12 +120,12 @@ function Add_appointment() {
             color="white"
           />
         </TouchableOpacity>
-        <Text style={STYLES.header}>Add Appointment</Text>
+        <Text style={STYLES.header}>New Task</Text>
         <TouchableOpacity style={STYLES.save_touch} onPress={() => {}}>
-          <Text style={STYLES.add_text}>Add</Text>
+          <Text style={STYLES.save_text}>SAVE</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView >
+      <ScrollView>
         <View
           style={{
             paddingHorizontal: "5%",
@@ -117,23 +135,16 @@ function Add_appointment() {
         >
           <Text style={styles.name_txt}>Subject</Text>
           <TextInput
-            placeholder="Subject"
+            placeholder="Enter Subject"
             style={styles.input}
             //   value={text_sign}
             //   onChangeText={(txt) => setText_sign(txt)}
           ></TextInput>
+
           <View style={styles.line2}></View>
-          <Text style={styles.name_txt}>Location</Text>
-          <TextInput
-            placeholder="Location"
-            style={styles.input}
-            //   value={text_sign}
-            //   onChangeText={(txt) => setText_sign(txt)}
-          ></TextInput>
-          <View style={styles.line2}></View>
-          <Text style={styles.name_txt}>Site</Text>
+          <Text style={styles.name_txt}>Lead Site</Text>
           <Dropdown
-            style={[styles.dropdown]}
+            style={[styles.dropdown2]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             // inputSearchStyle={styles.inputSearchStyle}
@@ -143,7 +154,7 @@ function Add_appointment() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value1}
+            placeholder={""}
             value={value1}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
@@ -175,43 +186,10 @@ function Add_appointment() {
             //   value={text_sign}
             //   onChangeText={(txt) => setText_sign(txt)}
           ></TextInput>
-          <View style={styles.line2}></View>
-          <Text style={styles.name_txt}>All Day Event</Text>
-          <Dropdown
-            style={[styles.dropdown]}
-            placeholderStyle={styles.placeholderStyle}
-            selectedTextStyle={styles.selectedTextStyle}
-            // inputSearchStyle={styles.inputSearchStyle}
-            // iconStyle={styles.iconStyle}
-            data={dt}
-            search={false}
-            maxHeight={300}
-            labelField="label"
-            valueField="value"
-            placeholder={value2}
-            value={value2}
-            //   onFocus={() => setIsFocus(true)}
-            //   onBlur={() => setIsFocus(false)}
-            onChange={(i) => {
-              setValue2(i.value);
-            }}
-            renderRightIcon={() => (
-              <AntDesign
-                style={{ paddingHorizontal: "5%" }}
-                color="#003366"
-                name="downsquare"
-                size={30}
-              />
-            )}
-          />
+
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <FontAwesome
-              style={styles.icon2}
-              color="#8c8c8c"
-              name="calendar"
-              size={24}
-            />
+            <FontAwesome style={styles.icon2} color="#8c8c8c" name="calendar" />
             <Text style={styles.name_txt2}>Start Date</Text>
           </View>
           <View style={[styles.press]}>
@@ -286,7 +264,7 @@ function Add_appointment() {
           </View>
 
           <Dropdown
-            style={[styles.dropdown2]}
+            style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             // inputSearchStyle={styles.inputSearchStyle}
@@ -296,7 +274,7 @@ function Add_appointment() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value3}
+            placeholder={""}
             value={value3}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
@@ -315,22 +293,47 @@ function Add_appointment() {
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
             <Octicons
-              style={styles.icon2}
+              style={styles.icon3}
               color="#8c8c8c"
               name="clock"
               size={24}
             />
-            <Text style={styles.name_txt2}>Reminder</Text>
+            <Text style={styles.name_txt2}>Reminder Time</Text>
           </View>
 
-          <TextInput
-            placeholder="Reminder"
-            style={styles.input2}
-            //   value={text_sign}
-            //   onChangeText={(txt) => setText_sign(txt)}
-          ></TextInput>
+          <View style={[styles.press]}>
+            <TouchableOpacity onPress={() => setModalVisible3(true)}>
+              <TextInput
+                style={{ color: "grey", fontSize: 17 }}
+                placeholder={"Reminder Date and Time"}
+                showSoftInputOnFocus={false}
+                // editable={false}
+                value={date_time}
+                onPressIn={() => setModalVisible3(true)}
+              ></TextInput>
+            </TouchableOpacity>
+            <Text
+              onPress={() => {
+                setdate_time("");
+              }}
+              style={{ marginEnd: "5%" }}
+            >
+              <MaterialIcons
+                name="highlight-remove"
+                size={30}
+                color="#8c8c8c"
+              />
+            </Text>
+          </View>
           <View style={styles.line2}></View>
-          <Text style={styles.name_txt}>Time Unit</Text>
+          <View style={{ flexDirection: "row" }}>
+            <MaterialCommunityIcons
+              name="signal-cellular-3"
+              style={styles.icon4}
+              color="#8c8c8c"
+            />
+            <Text style={styles.name_txt2}>Status</Text>
+          </View>
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
@@ -342,7 +345,7 @@ function Add_appointment() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value4}
+            placeholder={""}
             value={value4}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
@@ -359,9 +362,14 @@ function Add_appointment() {
             )}
           />
           <View style={styles.line2}></View>
-          <Text style={styles.name_txt}
-            onPress={() => {}}
-          >Show Time As</Text>
+          <View style={{ flexDirection: "row" }}>
+            <Ionicons
+              name="alert-circle"
+              style={styles.icon4}
+              color="#8c8c8c"
+            />
+            <Text style={styles.name_txt2}>Priority</Text>
+          </View>
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
@@ -373,7 +381,7 @@ function Add_appointment() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value5}
+            placeholder={""}
             value={value5}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
@@ -389,29 +397,43 @@ function Add_appointment() {
               />
             )}
           />
-          <View style={styles.line2}></View>
 
-          <Text style={styles.name_txt}>Notes</Text>
+          <View style={styles.line2}></View>
+          <View style={{ flexDirection: "row" }}>
+            <Octicons
+              style={styles.icon5}
+              color="#8c8c8c"
+              name="clock"
+              size={24}
+            />
+
+            <Text style={styles.name_txt2}>Complete (%)</Text>
+          </View>
           <TextInput
-            // placeholder="Subject"
+            // placeholder="Reminder"
             style={styles.input2}
             //   value={text_sign}
             //   onChangeText={(txt) => setText_sign(txt)}
           ></TextInput>
+          <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <FontAwesome
-              style={styles.icon_notes}
-              color="#8c8c8c"
-              name="calendar"
-              size={24}
-            />
-            <View style={styles.line3}></View>
+            <MaterialIcons name="notes" style={styles.icon4} color="#8c8c8c" />
+            <Text style={styles.name_txt2}>Notes</Text>
           </View>
+          <TextInput
+            // placeholder="Reminder"
+            style={styles.input2}
+            //   value={text_sign}
+            //   onChangeText={(txt) => setText_sign(txt)}
+          ></TextInput>
+          <View style={styles.line3}></View>
         </View>
       </ScrollView>
-      {com  ? <View style={{height:150,width:'100%',backgroundColor:"red",}}>
-
-</View>:null }
+      {/* {com ? (
+        <View
+          style={{ height: 150, width: "100%", backgroundColor: "red" }}
+        ></View>
+      ) : null} */}
 
       <Modal
         animationType="slide"
@@ -454,7 +476,7 @@ function Add_appointment() {
               <DateTimePickerModal
                 isVisible={isDatePickerVisible}
                 mode="date"
-                onConfirm={handleConfirm}
+                onConfirm={start_date_confirm}
                 onCancel={hideDatePicker}
                 pickerStyleIOS
               />
@@ -499,15 +521,70 @@ function Add_appointment() {
                   {moment().utcOffset("+05:30").format("DD-MMM-YYYY ")}
                 </Text>
               </TouchableOpacity>
-             
+
               <DateTimePickerModal
                 isVisible={isDatePickerVisible}
                 mode="date"
-                onConfirm={handleConfirm3}
+                onConfirm={End_date_confirm}
                 onCancel={hideDatePicker}
                 pickerStyleIOS
               />
-             
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible3}
+        onRequestClose={() => {
+          setModalVisible3(!modalVisible3);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.modal_top}>
+              <Text style={{ flex: 0.9 }}></Text>
+              <Text style={styles.date}>Start Date</Text>
+              <TouchableOpacity
+                onPress={() => setModalVisible3(!modalVisible3)}
+                style={styles.done}
+              >
+                <Text style={{ fontSize: 18, fontWeight: "600" }}>Done</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity
+                style={styles.modal_btn}
+                onPress={showDatePicker2}
+              >
+                <Text style={{ fontSize: 16, fontWeight: "500" }}>
+                  {moment().utcOffset("+05:30").format("DD-MMM-YYYY ")}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modal_btn}
+                onPress={showtimePicker}
+              >
+                <Text style={{ fontSize: 16, fontWeight: "500" }}>
+                  {moment().utcOffset("+05:30").format(" hh:mm a")}
+                </Text>
+              </TouchableOpacity>
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={time_date_confirm}
+                onCancel={hideDatePicker2}
+                pickerStyleIOS
+              />
+              <DateTimePickerModal
+                isVisible={istimePickerVisible}
+                mode="time"
+                onConfirm={handleConfirm2}
+                onCancel={hidetimePicker}
+                pickerStyleIOS
+                pickerComponentStyleIOS
+              />
             </View>
           </View>
         </View>
@@ -520,7 +597,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  
+
   done: { flex: 0.4, fontSize: 18, fontWeight: "bold" },
   date: { flex: 0.8, fontSize: 14, color: "#cccccc" },
   datePickerStyle: {
@@ -576,31 +653,31 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     alignItems: "center",
-    
-    
+
     position: "absolute",
     bottom: "0%",
-   
-   
-    
-     justifyContent: "flex-end",
+
+    justifyContent: "flex-end",
     alignItems: "center",
     marginTop: 0,
-    marginBottom: -20, height: "50%",width:"100%"
+    marginBottom: -20,
+    height: "50%",
+    width: "100%",
   },
   selectedTextStyle: { color: "#8c8c8c" },
-  icon2: { marginTop: "8%", flex: 0.15 },
-  icon3: { marginTop: "8%", flex: 0.19 },
+  icon2: { marginTop: "8%", flex: 0.15, fontSize: 22 },
+  icon4: { marginTop: "8%", flex: 0.15, fontSize: 28, marginStart: "-1%" },
+  icon3: { marginTop: "8%", flex: 0.2, marginStart: "-1%" },
+  icon5: { marginTop: "8%", flex: 0.17, fontSize: 22 },
   icon_notes: {},
   dropdown: {
     height: "2.6%",
     marginStart: "12%",
-    marginTop: "4%",
   },
   dropdown2: {
     height: "2.6%",
     marginStart: "12%",
-    marginTop: "1%",
+    marginTop: "5%",
   },
   line: {
     backgroundColor: "grey",
@@ -613,18 +690,18 @@ const styles = StyleSheet.create({
   line3: {
     backgroundColor: "grey",
     height: 1,
-    marginTop: "8%",
 
-    width: "85%",
-    marginStart: "6%",
+    width: "86%",
+    marginStart: "12%",
+    marginTop: "8%",
   },
   line2: {
     backgroundColor: "grey",
     height: 1,
-    marginTop: "1%",
 
     width: "86%",
     marginStart: "12%",
+    marginTop: "1%",
   },
   name_txt: {
     fontSize: 17,
@@ -654,68 +731,17 @@ const styles = StyleSheet.create({
     color: "#8c8c8c",
 
     fontSize: 17,
+    marginStart: "12%",
   },
   input2: {
     color: "#8c8c8c",
 
     fontSize: 17,
     marginStart: "12%",
-    marginTop: "-1%",
   },
-  button: {
-    height: height * 0.075,
-    width: width * 0.9,
-    marginTop: "5%",
+  
 
-    alignSelf: "center",
-    backgroundColor: "#003366",
-    elevation: 1,
-    borderRadius: 8,
-    justifyContent: "center",
-  },
-
-  header: {
-    height: height * 0.12,
-    backgroundColor: "#003366",
-    alignItems: "center",
-
-    // marginTop: 25,
-    flexDirection: "row",
-    marginBottom: "3%",
-  },
-  headertxt3: {
-    marginTop: "8%",
-    flex: 0.3,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  headertxt2: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: "7%",
-    textAlign: "center",
-    flex: 0.5,
-  },
-  headertxt1: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: "7%",
-    textAlign: "center",
-    flex: 0.2,
-    marginStart: "8%",
-  },
-  add: {
-    color: "yellow",
-    borderWidth: 1.3,
-    borderColor: "yellow",
-    paddingHorizontal: "13%",
-    borderRadius: 20,
-    fontWeight: "500",
-    fontSize: 16,
-  },
+  
   modal_btn: {
     backgroundColor: "#d9d9d9",
 
@@ -730,4 +756,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Add_appointment;
+export default Add_task;

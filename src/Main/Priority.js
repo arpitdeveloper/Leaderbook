@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,100 +7,49 @@ import {
   TouchableOpacity,
   FlatList,
 } from "react-native";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation, useRoute } from "@react-navigation/native";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 import {
   Ionicons,
   Octicons,
 } from "@expo/vector-icons";
+import { get_leads_priorities } from "../Services";
+import Loader from "../constant/Loader";
+import { ScreenNames } from "../constant/ScreenNames";
 
 
-export default function Priority({ navigation }) {
-
-  const DATA = [
-    {
-      id: "0",
-      name: "2 Leads",
-      Number: "High",
-      voicemail: "Voicemail",
-      email: "praful.mishra121@gmail.com",
-    },
-    {
-      id: "1",
-      name: "13 Leads",
-      Number: "Low",
-      voicemail: "Voicemail",
-      email: "praful.mishra121@gmail.com",
-    },
-    {
-      id: "2",
-      name: "0 Leads",
-      Number: "Medium",
-      voicemail: "Voicemail",
-      email: "praful.mishra121@gmail.com",
-    },
-    {
-      id: "3",
-      name: "22 Leads",
-      Number: "Low",
-      voicemail: "Voicemail",
-      email: "praful.mishra121@gmail.com",
-    },
-    {
-      id: "4",
-      name: "No Leads",
-      Number: "Low",
-      voicemail: "Voicemail",
-      email: "praful.mishra121@gmail.com",
-    },
-    {
-      id: "5",
-      name: "0 Leads",
-      Number: "Low",
-      voicemail: "Voicemail",
-      email: "praful.mishra121@gmail.com",
-    },
-    {
-      id: "6",
-      name: "12 Leads",
-      Number: "Low",
-      voicemail: "Voicemail",
-      email: "praful.mishra121@gmail.com",
-    },
-    {
-      id: "7",
-      name: "James Test",
-      Number: "Low",
-      voicemail: "Voicemail",
-      email: "praful.mishra121@gmail.com",
-    },
-    {
-      id: "8",
-      name: "James Test",
-      Number: "HIGH",
-      voicemail: "Voicemail",
-      email: "praful.mishra121@gmail.com",
-    },
-    {
-      id: "9",
-      name: "James Test",
-      Number: "Low",
-      voicemail: "Voicemail",
-      email: "praful.mishra121@gmail.com",
-    },
-    {
-      id: "10",
-      name: "James Test",
-      Number: "Medium",
-      voicemail: "Voicemail",
-      email: "praful.mishra121@gmail.com",
-    },
-  ];
+export default function Priority() {
+  const [DATA, setDATA] = useState([]);
+  const [loading, setLoading] = React.useState(true);
+  const navigation = useNavigation();
+  useEffect(() => {
+    (async () => {
+      const user_data = await AsyncStorage.getItem("user_data");
+      
+      const d = JSON.parse(user_data);
+     
+      // console.log(dr)
+      const data = {
+        email: d.email,
+        password: d.password,
+      };
+      get_leads_priorities(data)
+        .then((response) => response.json())
+        .then((result) => {
+         
+          setDATA(result?.data?.leadpriorities);
+          setLoading(false);
+        })
+        .catch((error) => console.log("error", error));
+    })();
+  }, []);
 
   return (
     // <ScrollView style={{  }}>
     <View style={styles.container}>
+       {loading?<Loader loading={loading}/>: DATA && DATA.length>0?
       <FlatList
         data={DATA}
         keyExtractor={(item) => item.id}
@@ -117,10 +66,10 @@ export default function Priority({ navigation }) {
                 }}
               >
                 <View style={{ flexDirection: "row" ,marginTop:"2%"}}>
-                  <Text style={styles.number}>{item.Number}</Text>
+                  <Text style={styles.number}>{item.type}</Text>
                 </View>
                 <View style={{ flexDirection: "row", marginStart: "5%" }}>
-                  <Text style={styles.name}>{item.name}</Text>
+                  <Text style={styles.name}>{item.totalcount} Leads</Text>
 
                   <Text style={{}}>
                     <Ionicons
@@ -136,7 +85,10 @@ export default function Priority({ navigation }) {
           </View>
         )}
       />
-      <TouchableOpacity style={styles.floating_btn}>
+      :null}
+      <TouchableOpacity 
+      onPress={() => navigation.navigate(ScreenNames.NEW_LEADS)}
+      style={styles.floating_btn}>
         <Ionicons name="person-add" size={30} color="white" />
       </TouchableOpacity>
     </View>
@@ -176,7 +128,7 @@ const styles = StyleSheet.create({
   icon: { marginTop: "5%" },
   icon1: { marginTop: "5%" },
   name: {
-    fontSize: 17,
+    fontSize: 19,
 
     color: "#808080",
     flex: 0.95,

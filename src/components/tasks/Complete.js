@@ -27,6 +27,7 @@ import {
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Colors } from "../../constant/colors";
+import { ScreenNames } from "../../constant/ScreenNames";
 
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
@@ -98,6 +99,9 @@ const DATA = [
   },
 ];
 
+
+
+
 function Complete() {
   const navigation = useNavigation();
   return (
@@ -135,6 +139,7 @@ function Complete() {
         )}
       />
       <TouchableOpacity 
+      onPress={() => navigation.navigate(ScreenNames.ADD_TASKS)}
         // onPress={() => navigation.navigate(ScreenNames.ADD_APPOINTMENT)}
 
       style={styles.floating_btn}>

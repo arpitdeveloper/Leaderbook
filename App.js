@@ -17,6 +17,7 @@ import Profile from "./src/Main/Detail_folder/Profile";
 import Related from "./src/Main/Detail_folder/Related";
 import Lead_activity from "./src/Main/Detail_folder/Lead_activity";
 import Edit_lead_detail from "./src/Main/Detail_folder/Edit_lead_detail";
+import Comments from "./src/Main/Detail_folder/Comments";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -39,6 +40,7 @@ export default function App() {
         <Stack.Screen name={ScreenNames.RELATED} component={Related} />
         <Stack.Screen name={ScreenNames.LEAD_ACTIVITY} component={Lead_activity} />
         <Stack.Screen name={ScreenNames.EDIT_LEAD_DETAIL} component={Edit_lead_detail} />
+        <Stack.Screen name={ScreenNames.Comments} component={Comments} />
       </Stack.Navigator>
     </NavigationContainer>
   );

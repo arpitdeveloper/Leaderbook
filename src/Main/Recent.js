@@ -34,9 +34,10 @@ export default function Recent() {
   const [selected_data, setSelected_data] = useState([]);
   const [d, setd] = useState(false);
   const navigation = useNavigation();
-  const route =useRoute()
+  const route = useRoute();
   const [DATA, setDATA] = useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [s,sets]=useState()
 
   useEffect(() => {
     (async () => {
@@ -49,6 +50,7 @@ export default function Recent() {
         email: d.email,
         password: d.password,
       };
+    
       get_leads(data)
         .then((response) => response.json())
         .then((result) => {
@@ -173,19 +175,22 @@ export default function Recent() {
                           </Text>
                         </View>
                       </View>
-                      <TouchableOpacity>
-                        
-                      </TouchableOpacity>
-                      <Text 
-                     onPress={() =>
-                       navigation.navigate(ScreenNames.DETAIL,{user :{name:item.Lead.first_name+` ${item.Lead.last_name}`,
-                       id:item.Lead.id,
-                       logo1:item.Lead.first_name[0],
-                       logo2:item.Lead.last_name[0],
-
-                      }})} 
-                      
-                      style={styles.name}>
+                      <TouchableOpacity></TouchableOpacity>
+                      <Text
+                        onPress={() =>
+                          navigation.navigate(ScreenNames.DETAIL, {
+                            user: {
+                              name:
+                                item.Lead.first_name +
+                                ` ${item.Lead.last_name}`,
+                              id: item.Lead.id,
+                              logo1: item.Lead.first_name[0],
+                              logo2: item.Lead.last_name[0],
+                            },
+                          })
+                        }
+                        style={styles.name}
+                      >
                         {item.Lead.first_name} {item.Lead.last_name}
                       </Text>
                       <Text style={styles.icon1}>
@@ -203,12 +208,13 @@ export default function Recent() {
                         }}
                         style={styles.number}
                       >
-                        {item.Lead.phone}
+                        {item.Lead.phone?item.Lead.phone:"no number"}
                       </Text>
-                      <Text style={styles.icon}
-                      onPress={() => {
-                        Linking.openURL(`sms:${item.Lead.phone}`);
-                      }}
+                      <Text
+                        style={styles.icon}
+                        onPress={() => {
+                          Linking.openURL(`sms:${item.Lead.phone}`);
+                        }}
                       >
                         <FontAwesome5 name="sms" size={30} color="black" />
                       </Text>
@@ -236,7 +242,7 @@ export default function Recent() {
                       <View style={styles.voice_icon}>
                         <Entypo name="voicemail" size={28} color="black" />
                       </View>
-                      <Text style={styles.voicemail}>{item.voicemail}</Text>
+                      <Text style={styles.voicemail}>{item.voicemail?item.voicemail:"voicemail"}</Text>
                     </View>
                   </View>
                 </View>
@@ -245,8 +251,9 @@ export default function Recent() {
             )}
           />
           <TouchableOpacity
-          onPress={() => navigation.navigate(ScreenNames.NEW_LEADS)}
-          style={styles.floating_btn}>
+            // onPress={() => navigation.navigate(ScreenNames.NEW_LEADS)}
+            style={styles.floating_btn}
+          >
             <Ionicons name="person-add" size={40} color="white" />
           </TouchableOpacity>
           <View
@@ -285,6 +292,7 @@ export default function Recent() {
           </View>
         </>
       ) : null}
+      
     </View>
     // </ScrollView>
   );

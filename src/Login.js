@@ -64,6 +64,7 @@ function Login_screen() {
             setLoading(false);
             if (result.status == 1) {
               AsyncStorage.setItem("userInfo", JSON.stringify(result.data));
+              AsyncStorage.setItem("fm", "1");
               AsyncStorage.setItem("user_data", JSON.stringify(data))
                 .then(() => {
                   navigation.navigate(ScreenNames.DRAWER);

@@ -22,8 +22,7 @@ import { STYLES } from "../../constant/styles";
 import { ScreenNames } from "../../constant/ScreenNames";
 import {
   Edit_leads_basic_detail,
-  edit_profile,
-  user_update,
+  Edit_leads_basic_detail_update,
 } from "../../Services";
 import Loader from "../../constant/Loader";
 
@@ -41,7 +40,7 @@ function Edit_lead_detail() {
   const [First_name, setFirst_name] = React.useState("");
   const [last_name, setLast_name] = React.useState("");
   const [email, setEmail] = React.useState("");
-  
+
   const [company, setCompany] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [state, setstate] = React.useState("");
@@ -98,20 +97,10 @@ function Edit_lead_detail() {
           Array.push(item);
           setdata(Array);
           setLoading(false);
-          // console.log("new",First_name)
         })
         .catch((error) => console.log("error", error));
-
-      // console.log(d);
-
-      // var array = [];
-      // array.push(d);
-
-      // setdata(array);
     })();
   }, []);
-
-  //   console.log("aman",data)
 
   const postdata = async () => {
     try {
@@ -122,27 +111,24 @@ function Edit_lead_detail() {
         first_name: First_name,
         last_name: last_name,
         lead_email: email,
-        is_grl_crea_lead:Assigned_value,
-        comments:comments,
-        lead_type_id:"",
-        user_id:type_value,
-        
+        is_grl_crea_lead: Assigned_value,
+        comments: comments,
+        user_id: type_value,
         state: state,
         address: address,
         city: city,
         phone: phone,
-        
-        company_name: company_name,
+        company_name: company,
         address: address,
         id: route.params.id,
         password: d.password,
-        email:d.email
+        email: d.email,
       };
-      user_update(data).then((response) => {
+      Edit_leads_basic_detail_update(data).then((response) => {
         response.json().then((data) => {
           // console.log(data);
           // Alert.alert(data.msg);
-          navigation.goBack();
+          navigation.navigate(ScreenNames.MAIN_SCREEN);
         });
       });
     } catch (error) {
@@ -163,8 +149,8 @@ function Edit_lead_detail() {
             color="white"
           />
         </TouchableOpacity>
-        <Text style={STYLES.header}>New lead</Text>
-        <TouchableOpacity style={STYLES.save_touch} onPress={() => {}}>
+        <Text style={STYLES.header}>Edit lead</Text>
+        <TouchableOpacity style={STYLES.save_touch} onPress={() => postdata()}>
           <Text style={STYLES.save_text}>save</Text>
         </TouchableOpacity>
       </View>
@@ -178,7 +164,7 @@ function Edit_lead_detail() {
           keyExtractor={(item) => item.id}
           renderItem={({ item, index }) => (
             <View>
-              <View style={{ paddingHorizontal: "6%", marginBottom: "5%" }}>
+              <View style={{ paddingHorizontal: "6%", marginBottom: "20%" }}>
                 <Text style={styles.name_txt}>{item.first_name.label}</Text>
                 <TextInput
                   placeholder="Enter first name"

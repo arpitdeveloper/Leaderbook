@@ -8,6 +8,8 @@ import {
   FlatList,
   SafeAreaView,
   ActivityIndicator,
+  Modal,
+  Pressable,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -48,6 +50,7 @@ function Basic_detail({ data }) {
   const [DATA, setDATA] = useState([]);
   const [tag, settag] = useState([]);
   const [loading, setLoading] = React.useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
 
   useEffect(() => {
     (async () => {
@@ -95,11 +98,16 @@ function Basic_detail({ data }) {
                   <View style={styles.row}>
                     <Text style={styles.name}>{item.Lead.email.value}</Text>
                     <Text
-                    onPress={() => {
-                      Linking.openURL(`mailto:${item.Lead.email.value}`);
-                    }}
-                    ><Zocial name="email" size={22} color={Colors.MAIN_COLOR} /></Text>
-                    
+                      onPress={() => {
+                        Linking.openURL(`mailto:${item.Lead.email.value}`);
+                      }}
+                    >
+                      <Zocial
+                        name="email"
+                        size={22}
+                        color={Colors.MAIN_COLOR}
+                      />
+                    </Text>
                   </View>
                 </View>
                 <View style={styles.line}></View>
@@ -116,32 +124,28 @@ function Basic_detail({ data }) {
                       color={Colors.MAIN_COLOR}
                     />
                     <Text
-                     style={{ marginHorizontal: 10 }}
-                    onPress={() => {
-                      Linking.openURL(`tel:${item.Lead.phone.value}`);
-                    }}
+                      style={{ marginHorizontal: 10 }}
+                      onPress={() => {
+                        Linking.openURL(`tel:${item.Lead.phone.value}`);
+                      }}
                     >
-                    <FontAwesome5
-                      name="phone-alt"
-                     
-                      size={25}
-                      color={Colors.MAIN_COLOR}
-                    />
+                      <FontAwesome5
+                        name="phone-alt"
+                        size={25}
+                        color={Colors.MAIN_COLOR}
+                      />
                     </Text>
                     <Text
-                    
-                    onPress={() => {
-                      Linking.openURL(`sms:${item.Lead.phone.value}`);
-                    }}
+                      onPress={() => {
+                        Linking.openURL(`sms:${item.Lead.phone.value}`);
+                      }}
                     >
-                    <FontAwesome5
-                      name="sms"
-                      size={28}
-                      color={Colors.MAIN_COLOR}
-                    />
+                      <FontAwesome5
+                        name="sms"
+                        size={28}
+                        color={Colors.MAIN_COLOR}
+                      />
                     </Text>
-                   
-                    
                   </View>
                 </View>
                 <View style={styles.line}></View>
@@ -207,7 +211,7 @@ function Basic_detail({ data }) {
                     </View>
                   </View>
                   <FlatList
-                    style={{  marginTop: "2%" }}
+                    style={{ marginTop: "2%" }}
                     data={item.Lead.lead_tags}
                     numColumns={4}
                     keyExtractor={(item) => "#" + item.id}
@@ -253,14 +257,51 @@ function Basic_detail({ data }) {
               </>
             )}
           />
+          <View style={styles.centeredView}>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                Alert.alert("Modal has been closed.");
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <View style={{}}>
+                <View style={styles.modalView}>
+                  <View style={{flexDirection:"row",justifyContent:"space-between",margin:"7%"}}>
+                  <Text style={styles.modalText}>Pin Note</Text>
+                  <Pressable
+                    style={[styles.button, styles.buttonClose]}
+                    onPress={() => setModalVisible(!modalVisible)}
+                  >
+                    <Text style={styles.modalText}>X</Text>
+                  </Pressable>
+                  </View>
+                  <View
+                  style={{height:1,width:"100%",backgroundColor:"#666666"}}
+                  >
+
+                  </View>
+                  <TouchableOpacity
+                  style={{height:"12%",width:"45%",backgroundColor:"blue",alignSelf:"center",marginTop:"70%",borderRadius:25,justifyContent:"center",alignItems:"center"}}
+                  >
+                  <Text style={{color:"white"}}>Add Note</Text>
+                  </TouchableOpacity>
+                 
+                  
+                </View>
+              </View>
+            </Modal>
+            <Pressable
+              style={[styles.button, styles.buttonOpen]}
+              onPress={() => setModalVisible(true)}
+            >
+              <Text style={styles.textStyle}>Show Modal</Text>
+            </Pressable>
+          </View>
           <TouchableOpacity
-            onPress={() => {
-              navigation.navigate(ScreenNames.LEAD_ACTIVITY, {
-                name: data.name,
-                logo1: data.logo1,
-                logo2: data.logo2,
-              });
-            }}
+            onPress={() => setModalVisible(true)}
             style={styles.floating_btn}
           >
             <MaterialCommunityIcons
@@ -279,7 +320,17 @@ function Basic_detail({ data }) {
               justifyContent: "center",
             }}
           >
-            <Text style={{ color: "white", fontSize: 20 }}>
+            <Text
+              onPress={() => {
+                navigation.navigate(ScreenNames.LEAD_ACTIVITY, {
+                  name: data.name,
+                  logo1: data.logo1,
+                  logo2: data.logo2,
+                  id: Id,
+                });
+              }}
+              style={{ color: "white", fontSize: 20 }}
+            >
               View Lead Activity
             </Text>
           </View>
@@ -290,6 +341,24 @@ function Basic_detail({ data }) {
 }
 
 const styles = StyleSheet.create({
+  modalText: {
+    fontSize:25,fontWeight:"bold"
+  },
+  centeredView: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: "rgba(52, 52, 52, 0.3)",
+  },
+  modalView: {
+    height:"60%",width:"80%",
+    backgroundColor: '#ffc0cb',
+    borderRadius: 10,
+    
+    
+    
+    elevation: 5,alignSelf:"center",marginTop:"50%"
+  },
   floating_btn: {
     alignItems: "center",
     justifyContent: "center",

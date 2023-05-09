@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import { MaterialCommunityIcons ,FontAwesome} from "@expo/vector-icons";
 import {
   SafeAreaView,
   Dimensions,
@@ -14,54 +13,155 @@ import {
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
-
-const dt = [
-  { label: "Canada", value: "1" },
-  
-];
-const calender = [
-    { label: "No Tag", value: "1" },
-    { label: "Jan1", value: "2" },
-    { label: "Jan2", value: "3" },
-    { label: "Jan3", value: "4" },
-    { label: "Jan4", value: "5" },
-    { label: "Feb1", value: "6" },
-    { label: "Feb2", value: "7" },
-    { label: "Feb3", value: "8" },
-    { label: "Feb4", value: "9" },
-    
-  ];
+import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { ScrollView } from "react-native-gesture-handler";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { STYLES } from "../constant/styles";
 import { ScreenNames } from "../constant/ScreenNames";
+import Loader from "../constant/Loader";
+import { New_lead_detail, New_lead_detail_update } from "../Services";
+
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 function New_lead() {
   const navigation = useNavigation();
+  const route = useRoute();
   const [data, setdata] = useState([]);
-  const [value, setValue] = useState(0);
+  const [Assigned_value, setAssigned_value] = useState(0);
+  const [type_value, settype_value] = useState(0);
+  const [status_value, setstatus_value] = useState(0);
+  const [follow_value, setfollow_value] = useState(0);
   const [isFocus, setIsFocus] = useState(false);
   const [First_name, setFirst_name] = React.useState("");
   const [last_name, setLast_name] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const [title, setTitle] = React.useState("");
+
   const [company, setCompany] = React.useState("");
   const [phone, setPhone] = React.useState("");
   const [state, setstate] = React.useState("");
   const [city, setCity] = React.useState("");
-  const [text_sign, setText_sign] = React.useState("");
-  const [country_id, setCountry_id] = React.useState("");
+  const [comments, setcomments] = React.useState("");
+  const [logged_date, setlogged_date] = React.useState("");
   const [address, setAddress] = React.useState("");
-  const [drop, setDrop] = React.useState("");
+  const [follow, setfollow] = React.useState("");
+  const [status, setstatus] = React.useState("");
+  const [type, settype] = React.useState("");
+  const [assign, setassign] = React.useState("");
   const [id, setId] = React.useState("");
+  const [loading, setLoading] = React.useState(true);
 
- 
+  useEffect(() => {
+    (async () => {
+      // const user_data = await AsyncStorage.getItem("user_data");
+      // const Follow_data = await AsyncStorage.getItem("Follow");
+      // const status_data = await AsyncStorage.getItem("Status");
+      // const assign_data = await AsyncStorage.getItem("Assign");
+      // const type_data = await AsyncStorage.getItem("Type");
+      // const d = JSON.parse(user_data);
+      // const F = JSON.parse(Follow_data);
+      // const S = JSON.parse(status_data);
+      // const T = JSON.parse(type_data);
+      // const A = JSON.parse(assign_data);
+      // setfollow(F);
+      // setassign(A);
+      // settype(T);
+      // setstatus(S);
+      // // console.log(dr)
+      // const data = {
+      //   email: d.email,
+      //   password: d.password,
+      //   id: route.params.id,
+      // };
+      // New_lead_detail(data)
+      //   .then((response) => response.json())
+      //   .then((result) => {
+      //     console.log(result.data.lead_detail.Lead)
+      // var Array = [];
 
-  // console.log(value)
+      // var item = result.data.lead_detail.Lead;
+      // setFirst_name(item?.first_name?.field_type);
+      // setLast_name(item?.last_name?.field_type);
+      // setEmail(item?.email?.field_type);
+      // setCompany(item?.company_name?.field_type);
+      // setPhone(item?.phone?.field_type);
+      // setAddress(item?.address?.field_type);
+      // setCity(item?.city?.field_type);
+      // setstate(item?.state?.field_type);
+      // setlogged_date(item?.new_grouped_date?.field_type);
+      // setcomments(item?.comments?.field_type);
+      // Array.push(item);
+      // setdata(Array);
+      // setLoading(false);
+      //   })
+      //   .catch((error) => console.log("error", error));
+      const user_data = await AsyncStorage.getItem("user_data");
+      const d = JSON.parse(user_data);
+      const data = {
+        email: d.email,
+        password: d.password,
+      };
+      New_lead_detail(data)
+        .then((response) => response.json())
+        .then((result) => {
+          var Array = [];
+
+          var item = result.data.lead_detail.Lead;
+          setFirst_name(item?.first_name?.field_type);
+          setLast_name(item?.last_name?.field_type);
+          setEmail(item?.email?.field_type);
+          setCompany(item?.company_name?.field_type);
+          setPhone(item?.phone?.field_type);
+          setAddress(item?.address?.field_type);
+          setCity(item?.city?.field_type);
+          setstate(item?.state?.field_type);
+          setlogged_date(item?.new_grouped_date?.field_type);
+          setcomments(item?.comments?.field_type);
+          Array.push(item);
+          setdata(Array);
+          setLoading(false);
+        })
+        .catch((error) => console.log("error", error));
+    })();
+  }, []);
+
+  // console.log(data)
+
+  const postdata = async () => {
+    try {
+      const user_data = await AsyncStorage.getItem("user_data");
+      // const drop_data = await AsyncStorage.getItem("dropdown_data");
+      const d = JSON.parse(user_data);
+      const data = {
+        first_name: First_name,
+        last_name: last_name,
+        lead_email: email,
+        is_grl_crea_lead: Assigned_value,
+        comments: comments,
+        user_id: type_value,
+        state: state,
+        address: address,
+        city: city,
+        phone: phone,
+        company_name: company,
+        address: address,
+        id: route.params.id,
+        password: d.password,
+        email: d.email,
+      };
+      New_lead_detail_update(data).then((response) => {
+        response.json().then((data) => {
+          // console.log(data);
+          // Alert.alert(data.msg);
+          navigation.navigate(ScreenNames.MAIN_SCREEN);
+        });
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -81,88 +181,57 @@ function New_lead() {
           <Text style={STYLES.save_text}>save</Text>
         </TouchableOpacity>
       </View>
-      <ScrollView
-      nestedScrollEnabled={true}
-      >
+
+      {loading ? (
+        <Loader loading={loading} />
+      ) : data && data.length > 0 ? (
         <FlatList
-          style={{ backgroundColor: "#f2f2f2", padding: 10 }}
-          data={dt}
+          style={{ backgroundColor: "#f2f2f2" }}
+          data={data}
           keyExtractor={(item) => item.id}
           renderItem={({ item, index }) => (
             <View>
-              <View style={{ paddingHorizontal: "6%", marginBottom: "5%" }}>
-                <Text style={styles.name_txt}>Firstname</Text>
+              <View style={{ paddingHorizontal: "6%", marginBottom: "20%" }}>
+                <Text style={styles.name_txt}>{item.first_name.label}</Text>
                 <TextInput
-                  placeholder=""
+                  placeholder="Enter first name"
                   style={styles.input}
                   value={First_name}
                   onChangeText={(txt) => setFirst_name(txt)}
                 ></TextInput>
                 {/* {console.log(First_name)} */}
-                <Text style={styles.name_txt}>Last name</Text>
+                <Text style={styles.name_txt}>{item.last_name.label}</Text>
                 <TextInput
-                  placeholder=""
+                  placeholder=" Enter last name"
                   style={styles.input}
                   value={last_name}
                   onChangeText={(txt) => setLast_name(txt)}
                 ></TextInput>
-                 <Text style={styles.name_txt}>Choose Site</Text>
-                {/* {renderLabel()} */}
-                <Dropdown
-                  style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
-                  placeholderStyle={styles.placeholderStyle}
-                  selectedTextStyle={styles.selectedTextStyle}
-                  // inputSearchStyle={styles.inputSearchStyle}
-                  // iconStyle={styles.iconStyle}
-                  data={dt}
-                  search={false}
-                  maxHeight={300}
-                  labelField="label"
-                  valueField="value"
-                  placeholder={drop}
-                  value={value}
-                  onFocus={() => setIsFocus(true)}
-                  onBlur={() => setIsFocus(false)}
-                  onChange={(i) => {
-                    setValue(i.value);
-                   
-                    setIsFocus(false);
-                  }}
-                  renderRightIcon={() => (
-                   
-                    <AntDesign
-                      style={styles.icon}
-                      color="#003366"
-                      name="downsquare"
-                      size={30}
-                    />
-                  )}
-                />
-                <Text style={styles.name_txt}>Email</Text>
+
+                <Text style={styles.name_txt}>{item.email.label}</Text>
                 <TextInput
-                  placeholder=""
+                  placeholder="Enter email"
                   style={styles.input}
                   value={email}
                   onChangeText={(txt) => setEmail(txt)}
                 ></TextInput>
-                
-                <Text style={styles.name_txt}>Phone</Text>
+
+                <Text style={styles.name_txt}>{item.phone.label}</Text>
                 <TextInput
-                  placeholder=""
-                  style={styles.input}
-                  value={company}
-                  onChangeText={(txt) => setCompany(txt)}
-                ></TextInput>
-                <Text style={styles.name_txt}>Comments</Text>
-                <TextInput
-                  placeholder=""
+                  placeholder="Enter Phone"
                   style={styles.input}
                   value={phone}
                   onChangeText={(txt) => setPhone(txt)}
                 ></TextInput>
-                
-                
-                <Text style={styles.name_txt}>Assigned To</Text>
+                <Text style={styles.name_txt}>{item.comments.label}</Text>
+                <TextInput
+                  placeholder="No Comments"
+                  style={styles.comments}
+                  value={comments}
+                  onChangeText={(txt) => setcomments(txt)}
+                ></TextInput>
+
+                <Text style={styles.name_txt}>{item.user_id.label}</Text>
                 {/* {renderLabel()} */}
                 <Dropdown
                   style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
@@ -170,18 +239,18 @@ function New_lead() {
                   selectedTextStyle={styles.selectedTextStyle}
                   // inputSearchStyle={styles.inputSearchStyle}
                   // iconStyle={styles.iconStyle}
-                  data={dt}
+                  data={item.user_id.dropdown_arr}
                   search={false}
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  placeholder={drop}
-                  value={value}
+                  placeholder={assign}
+                  value={Assigned_value}
                   onFocus={() => setIsFocus(true)}
                   onBlur={() => setIsFocus(false)}
                   onChange={(i) => {
-                    setValue(i.value);
-                   
+                    setAssigned_value(i.value);
+                    AsyncStorage.setItem("Assign", JSON.stringify(i.label));
                     setIsFocus(false);
                   }}
                   renderRightIcon={() => (
@@ -193,7 +262,7 @@ function New_lead() {
                     />
                   )}
                 />
-                <Text style={styles.name_txt}>Lead Type</Text>
+                <Text style={styles.name_txt}>{item.lead_type_id.label}</Text>
                 {/* {renderLabel()} */}
                 <Dropdown
                   style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
@@ -201,18 +270,18 @@ function New_lead() {
                   selectedTextStyle={styles.selectedTextStyle}
                   // inputSearchStyle={styles.inputSearchStyle}
                   // iconStyle={styles.iconStyle}
-                  data={dt}
+                  data={item.lead_type_id.dropdown_arr}
                   search={false}
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  placeholder={drop}
-                  value={value}
+                  placeholder={type}
+                  value={type_value}
                   onFocus={() => setIsFocus(true)}
                   onBlur={() => setIsFocus(false)}
                   onChange={(i) => {
-                    setValue(i.value);
-                   
+                    settype_value(i.value);
+                    AsyncStorage.setItem("Type", JSON.stringify(i.label));
                     setIsFocus(false);
                   }}
                   renderRightIcon={() => (
@@ -224,8 +293,10 @@ function New_lead() {
                     />
                   )}
                 />
-                
-                <Text style={styles.name_txt}>Lead Status</Text>
+
+                <Text style={styles.name_txt}>
+                  {item.is_grl_crea_lead.label}
+                </Text>
                 {/* {renderLabel()} */}
                 <Dropdown
                   style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
@@ -233,18 +304,18 @@ function New_lead() {
                   selectedTextStyle={styles.selectedTextStyle}
                   // inputSearchStyle={styles.inputSearchStyle}
                   // iconStyle={styles.iconStyle}
-                  data={dt}
+                  data={item.is_grl_crea_lead.dropdown_arr}
                   search={false}
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  placeholder={drop}
-                  value={value}
+                  placeholder={status}
+                  value={status_value}
                   onFocus={() => setIsFocus(true)}
                   onBlur={() => setIsFocus(false)}
                   onChange={(i) => {
-                    setValue(i.value);
-                   
+                    setstatus_value(i.value);
+                    AsyncStorage.setItem("Status", JSON.stringify(i.label));
                     setIsFocus(false);
                   }}
                   renderRightIcon={() => (
@@ -256,67 +327,71 @@ function New_lead() {
                     />
                   )}
                 />
-                <Text style={styles.name_txt}>Follow Up</Text>
+                <Text style={styles.name_txt}>{item.month.label}</Text>
                 {/* {renderLabel()} */}
                 <Dropdown
-                
                   style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
                   placeholderStyle={styles.placeholderStyle}
                   selectedTextStyle={styles.selectedTextStyle}
                   // inputSearchStyle={styles.inputSearchStyle}
                   // iconStyle={styles.iconStyle}
-                  data={calender}
+                  data={item.month.dropdown_arr}
                   search={false}
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  placeholder={drop}
-                  value={value}
+                  placeholder={follow}
+                  value={follow_value}
                   onFocus={() => setIsFocus(true)}
                   onBlur={() => setIsFocus(false)}
                   onChange={(i) => {
-                    setValue(i.value);
-                   
+                    setfollow_value(i.value);
+                    AsyncStorage.setItem("Follow", JSON.stringify(i.label));
                     setIsFocus(false);
                   }}
                   renderRightIcon={() => (
-                   
-                    <FontAwesome style={styles.icon} name="calendar" size={30} color="grey" />
+                    <FontAwesome
+                      style={styles.icon}
+                      name="calendar"
+                      size={30}
+                      color="grey"
+                    />
                   )}
                 />
-                <Text style={styles.name_txt}>Company Name</Text>
+
+                <Text style={styles.name_txt}>{item.company_name.label}</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Enter Company name"
                   style={styles.input}
-                  value={text_sign}
-                  onChangeText={(txt) => setText_sign(txt)}
+                  value={company}
+                  onChangeText={(txt) => setCompany(txt)}
                 ></TextInput>
-                <Text style={styles.name_txt}>Address</Text>
+                <Text style={styles.name_txt}>{item.address.label}</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Enter Address"
                   style={styles.input}
-                  value={text_sign}
-                  onChangeText={(txt) => setText_sign(txt)}
+                  value={address}
+                  onChangeText={(txt) => setAddress(txt)}
                 ></TextInput>
-                <Text style={styles.name_txt}>City</Text>
+                <Text style={styles.name_txt}>{item.city.label}</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Enter City"
                   style={styles.input}
-                  value={text_sign}
-                  onChangeText={(txt) => setText_sign(txt)}
+                  value={city}
+                  onChangeText={(txt) => setCity(txt)}
                 ></TextInput>
-                <Text style={styles.name_txt}>State/Province</Text>
+                <Text style={styles.name_txt}>{item.state.label}</Text>
                 <TextInput
-                  placeholder="name"
+                  placeholder="Enter State"
                   style={styles.input}
-                  value={text_sign}
-                  onChangeText={(txt) => setText_sign(txt)}
+                  value={state}
+                  onChangeText={(txt) => setstate(txt)}
                 ></TextInput>
               </View>
             </View>
           )}
         />
-      </ScrollView>
+      ) : null}
     </SafeAreaView>
   );
 }
@@ -325,24 +400,16 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  save: {
-    fontSize: 20,
-    color: "yellow",
-    borderWidth: 1.5,
-    borderColor: "yellow",
-    borderRadius: 15,
-    paddingHorizontal: 2,
-    textAlign: "center",
-  },
-  dropdown: {
-    height: 50,
 
-    borderRadius: 8,
+  dropdown: {
+    height: height * 0.06,
+
+    borderRadius: 6,
     paddingHorizontal: 8,
     backgroundColor: "white",
   },
   icon: {
-    marginRight: 5,
+    marginLeft: "-5%",
   },
   label: {
     // position: "absolute",
@@ -355,9 +422,11 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
+    color: "#808080",
   },
   selectedTextStyle: {
-    fontSize: 15,
+    fontSize: 16,
+    color: "#808080",
   },
   iconStyle: {
     width: 20,
@@ -371,86 +440,19 @@ const styles = StyleSheet.create({
   name_txt: { fontSize: 17, marginBottom: "2%", paddingTop: "5%" },
   input: {
     backgroundColor: "white",
+    color: "#808080",
+    paddingHorizontal: "2%",
+    fontSize: 17,
+    height: height * 0.06,
+    borderRadius: 6,
+  },
+  comments: {
+    backgroundColor: "white",
     color: "black",
     paddingHorizontal: "2%",
     fontSize: 17,
-    height: 50,
+    height: "5%",
     borderRadius: 6,
-  },
-  button: {
-    height: height * 0.085,
-    width: width * 0.9,
-    marginTop: 50,
-
-    padding: 10,
-    alignSelf: "center",
-    backgroundColor: "#003366",
-    elevation: 1,
-    borderRadius: 8,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  login: {
-    textAlign: "center",
-    color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
-  },
-  //   header: {
-  //     height: height * 0.1,
-  //     backgroundColor: "#003366",
-  //     justifyContent: "space-between",
-  //     alignItems: "center",flexDirection:"row",
-  //   },
-  header: {
-    height: height * 0.12,
-    backgroundColor: "#003366",
-    alignItems: "center",
-
-    // marginTop: 25,
-    flexDirection: "row",
-  },
-  headertxt3: {
-    marginTop: "8%",
-    flex: 0.3,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  headertxt2: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: "7%",
-    textAlign: "center",
-    flex: 0.5,
-  },
-  headertxt1: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: "7%",
-    textAlign: "center",
-    flex: 0.2,
-    marginStart: "8%",
-  },
-  add: {
-    color: "yellow",
-    borderWidth: 1.3,
-    borderColor: "yellow",
-    paddingHorizontal: "2%",
-    borderRadius: 20,
-    fontWeight: "400",
-    fontSize: 20,
-  },
-
-  fp_text: {
-    fontSize: 15,
-    color: "black",
-    textAlign: "right",
-    fontWeight: "500",
-    paddingHorizontal: 20,
-    paddingVertical: 10,
   },
 });
 

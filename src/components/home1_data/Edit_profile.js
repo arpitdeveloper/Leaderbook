@@ -140,23 +140,23 @@ function Edit_profile() {
         >
           <MaterialCommunityIcons
             name="keyboard-backspace"
-            size={30}
+            size={35}
             color="white"
           />
         </TouchableOpacity>
         <Text style={STYLES.header}>Profile</Text>
         <TouchableOpacity style={STYLES.save_touch} onPress={() => postdata()}>
-          <Text style={STYLES.save_text}>save</Text>
+          <Text style={STYLES.add_text}>SAVE</Text>
         </TouchableOpacity>
       </View>
       <ScrollView>
         <FlatList
-          style={{ backgroundColor: "#f2f2f2", padding: 10 }}
+          style={{ backgroundColor: "#f2f2f2",  }}
           data={data}
           keyExtractor={(item) => item.id}
           renderItem={({ item, index }) => (
             <View>
-              <View style={{ paddingHorizontal: "6%", marginBottom: "5%" }}>
+              <View style={{ paddingHorizontal: "4%", marginBottom: "5%" }}>
                 <Text style={styles.name_txt}> {item.first_name.label}</Text>
                 <TextInput
                   placeholder="Firstname"

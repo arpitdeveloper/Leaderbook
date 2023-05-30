@@ -7,9 +7,15 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
-  FlatList,Modal,Pressable
+  FlatList,
+  Modal,
+  Pressable,
 } from "react-native";
-import { MaterialCommunityIcons, FontAwesome,EvilIcons } from "@expo/vector-icons";
+import {
+  MaterialCommunityIcons,
+  FontAwesome,
+  EvilIcons,
+} from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { STYLES } from "../../constant/styles";
 import { Colors } from "../../constant/colors";
@@ -26,7 +32,6 @@ function Comments() {
   const [data, setdata] = useState([]);
   const [loading, setLoading] = React.useState(true);
   const [modalVisible, setModalVisible] = useState(false);
-  
 
   useEffect(() => {
     (async () => {
@@ -95,22 +100,24 @@ function Comments() {
               >
                 <Text style={styles.title}>{item.user_name}</Text>
                 <Text style={styles.created}>{item.created}</Text>
-                <TouchableOpacity 
-       onPress={() => {
-        setModalVisible(true);
-      }}><MaterialCommunityIcons
-      style={{ marginTop: "-3%" }}
-      name="pencil"
-      size={24}
-      color="black"
-    /></TouchableOpacity>
-                
+                <TouchableOpacity
+                  onPress={() => {
+                    setModalVisible(true);
+                  }}
+                >
+                  <MaterialCommunityIcons
+                    style={{ marginTop: "-3%" }}
+                    name="pencil"
+                    size={24}
+                    color="black"
+                  />
+                </TouchableOpacity>
               </View>
             </View>
           </View>
         )}
       />
-        <Modal
+      <Modal
         animationType="slide"
         transparent={true}
         visible={modalVisible}
@@ -121,17 +128,32 @@ function Comments() {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <View style={{flexDirection:"row",justifyContent:"space-evenly",marginVertical:"5%"}}>
-            <Text >      </Text>
-            <Text  style={{fontSize:20,color:"black"}}>Comment</Text>
-            <Text  onPress={() => setModalVisible(!modalVisible)} style={{fontSize:20,color:"black"}}>X</Text>
+            <View
+              style={styles.modal_page}
+            >
+              <Text> </Text>
+              <Text style={{ fontSize: 20, color: "black" }}>Comment</Text>
+              <Text
+                onPress={() => setModalVisible(!modalVisible)}
+                style={{ fontSize: 20, color: "black" }}
+              >
+                X
+              </Text>
             </View>
-            <View style={{height:1,width:"100%",backgroundColor:"#cccccc"}}>
-            
-            </View>
-            <View style={{height:"50%",width:"90%",backgroundColor: "#f2f2f2",marginVertical:"5%",borderRadius:10,alignSelf:"center"}}>
-
-            </View>
+            <View
+              style={{ height: 1, width: "100%", backgroundColor: "#cccccc" }}
+            ></View>
+            <View
+              style={{
+                height: "50%",
+                width: "90%",
+                backgroundColor: "#f2f2f2",
+                marginVertical: "5%",
+                borderRadius: 10,
+                alignSelf: "center",
+              }}
+            ></View>
+            <View></View>
             {/* <View style={styles.modal_top}>
               <Text style={{ flex: 0.9 }}></Text>
               <Text style={styles.date}>Start Date</Text>
@@ -142,7 +164,6 @@ function Comments() {
                 <Text style={{ fontSize: 18, fontWeight: "600" }}>Done</Text>
               </TouchableOpacity>
             </View> */}
-            
           </View>
         </View>
       </Modal>
@@ -167,22 +188,27 @@ function Comments() {
 }
 
 const styles = StyleSheet.create({
+  modal_page:{
+    flexDirection: "row",
+    justifyContent: "space-evenly",
+    marginVertical: "5%",
+  },
   container: {
     flex: 1,
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "rgba(52, 52, 52, 0.3)",
   },
   modalView: {
-    height:"40%",width:"80%",
-    backgroundColor: 'white',
+    height: "40%",
+    width: "80%",
+    backgroundColor: "white",
     borderRadius: 10,
-    
-    
-    shadowColor: '#000',
+
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 2,

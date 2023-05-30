@@ -2,7 +2,9 @@ import React from "react";
 
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import Customdrawer from "./components/Custom_Drawer";
-
+import {
+  Dimensions,
+} from "react-native";
 import Tag from "./components/Tag";
 import Tasks from "./components/Tasks";
 import Appointments from "./components/Appointments";
@@ -15,15 +17,18 @@ import Home from "./components/Home";
 import { ScreenNames } from "./constant/ScreenNames";
 import Add_appointment from "./components/Appointment/Add_appointment";
 import Recent_chats from "./components/Recent_chats";
-import { Msg } from "./components/recent_chats/Msg";
+
 import Add_task from "./components/tasks/Add_tasks";
 
 const Drawer = createDrawerNavigator();
 
+const width = Dimensions.get("window").width;
 function Drawer_screen() {
   return (
     <Drawer.Navigator
-      screenOptions={{ headerShown: false }}
+      screenOptions={{ headerShown: false , drawerStyle: {
+        width: width*0.63,
+      }, }}
       drawerContent={(props) => <Customdrawer {...props} />}
     >
       <Drawer.Screen name={ScreenNames.MAIN_SCREEN} component={Main_Screen} />
@@ -37,7 +42,7 @@ function Drawer_screen() {
       <Drawer.Screen name={ScreenNames.EDIT_PROFILE} component={Edit_profile} />
       <Drawer.Screen name={ScreenNames.ADD_APPOINTMENT} component={Add_appointment} />
       <Drawer.Screen name={ScreenNames.RECENT_CHATS} component={Recent_chats} />
-      <Drawer.Screen name={ScreenNames.MSG} component={Msg} />
+  
       <Drawer.Screen name={ScreenNames.ADD_TASKS} component={Add_task} />
     </Drawer.Navigator>
   );

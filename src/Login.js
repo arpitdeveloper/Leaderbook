@@ -20,6 +20,7 @@ import { LOGIN } from "./Services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScreenNames } from "./constant/ScreenNames";
 import { STYLES } from "./constant/styles";
+import { Colors } from "./constant/colors";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -92,7 +93,7 @@ function Login_screen() {
           placeholder="Email"
           onChangeText={(txt) => setEmail(txt)}
           value={email}
-          placeholderTextColor={"#bfbfbf"}
+          placeholderTextColor={"#cccccc"}
           maxLength={40}
           keyboardType="email-address"
         />
@@ -100,7 +101,7 @@ function Login_screen() {
           style={styles.input}
           placeholder="Password"
           onChangeText={(value2) => setPassword(value2)}
-          placeholderTextColor={"#bfbfbf"}
+          placeholderTextColor={"#cccccc"}
           secureTextEntry={true}
           value={password}
         />
@@ -254,28 +255,28 @@ const styles = StyleSheet.create({
     elevation: 20,
   },
   container: {
-    flex: 1,
+    flex: 1,backgroundColor: "#f2f2f2"
   },
   input: {
-    height: height * 0.075,
+    height: height * 0.08,
     width: width * 0.9,
     marginTop: 30,
 
     padding: 10,
     alignSelf: "center",
     backgroundColor: "white",
-    elevation: 1,
+    
     borderRadius: 6,
-    color: "#808080",
-    fontSize: 20,
+    color: "black",
+    fontSize: 19,
   },
   button: {
-    height: height * 0.085,
+    height: height * 0.095,
     width: width * 0.9,
     marginTop: 30,
     padding: 10,
     alignSelf: "center",
-    backgroundColor: "#003366",
+    backgroundColor: Colors.MAIN_COLOR,
     elevation: 1,
     borderRadius: 8,
     justifyContent: "center",
@@ -284,24 +285,24 @@ const styles = StyleSheet.create({
   login: {
     textAlign: "center",
     color: "white",
-    fontSize: 30,
-    fontWeight: "500",
-    marginTop: "5%",
+    fontSize: 24,
+    fontWeight: "normal",
+    
   },
   login1: {
     textAlign: "center",
     color: "white",
-    fontSize: 30,
-    fontWeight: "500",
+    fontSize: 24,
+    fontWeight: "normal",
   },
 
   fp_text: {
-    fontSize: 15,
-    color: "black",
+    fontSize: 12,
+    color:Colors.MAIN_COLOR,
     textAlign: "right",
-    fontWeight: "500",
+    fontWeight: "normal",
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 15,
   },
 });
 

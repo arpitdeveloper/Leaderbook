@@ -26,15 +26,14 @@ const width = Dimensions.get("window").width;
 
 export default function Main_Screen({ navigation }) {
   const [com, setcom] = useState(false);
+  const [com1, setcom1] = useState(50);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
+  const hasUnsavedChanges = Boolean(true);
 
-  const [loading, setLoading] = React.useState(true);
-  // useEffect(() => {
-  //   setModalVisible(true);
-  // }, []);
   React.useEffect(() => {
     (async () => {
+      await AsyncStorage.setItem("o", "1");
       const user = await AsyncStorage.getItem("fm");
       console.log(user);
       if (user == 1) {
@@ -42,124 +41,120 @@ export default function Main_Screen({ navigation }) {
       }
     })();
   }, []);
-  const showAlert = () =>
-    Alert.alert(
-      "Closing Appplication",
-      "Are you sure wants to exit",
-      [
-        { text: "Yes", onPress: () => navigation.navigate(ScreenNames.LOGIN) },
-        {
-          text: "",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel",
-        },
-        { text: "NO", onPress: () => console.log("OK Pressed") },
-      ],
-      { cancelable: true }
-    );
 
-  function handleBackButtonClick() {
-    setModalVisible1(true);
-    // navigation.navigate(ScreenNames.PRIORITY);
-    return true;
-  }
+  React.useEffect(
+    () =>
+      navigation.addListener("beforeRemove", (e) => {
+        if (!hasUnsavedChanges) {
+          // If we don't have unsaved changes, then we don't need to do anything
+          return;
+        }
 
-  useEffect(() => {
-    BackHandler.addEventListener("hardwareBackPress", handleBackButtonClick);
-    return () => {
-      BackHandler.removeEventListener(
-        "hardwareBackPress",
-        handleBackButtonClick
-      );
-    };
-  }, []);
+        // Prevent default behavior of leaving the screen
+
+        e.preventDefault();
+
+        setModalVisible1(true);
+      }),
+    [navigation, hasUnsavedChanges]
+  );
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={STYLES.header_box}>
+      <View
+        style={{
+          height: height * 0.11,
+          backgroundColor: Colors.MAIN_COLOR,
+          alignItems: "center",
+
+          // marginTop: 25,
+          flexDirection: "row",
+        }}
+      >
         <TouchableOpacity
           style={STYLES.back_button}
           onPress={() => navigation.toggleDrawer()}
         >
           <Entypo name="menu" size={35} color="white" />
         </TouchableOpacity>
-        <Text style={STYLES.header}>Leads</Text>
+        <Text style={STYLES.header1}>Leads</Text>
         <TouchableOpacity
-          style={STYLES.save_touch}
-          // onPress={() => navigation.toggleDrawer()}
+          style={STYLES.save_touch1}
+          // onPress={() => backPress()}
         >
-          <Ionicons name="ios-search" size={26} color="white" />
+          <Ionicons name="ios-search" size={28} color="white" />
         </TouchableOpacity>
       </View>
-      <View style={{}}>
-        <View>
-          <View style={styles.tab}>
-            <TouchableOpacity
-              style={styles.ord}
-              onPress={() => {
-                setcom("RECENT");
-              }}
-            >
-              <View style={styles.home_text}>
-                <Text style={styles.text}>RECENT</Text>
-              </View>
-            </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.add}
-              onPress={() => {
-                setcom("PRIORITY");
-              }}
-            >
-              <View style={styles.home_text}>
-                <Text style={styles.text}>PRIORITY</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.setting}
-              onPress={() => {
-                setcom("ALL");
-              }}
-            >
-              <View style={styles.home_text}>
-                <Text style={styles.text}>ALL</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View
-            style={{ flexDirection: "row", backgroundColor: Colors.MAIN_COLOR }}
+      <View>
+        <View style={styles.tab}>
+          <TouchableOpacity
+            style={styles.ord}
+            onPress={() => {
+              setcom("RECENT");
+            }}
           >
-            <View
-              style={{
-                height: 3,
-                width: width * 0.3,
-                backgroundColor:
-                  com == "RECENT" ? Colors.LINE : Colors.MAIN_COLOR,
-                marginTop: "2%",
-              }}
-            ></View>
+            <View style={styles.home_text}>
+              <Text style={styles.text}>RECENT</Text>
+            </View>
+          </TouchableOpacity>
 
-            <View
-              style={{
-                height: 3,
-                width: width * 0.3,
-                backgroundColor:
-                  com == "PRIORITY" ? Colors.LINE : Colors.MAIN_COLOR,
-                marginTop: "2%",
-                marginStart: "5%",
-              }}
-            ></View>
-            <View
-              style={{
-                height: 3,
-                width: width * 0.3,
-                backgroundColor: com == "ALL" ? Colors.LINE : Colors.MAIN_COLOR,
-                marginTop: "2%",
-                marginStart: "5%",
-              }}
-            ></View>
-          </View>
+          <TouchableOpacity
+            style={styles.add}
+            onPress={() => {
+              setcom("PRIORITY");
+            }}
+          >
+            <View style={styles.home_text}>
+              <Text style={styles.text}>PRIORITY</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.setting}
+            onPress={() => {
+              setcom("ALL");
+            }}
+          >
+            <View style={styles.home_text}>
+              <Text style={styles.text}>ALL</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{ flexDirection: "row", backgroundColor: Colors.MAIN_COLOR }}
+        >
+          <View
+            style={{
+              height: 3,
+              width: width * 0.3,
+              backgroundColor:
+                com == "RECENT" ? Colors.LINE : Colors.MAIN_COLOR,
+              marginTop: "2%",
+            }}
+          ></View>
+
+          <View
+            style={{
+              height: 3,
+              width: width * 0.3,
+              backgroundColor:
+                com == "PRIORITY" ? Colors.LINE : Colors.MAIN_COLOR,
+              marginTop: "2%",
+              marginStart: "5%",
+            }}
+          ></View>
+          <View
+            style={{
+              height: 3,
+              width: width * 0.3,
+              backgroundColor: com == "ALL" ? Colors.LINE : Colors.MAIN_COLOR,
+              marginTop: "2%",
+              marginStart: "5%",
+            }}
+          ></View>
         </View>
       </View>
+
       <View style={{ flex: 1 }}>
         {com == "RECENT" ? (
           <Recent />
@@ -183,21 +178,19 @@ export default function Main_Screen({ navigation }) {
         <View style={styles.centeredView}>
           <ImageBackground
             style={styles.modalView}
-            source={require("E:/React_native_demo/Leaderbook/assets/sms.png")}
+            source={require("../../assets/sms.png")}
           >
-            <View style={{}}>
-              <Text style={{ fontSize: 12, color: "white" }}>
-                Press and hold any lead for multi calling
-              </Text>
-              <Text
-                onPress={() => (
-                  setModalVisible(!modalVisible), AsyncStorage.removeItem("fm")
-                )}
-                style={styles.modal_txt}
-              >
-                Ok,Got It!
-              </Text>
-            </View>
+            <Text style={{ fontSize: 12, color: "white" }}>
+              Press and hold any lead for multi calling
+            </Text>
+            <Text
+              onPress={() => (
+                setModalVisible(!modalVisible), AsyncStorage.removeItem("fm")
+              )}
+              style={styles.modal_txt}
+            >
+              Ok,Got It!
+            </Text>
           </ImageBackground>
         </View>
       </Modal>
@@ -207,85 +200,74 @@ export default function Main_Screen({ navigation }) {
         visible={modalVisible1}
         avoidKeyboard={true}
         onRequestClose={() => {
-          setModalVisible(!modalVisible1);
+          setModalVisible1(!modalVisible1);
         }}
       >
-        <View
-          style={{
-            backgroundColor: "rgba(52, 52, 52, 0.7)",
-            flex: 1,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+        <TouchableOpacity
+          style={{ width: "100%", height: "100%" }}
+          onPress={() => (setModalVisible1(!modalVisible1), setcom1(0))}
         >
-          <View style={styles.modalView1}>
-            <View style={{}}>
-              <Text
-                style={{
-                  fontSize: 20,
-                  color: "#33d6ff",
-                  marginStart: "5%",
-                  marginVertical: "6%",
-                }}
-              >
-                Closing Appplication
-              </Text>
-              <View
-                style={{ backgroundColor: "#33d6ff", height: 2, width: "100%" }}
-              ></View>
-              <Text
-                style={{
-                  fontSize: 17,
-                  color: "black",
-                  marginVertical: "5%",
-                  marginStart: "6%",
-                }}
-              >
-                Are you sure wants to exit ?
-              </Text>
-              <View
-                style={{
-                  backgroundColor: "#d9d9d9",
-                  height: 1,
-                  width: "100%",
-                  marginTop: "4%",
-                }}
-              ></View>
+          <View style={styles.modalpage}>
+            <View style={styles.modalView}>
+              <Text style={styles.close_txt}>Closing Appplication</Text>
+              <View style={styles.closing_line}></View>
+              <Text style={styles.exit}>Are you sure wants to exit ?</Text>
+              <View style={styles.exit_line}></View>
               <View
                 style={{
                   flexDirection: "row",
-                  justifyContent: "space-between",
+                  justifyContent: "space-evenly",
                 }}
               >
-                <Text
+                <TouchableOpacity
                   onPress={() => setModalVisible1(!modalVisible1)}
-                  style={styles.modal_txt1}
                 >
-                  No
-                </Text>
+                  <Text style={styles.modal_txt1}>No</Text>
+                </TouchableOpacity>
+
                 <View
                   style={{
                     backgroundColor: "#d9d9d9",
                     width: 1,
-                    marginBottom: "-3%",
                   }}
                 ></View>
-                <Text
-                  onPress={() => navigation.navigate(ScreenNames.LOGIN)}
-                  style={styles.modal_txt1}
-                >
-                  Yes
-                </Text>
+                <TouchableOpacity onPress={() => BackHandler.exitApp()}>
+                  <Text style={styles.modal_txt1}>Yes</Text>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
       </Modal>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  closing_line: { backgroundColor: "#33d6ff", height: 2, width: "100%" },
+  exit_line: {
+    backgroundColor: "#d9d9d9",
+    height: 1,
+    width: "100%",
+    marginTop: "4%",
+  },
+  exit: {
+    fontSize: 17,
+    color: "black",
+    marginVertical: "5%",
+    marginStart: "6%",
+  },
+  close_txt: {
+    fontSize: 20,
+    color: "#33d6ff",
+    marginStart: "5%",
+    marginVertical: "6%",
+  },
+  modalpage: {
+    backgroundColor: "rgba(52, 52, 52, 0.6)",
+    flex: 1,
+    justifyContent: "center",
+  },
   centeredView: {
     backgroundColor: "transparent",
     marginVertical: "50%",
@@ -309,21 +291,21 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "black",
     textAlign: "center",
-    marginVertical: "4%",
+    marginVertical: "8%",
     marginHorizontal: "20%",
   },
   modalView: {
-    height: "98%",
-    width: "100%",
-    resizeMode: "contain",
-    alignContent: "center",
-    alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "white",
+    width: "90%",
+    alignSelf: "center",
+    shadowColor: "#171717",
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.6,
+    shadowRadius: 30,
+    borderRadius: 4,
   },
   modalView1: {
     backgroundColor: "white",
-
-    elevation: 10,
   },
   button: {
     borderRadius: 20,
@@ -346,22 +328,24 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   text: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: "500",
     color: "white",
-    textAlign: "center",
+    marginBottom: "2%",
+    marginTop: "4%",
+    // textAlign: "center",
   },
 
   tab: { flexDirection: "row", backgroundColor: Colors.MAIN_COLOR },
   ord: {
     backgroundColor: Colors.MAIN_COLOR,
 
-    flex: 0.25,
-    marginStart: "5%",
+    flex: 0.48,
+    marginStart: "7%",
   },
   add: {
     backgroundColor: Colors.MAIN_COLOR,
-    flex: 0.4,
+    flex: 0.55,
   },
   setting: {
     backgroundColor: Colors.MAIN_COLOR,

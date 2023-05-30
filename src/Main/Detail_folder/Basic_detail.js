@@ -7,9 +7,12 @@ import {
   TouchableOpacity,
   FlatList,
   SafeAreaView,
-  ActivityIndicator,
   Modal,
   Pressable,
+  TextInput,
+  KeyboardAvoidingView,
+  Image,
+  SectionList,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -17,40 +20,31 @@ import * as Linking from "expo-linking";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 import {
-  Ionicons,
-  Octicons,
   Entypo,
   FontAwesome,
   AntDesign,
   MaterialCommunityIcons,
   Zocial,
   FontAwesome5,
-  Feather,
 } from "@expo/vector-icons";
 import { get_leads_basic_detail } from "../../Services";
 import Loader from "../../constant/Loader";
 import { Colors } from "../../constant/colors";
 import { ScreenNames } from "../../constant/ScreenNames";
-const dt = [
-  { label: "Canada", value: "1" },
-  { label: "Canada", value: "1" },
-  { label: "Canada", value: "1" },
-  { label: "Canada", value: "1" },
-  { label: "Canada", value: "1" },
-  { label: "Canada", value: "1" },
-  { label: "Canada", value: "1" },
-  { label: "Canada", value: "1" },
-  { label: "Canada", value: "1" },
-];
 
 function Basic_detail({ data }) {
-  const Id = data.id;
+  const User_data = data;
   const navigation = useNavigation();
-  // console.log(Id)
+
   const [DATA, setDATA] = useState([]);
+  const [DATA1, setDATA1] = useState([]);
+  const [DATA2, setDATA2] = useState([]);
   const [tag, settag] = useState([]);
   const [loading, setLoading] = React.useState(true);
   const [modalVisible, setModalVisible] = useState(false);
+  const [modalVisible1, setModalVisible1] = useState(false);
+  const [d, setd] = useState(false);
+  // console.log(User_data)
 
   useEffect(() => {
     (async () => {
@@ -61,7 +55,7 @@ function Basic_detail({ data }) {
       const data = {
         email: d.email,
         password: d.password,
-        id: Id,
+        id: User_data.id,
       };
       get_leads_basic_detail(data)
         .then((response) => response.json())
@@ -70,8 +64,28 @@ function Basic_detail({ data }) {
 
           k.push(result?.data?.lead_detail);
           var t = result?.data?.lead_detail?.Lead?.lead_tags;
+          var a = result?.data?.tags?.user_tags;
+          var b = result?.data?.tags?.system_tags;
+          var a = [];
+          result?.data?.tags?.user_tags.map((i) => {
+            a.push({
+              ...i,
+
+              isChecked: false,
+            });
+          });
+          var b = [];
+          result?.data?.tags?.system_tags.map((i) => {
+            b.push({
+              ...i,
+
+              isChecked: false,
+            });
+          });
           // console.log(result?.data?.leads)
           setDATA(k);
+          setDATA1(a);
+          setDATA2(b);
           setLoading(false);
           settag(t);
 
@@ -80,7 +94,35 @@ function Basic_detail({ data }) {
         .catch((error) => console.log("error", error));
     })();
   }, []);
-  // console.log(tag);
+
+  const handleChange = (value) => {
+    let temp = DATA1.map((product) => {
+      if (value === product.value) {
+        return { ...product, isChecked: !product.isChecked };
+      }
+      return product;
+    });
+    setDATA1(temp);
+  };
+
+  const handleChange1 = (value) => {
+    let temp = DATA2.map((product) => {
+      if (value === product.value) {
+        return { ...product, isChecked: !product.isChecked };
+      }
+      return product;
+    });
+    setDATA2(temp);
+  };
+
+  let selected = DATA1.filter((product) => product.isChecked);
+  let selected1 = DATA2.filter((product) => product.isChecked);
+  selected.push(...selected1);
+
+  // console.log(selected)
+
+  // console.log(DATA2);
+
   return (
     <SafeAreaView style={styles.container}>
       {loading ? (
@@ -92,7 +134,7 @@ function Basic_detail({ data }) {
             // keyExtractor={(item) => item.id}
             renderItem={({ item, index }) => (
               <>
-                <View style={{ padding: "5%" }}>
+                <View style={styles.pad}>
                   <Text style={styles.number}>{item.Lead.email.label}</Text>
 
                   <View style={styles.row}>
@@ -111,8 +153,15 @@ function Basic_detail({ data }) {
                   </View>
                 </View>
                 <View style={styles.line}></View>
-                <View style={{ padding: "5%", flexDirection: "row" }}>
-                  <View style={{ flex: 1 }}>
+                <View
+                  style={{
+                    paddingRight: "2%",
+                    flexDirection: "row",
+                    paddingVertical: "2%",
+                    paddingLeft: "5%",
+                  }}
+                >
+                  <View style={{ flex: 1.4 }}>
                     <Text style={styles.number}>{item.Lead.phone.label}</Text>
                     <Text style={styles.name}>{item.Lead.phone.value}</Text>
                   </View>
@@ -124,7 +173,7 @@ function Basic_detail({ data }) {
                       color={Colors.MAIN_COLOR}
                     />
                     <Text
-                      style={{ marginHorizontal: 10 }}
+                      style={{ marginLeft: 10 }}
                       onPress={() => {
                         Linking.openURL(`tel:${item.Lead.phone.value}`);
                       }}
@@ -135,31 +184,39 @@ function Basic_detail({ data }) {
                         color={Colors.MAIN_COLOR}
                       />
                     </Text>
-                    <Text
+
+                    <TouchableOpacity
                       onPress={() => {
-                        Linking.openURL(`sms:${item.Lead.phone.value}`);
+                        Linking.openURL(`sms:${item.Lead.phone}`);
                       }}
                     >
-                      <FontAwesome5
-                        name="sms"
-                        size={28}
-                        color={Colors.MAIN_COLOR}
-                      />
-                    </Text>
+                      <Image
+                        style={{
+                          height: height * 0.032,
+                          width: width * 0.15,
+                          resizeMode: "contain",
+                        }}
+                        source={require("../../../assets/sms.jpg")}
+                      ></Image>
+                    </TouchableOpacity>
                   </View>
                 </View>
                 <View style={styles.line}></View>
-                <View style={{ padding: "5%" }}>
+                <View style={styles.pad}>
                   <Text style={styles.number}>{item.Lead.comments.label}</Text>
-                  <Text style={styles.name}>{item.Lead.comments.value}</Text>
+                  <Text style={styles.name}>
+                    {item.Lead.comments.value
+                      ? item.Lead.comments.value
+                      : "No Comment"}
+                  </Text>
                 </View>
                 <View style={styles.line}></View>
-                <View style={{ padding: "5%" }}>
+                <View style={styles.pad}>
                   <Text style={styles.number}>{item.Lead.user_id.label}</Text>
                   <Text style={styles.name}>{item.Lead.user_id.value}</Text>
                 </View>
                 <View style={styles.line}></View>
-                <View style={{ padding: "5%" }}>
+                <View style={styles.pad}>
                   <Text style={styles.number}>
                     {item.Lead.lead_type_id.label}
                   </Text>
@@ -168,12 +225,12 @@ function Basic_detail({ data }) {
                   </Text>
                 </View>
                 <View style={styles.line}></View>
-                <View style={{ padding: "5%" }}>
+                <View style={styles.pad}>
                   <Text style={styles.number}>{item.Lead.site_id.label}</Text>
                   <Text style={styles.name}>{item.Lead.site_id.value}</Text>
                 </View>
                 <View style={styles.line}></View>
-                <View style={{ padding: "5%" }}>
+                <View style={styles.pad}>
                   <Text style={styles.number}>
                     {item.Lead.is_grl_crea_lead.label}
                   </Text>
@@ -183,21 +240,19 @@ function Basic_detail({ data }) {
                 </View>
                 <View style={styles.line}></View>
 
-                <View style={{ padding: "5%" }}>
+                <View style={styles.pad}>
                   <Text style={styles.number}>{item.Lead.month.label}</Text>
                   <Text style={styles.name}>{item.Lead.month.value}</Text>
                 </View>
                 <View style={styles.line}></View>
-                <View
-                  style={{
-                    paddingHorizontal: "5%",
-                    paddingTop: "2%",
-                    paddingBottom: "4%",
-                  }}
-                >
+                <View style={styles.pad}>
                   <View style={styles.row}>
                     <Text style={styles.number}>Lead Tags</Text>
-                    <View style={{ flexDirection: "row", marginTop: "2%" }}>
+
+                    <TouchableOpacity
+                      onPress={() => setModalVisible1(true)}
+                      style={{ flexDirection: "row" }}
+                    >
                       <AntDesign
                         name="plus"
                         size={17}
@@ -205,10 +260,10 @@ function Basic_detail({ data }) {
                       />
                       <FontAwesome
                         name="tags"
-                        size={17}
+                        size={20}
                         color={Colors.MAIN_COLOR}
                       />
-                    </View>
+                    </TouchableOpacity>
                   </View>
                   <FlatList
                     style={{ marginTop: "2%" }}
@@ -226,7 +281,7 @@ function Basic_detail({ data }) {
                   />
                 </View>
                 <View style={styles.line}></View>
-                <View style={{ padding: "5%" }}>
+                <View style={styles.pad}>
                   <Text style={styles.number}>
                     {item.Lead.new_grouped_date.label}
                   </Text>
@@ -235,98 +290,335 @@ function Basic_detail({ data }) {
                   </Text>
                 </View>
                 <View style={styles.line}></View>
-                <View style={{ padding: "5%" }}>
+                <View style={styles.pad}>
                   <Text style={styles.number}>
                     {item.Lead.company_name.label}
                   </Text>
                   <Text style={styles.name}>
-                    {item.Lead.company_name.value}
+                    {item.Lead.company_name.value
+                      ? item.Lead.company_name.value
+                      : "No Company"}
                   </Text>
                 </View>
                 <View style={styles.line}></View>
-                <View style={{ padding: "5%" }}>
-                  <Text style={styles.number}>{item.Lead.city.label}</Text>
-                  <Text style={styles.name}>{item.Lead.city.value}</Text>
+                <View style={styles.pad}>
+                  <Text style={styles.number}>{item.Lead.address.label}</Text>
+                  <Text style={styles.name}>
+                    {item.Lead.address.value
+                      ? item.Lead.address.value
+                      : "No Address"}
+                  </Text>
                 </View>
                 <View style={styles.line}></View>
-                <View style={{ padding: "5%" }}>
-                  <Text style={styles.number}>{item.Lead.state.label}</Text>
-                  <Text style={styles.name}>{item.Lead.state.value}</Text>
+                <View style={styles.pad}>
+                  <Text style={styles.number}>{item.Lead.city.label}</Text>
+                  <Text style={styles.name}>
+                    {item.Lead.city.value ? item.Lead.city.value : "No City"}
+                  </Text>
+                </View>
+                <View style={styles.line}></View>
+                <View style={styles.pad}>
+                  <Text style={styles.number}>State/Province</Text>
+                  <Text style={styles.name}>
+                    {item.Lead.state.value ? item.Lead.state.value : "No State"}
+                  </Text>
                 </View>
                 <View style={styles.line}></View>
               </>
             )}
           />
           <View style={styles.centeredView}>
+            {d ? (
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                  Alert.alert("Modal has been closed.");
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <View style={styles.modal_page}>
+                  <View style={styles.modalView1}>
+                    <View style={styles.pin2}>
+                      <Text style={styles.modalText1}>Pin Note</Text>
+                      <Pressable
+                        onPress={() => (
+                          setModalVisible(!modalVisible), setd(false)
+                        )}
+                      >
+                        <Entypo name="cross" size={30} color="black" />
+                      </Pressable>
+                    </View>
+                    <View style={styles.line}></View>
+                    <KeyboardAvoidingView enabled>
+                      <View style={styles.input}>
+                        <TextInput
+                          // onChangeText={onChangeNumber}
+                          // value={number}
+                          placeholder=""
+                        />
+                      </View>
+                    </KeyboardAvoidingView>
+                    <View style={styles.modal_btn_box}>
+                      <TouchableOpacity
+                        onPress={() => {}}
+                        style={styles.modal_btn_txt1}
+                      >
+                        <Text style={styles.modal_btn_txt}>Save</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setd(!d);
+                        }}
+                        style={styles.modal_btn}
+                      >
+                        <Text style={styles.modal_btn_txt}>Close</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </Modal>
+            ) : (
+              <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                  Alert.alert("Modal has been closed.");
+                  setModalVisible(!modalVisible);
+                }}
+              >
+                <View style={styles.modal_page}>
+                  <View style={styles.modalView}>
+                    <View style={styles.pin}>
+                      <Text style={styles.modalText}>Pin Note</Text>
+                      <Pressable
+                        style={{}}
+                        onPress={() => (
+                          setModalVisible(!modalVisible), setd(false)
+                        )}
+                      >
+                        <Entypo name="cross" size={30} color="black" />
+                      </Pressable>
+                    </View>
+                    <Text
+                      style={{
+                        color: "black",
+                        marginLeft: "4%",
+                        marginTop: "12%",
+                      }}
+                    >
+                      No note added yet.
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => setd(!d)}
+                      style={styles.add_note}
+                    >
+                      <Text style={{ color: "white" }}>Add Note</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
+            )}
+          </View>
+          <View style={styles.centeredView}>
             <Modal
               animationType="slide"
               transparent={true}
-              visible={modalVisible}
+              visible={modalVisible1}
               onRequestClose={() => {
                 Alert.alert("Modal has been closed.");
-                setModalVisible(!modalVisible);
+                setModalVisible1(!modalVisible1);
               }}
             >
-              <View style={{}}>
-                <View style={styles.modalView}>
-                  <View style={{flexDirection:"row",justifyContent:"space-between",margin:"7%"}}>
-                  <Text style={styles.modalText}>Pin Note</Text>
-                  <Pressable
-                    style={[styles.button, styles.buttonClose]}
-                    onPress={() => setModalVisible(!modalVisible)}
-                  >
-                    <Text style={styles.modalText}>X</Text>
-                  </Pressable>
-                  </View>
+              <View
+                style={{
+                  flex: 1,
+                  backgroundColor: "rgba(52, 52, 52, 0.7)",
+                  marginTop: "8%",
+                }}
+              >
+                <View style={styles.modalView2}>
                   <View
-                  style={{height:1,width:"100%",backgroundColor:"#666666"}}
-                  >
+                    style={{
+                      flexDirection: "row",
 
-                  </View>
-                  <TouchableOpacity
-                  style={{height:"12%",width:"45%",backgroundColor:"blue",alignSelf:"center",marginTop:"70%",borderRadius:25,justifyContent:"center",alignItems:"center"}}
+                      margin: "4%",
+                      alignItems: "center",
+                    }}
                   >
-                  <Text style={{color:"white"}}>Add Note</Text>
+                    <Text style={styles.modalText2}>Add Tags To Leads</Text>
+
+                    <Pressable
+                      style={{}}
+                      onPress={() => setModalVisible1(!modalVisible1)}
+                    >
+                      <Text style={styles.modalText3}>X</Text>
+                    </Pressable>
+                  </View>
+                  <View style={styles.line}></View>
+                  <KeyboardAvoidingView enabled>
+                    <View style={styles.input2}>
+                      <TextInput
+                        // onChangeText={onChangeNumber}
+                        // value={number}
+                        placeholder="Search Tags"
+                      />
+                    </View>
+                  </KeyboardAvoidingView>
+                  <View style={styles.line}></View>
+
+                  <SectionList
+                    renderSectionHeader={({ section: { title } }) => (
+                      <Text
+                        style={{
+                          fontWeight: "400",
+                          fontSize: 20,
+                          margin: "3%",
+                        }}
+                      >
+                        {title}
+                      </Text>
+                    )}
+                    sections={[
+                      {
+                        title: "User Tags",
+                        data: DATA1,
+                        renderItem: ({
+                          item,
+                          index,
+                          section: { title, data },
+                        }) => (
+                          <TouchableOpacity
+                            style={{
+                              paddingHorizontal: "6%",
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }}
+                            onPress={() => {}}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontWeight: "normal",
+                                marginBottom: "5%",
+                              }}
+                            >
+                              {item.label}
+                            </Text>
+                            <Pressable onPress={() => handleChange(item.value)}>
+                              <MaterialCommunityIcons
+                                name={
+                                  item.isChecked
+                                    ? "checkbox-marked"
+                                    : "checkbox-blank-outline"
+                                }
+                                size={24}
+                                color="#000"
+                              />
+                            </Pressable>
+                          </TouchableOpacity>
+                        ),
+                      },
+                      {
+                        title: "System Tags",
+                        data: DATA2,
+                        renderItem: ({
+                          item,
+                          index,
+                          section: { title, data },
+                        }) => (
+                          <View
+                            style={{
+                              paddingHorizontal: "6%",
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }}
+                          >
+                            <Text
+                              style={{
+                                fontSize: 16,
+                                fontWeight: "normal",
+                                marginBottom: "5%",
+                              }}
+                            >
+                              {item.label}
+                            </Text>
+                            <Pressable
+                              onPress={() => handleChange1(item.value)}
+                            >
+                              <MaterialCommunityIcons
+                                name={
+                                  item.isChecked
+                                    ? "checkbox-marked"
+                                    : "checkbox-blank-outline"
+                                }
+                                size={24}
+                                color="#000"
+                              />
+                            </Pressable>
+                          </View>
+                        ),
+                      },
+                    ]}
+                    // keyExtractor={(item, index) => item.name + index}
+                  />
+
+                  <TouchableOpacity
+                    style={{
+                      height: height * 0.045,
+
+                      backgroundColor: Colors.float_btn,
+                      alignSelf: "center",
+                      marginTop: "5%",
+                      borderRadius: 25,
+                      justifyContent: "center",
+                      alignItems: "center",
+                      marginBottom: 10,
+                      padding: 3,
+                    }}
+                  >
+                    <Text style={{ color: "white" }}>Save Lead To Tag</Text>
                   </TouchableOpacity>
-                 
-                  
                 </View>
               </View>
             </Modal>
-            <Pressable
-              style={[styles.button, styles.buttonOpen]}
-              onPress={() => setModalVisible(true)}
-            >
-              <Text style={styles.textStyle}>Show Modal</Text>
-            </Pressable>
           </View>
           <TouchableOpacity
             onPress={() => setModalVisible(true)}
             style={styles.floating_btn}
           >
-            <MaterialCommunityIcons
-              style={{}}
-              name="note-plus"
-              size={60}
-              color="orange"
-            />
+            
+            <Image
+              style={{
+                height: height * 0.1,
+                width: width * 0.2,
+                resizeMode: "contain",
+              }}
+              source={require("../../../assets/note1.jpg")}
+            ></Image>
           </TouchableOpacity>
           <View
             style={{
-              height: height * 0.08,
-              backgroundColor: "#003366",
-              flexDirection: "row",
-              alignItems: "center",
+              width: "100%",
+              height: height * 0.065,
+              backgroundColor: Colors.MAIN_COLOR,
               justifyContent: "center",
+              alignItems: "center",
+              position: "absolute", 
+              bottom: 0,
             }}
           >
             <Text
               onPress={() => {
                 navigation.navigate(ScreenNames.LEAD_ACTIVITY, {
-                  name: data.name,
-                  logo1: data.logo1,
-                  logo2: data.logo2,
-                  id: Id,
+                  name: User_data.name,
+                  logo1: User_data.logo,
+
+                  id: User_data.id,
                 });
               }}
               style={{ color: "white", fontSize: 20 }}
@@ -341,37 +633,157 @@ function Basic_detail({ data }) {
 }
 
 const styles = StyleSheet.create({
+  pin: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    margin: "4%",
+  },
+  pin2: {
+    flexDirection: "row",
+
+    margin: "4%",
+    alignSelf: "flex-end",
+    justifyContent: "center",
+  },
+  modal_btn_box: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginHorizontal: "10%",
+    marginVertical: "4%",
+  },
+  modal_btn_txt: { color: "white", fontSize: 17 },
+  modal_btn_txt1: {
+    height: height * 0.05,
+    width: "45%",
+    backgroundColor: "#347ab6",
+    alignSelf: "center",
+
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modal_page: {
+    flex: 1,
+    backgroundColor: "rgba(52, 52, 52, 0.7)",
+    marginTop: "10%",
+  },
+  modal_btn: {
+    height: height * 0.05,
+    width: "45%",
+    backgroundColor: "#d8524f",
+    alignSelf: "center",
+
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  add_note: {
+    height: height * 0.05,
+    width: width * 0.3,
+    backgroundColor: "#5bbfdf",
+    alignSelf: "center",
+    marginTop: "52%",
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+  },
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 5,
+    marginVertical: 4,
+  },
+  header: {
+    fontSize: 32,
+    backgroundColor: "#fff",
+  },
+  title: {
+    fontSize: 24,
+  },
+  pad: { paddingVertical: "3%", paddingHorizontal: "5%" },
+  input: {
+    height: height * 0.25,
+    margin: 12,
+
+    padding: 10,
+    backgroundColor: "#f2f2f2",
+    borderRadius: 8,
+  },
+  input2: {
+    height: height * 0.05,
+    margin: "2%",
+
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 20,
+  },
   modalText: {
-    fontSize:25,fontWeight:"bold"
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  modalText3: {
+    fontSize: 18,
+    fontWeight: "normal",
+    color: "#666666",
+  },
+  modalText2: {
+    fontSize: 18,
+    fontWeight: "normal",
+    flex: 0.95,
+    marginStart: "25%",
+    color: "#666666",
+  },
+  modalText1: {
+    fontSize: 18,
+    marginHorizontal: "25%",
   },
   centeredView: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     backgroundColor: "rgba(52, 52, 52, 0.3)",
   },
   modalView: {
-    height:"60%",width:"80%",
-    backgroundColor: '#ffc0cb',
+    // height: height * 0.44,
+    width: "90%",
+    backgroundColor: "#fcf5bf",
     borderRadius: 10,
-    
-    
-    
-    elevation: 5,alignSelf:"center",marginTop:"50%"
+
+    elevation: 5,
+    alignSelf: "center",
+  },
+  modalView1: {
+    // height: height * 0.44,
+    width: "90%",
+    backgroundColor: "white",
+    borderRadius: 10,
+
+    elevation: 20,
+    alignSelf: "center",
+  },
+  modalView2: {
+    // height: height*0.55,
+    width: "95%",
+    backgroundColor: "white",
+    borderRadius: 6,
+
+    elevation: 20,
+    alignSelf: "center",
+    height: "93%",
   },
   floating_btn: {
     alignItems: "center",
     justifyContent: "center",
 
     position: "absolute",
-    bottom: "12%",
-    right: "5%",
+    bottom: "8%",
+    right: "1%",
   },
   tag: { fontSize: 18, marginLeft: 5, color: "white", fontWeight: "300" },
   box: {
     flexDirection: "row",
     height: height * 0.04,
-    width: width * 0.18,
+
     backgroundColor: "grey",
     alignItems: "center",
     justifyContent: "center",
@@ -386,32 +798,25 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   name: {
-    fontSize: 17,
+    fontSize: 15,
 
     color: "#808080",
 
-    marginTop: "3%",
+    marginTop: "2%",
     fontWeight: "300",
   },
   number: {
-    fontSize: 17,
+    fontSize: 15,
 
     fontWeight: "400",
-    color: "#737373",
+    color: Colors.MAIN_COLOR,
   },
 
   line: {
     backgroundColor: "#cccccc",
-    height: 0.5,
+    height: 1,
 
     width: "100%",
-  },
-  line2: {
-    backgroundColor: "#cccccc",
-    height: 1,
-    marginVertical: "4%",
-    width: "95%",
-    marginStart: "5%",
   },
 
   container: { flex: 1, backgroundColor: "white" },

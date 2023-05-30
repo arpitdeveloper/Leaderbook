@@ -106,7 +106,7 @@ function Recent_chats() {
         renderItem={({ item, index }) => (
           <View>
             <TouchableOpacity
-              // onPress={() => navigation.navigate(ScreenNames.MSG)}
+              
             >
               <View
                 style={{

@@ -26,5 +26,7 @@ RELATED:"RELATED",
 PROFILE:"PROFILE",
 LEAD_ACTIVITY:"LEAD_ACTIVITY",
 EDIT_LEAD_DETAIL:"EDIT_LEAD_DETAIL",
-Comments:"Comments"
+Comments:"Comments",
+Page:"Page",
+NPage:"NPage",TPage:"TPage",APage:"APage"
 }

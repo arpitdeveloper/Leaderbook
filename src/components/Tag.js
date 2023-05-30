@@ -14,6 +14,7 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import User_tag from "./taglist/User_tag";
 import System_tag from "./taglist/System_tag";
 import { STYLES } from "../constant/styles";
+import { Colors } from "../constant/colors";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -32,67 +33,44 @@ function Tag() {
         </TouchableOpacity>
         <Text style={STYLES.bar_header}>Tags</Text>
       </View>
-      <View style={{}}>
-        <View>
+      
           <View style={styles.tab}>
             <TouchableOpacity
               style={styles.ord}
               onPress={() => {
-                setcom("MY ORDERS");
+                setcom("User_tag");
               }}
             >
-              <View style={styles.home_text}>
+             
                 <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "600",
-                    color: "white",
-                    textAlign: "center",
-                  }}
+                  style={styles.home_text}
                 >
                   USER TAGS
                 </Text>
-              </View>
+             
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={styles.add}
+              style={styles.ord}
               onPress={() => {
-                setcom("MY ADDRESSES");
+                setcom("System_tag");
               }}
             >
-              <View style={styles.home_text}>
+              
                 <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "600",
-                    color: "white",
-                    textAlign: "center",
-                  }}
+                  style={styles.home_text}
                 >
                   SYSTEM TAGS
                 </Text>
-              </View>
-              {/* <View
-                  style={{
-                    height: 2,
-                    width: 100,
-                    backgroundColor: com == "MY ADDRESSES" ? "#ffcc00" : "#003366",
-                    marginTop: "10%",
-                  }}
-                ></View> */}
+            
+              
             </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.setting}
-              onPress={() => {
-                setcom("MY ADDRESSES");
-              }}
-            ></TouchableOpacity>
+            
           </View>
           <View
             style={{
               flexDirection: "row",
-              backgroundColor: "#003366",
+              
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -101,8 +79,8 @@ function Tag() {
               style={{
                 height: 3,
                 width: width * 0.5,
-                backgroundColor: com == "MY ORDERS" ? "#ffcc00" : "#003366",
-                marginTop: "2%",
+                backgroundColor: com == "User_tag" ? "#ffcc00" : "#003366",
+                
               }}
             ></View>
 
@@ -110,20 +88,19 @@ function Tag() {
               style={{
                 height: 3,
                 width: width * 0.5,
-                backgroundColor: com == "MY ADDRESSES" ? "#ffcc00" : "#003366",
-                marginTop: "2%",
+                backgroundColor: com == "System_tag" ? "#ffcc00" : "#003366",
+                
               }}
             ></View>
           </View>
-        </View>
-      </View>
+       
       <View style={{ flex: 1 }}>
-        {com == "MY ORDERS" ? (
+        {com == "User_tag" ? (
           <User_tag />
-        ) : com == "MY ADDRESSES" ? (
+        ) : com == "System_tag" ? (
           <System_tag />
         ) : (
-          setcom("MY ORDERS")
+          setcom("User_tag")
         )}
       </View>
     </SafeAreaView>
@@ -134,30 +111,31 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  home_text:{
+    fontSize: 17,
+    fontWeight: "600",
+    color: "white",
+    textAlign: "center",paddingVertical:"3%"
+  },
 
   tab: {
     flexDirection: "row",
-    backgroundColor: "#003366",
+    backgroundColor: Colors.MAIN_COLOR,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "space-between",paddingHorizontal:"10%"
   },
   ord: {
-    backgroundColor: "#003366",
+    backgroundColor: Colors.MAIN_COLOR,
     marginTop: "0%",
-    marginStart: "5%",
-    flex: 0.5,
+    // marginStart: "0%",
+    // flex: 0.5,
   },
   add: {
-    backgroundColor: "#003366",
+    backgroundColor: Colors.MAIN_COLOR,
     marginTop: "0%",
-    flex: 0.55,
+    
   },
-  setting: {
-    backgroundColor: "#003366",
-    marginTop: "5%",
-
-    marginBottom: 0,
-  },
+  
 });
 
 export default Tag;

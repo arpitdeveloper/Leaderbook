@@ -47,9 +47,9 @@ function Customdrawer(props) {
   }, []);
   // console.log(company)
   return (
-    <DrawerContentScrollView style={{}} {...props}>
+    <DrawerContentScrollView style={{marginTop:"-1.5%",backgroundColor:"#f5f5f5",}} {...props}>
       <View style={styles.up}>
-        <View style={{ marginTop: "8%", marginStart: "8%" }}>
+        <View style={{ marginTop: "8%", marginStart: "6%" }}>
           <View style={styles.circle}>
             <Text style={styles.circle_text}>
               {First_name[0]}
@@ -63,12 +63,14 @@ function Customdrawer(props) {
           <Text style={styles.name_text2}>{company}</Text>
         </View>
       </View>
+      
       <TouchableOpacity
         onPress={() => navigation.navigate(ScreenNames.HOME)}
         style={styles.gap}
       >
         <View style={styles.icon}>
-          <Feather name="home" size={35} color={Colors.ICON} />
+        
+        <AntDesign name="home" size={26} color={Colors.ICON} />
           <Text style={STYLES.ICON_TEXT}>HOME</Text>
         </View>
       </TouchableOpacity>
@@ -78,7 +80,7 @@ function Customdrawer(props) {
         style={styles.gap}
       >
         <View style={styles.icon}>
-          <SimpleLineIcons name="people" size={35} color={Colors.ICON} />
+          <SimpleLineIcons name="people" size={26} color={Colors.ICON} />
           <Text style={STYLES.ICON_TEXT}>LEADS</Text>
         </View>
       </TouchableOpacity>
@@ -88,7 +90,7 @@ function Customdrawer(props) {
         style={styles.gap}
       >
         <View style={styles.icon}>
-          <FontAwesome5 name="tags" size={28} color={Colors.ICON} />
+          <FontAwesome5 name="tags" size={20} color={Colors.ICON} />
           <Text style={STYLES.ICON_TEXT}>TAG SEARCH</Text>
         </View>
       </TouchableOpacity>
@@ -98,7 +100,7 @@ function Customdrawer(props) {
         style={styles.gap}
       >
         <View style={styles.icon}>
-          <Feather name="shopping-bag" size={35} color={Colors.ICON} />
+          <Feather name="shopping-bag" size={26} color={Colors.ICON} />
           <Text style={STYLES.ICON_TEXT}>TASKS</Text>
         </View>
       </TouchableOpacity>
@@ -108,7 +110,7 @@ function Customdrawer(props) {
         style={styles.gap}
       >
         <View style={styles.icon}>
-          <Fontisto name="date" size={35} color={Colors.ICON} />
+          <Fontisto name="date" size={26} color={Colors.ICON} />
           <Text style={STYLES.ICON_TEXT}>APPOINTMENTS</Text>
         </View>
       </TouchableOpacity>
@@ -120,7 +122,7 @@ function Customdrawer(props) {
         <View style={styles.icon}>
           <MaterialCommunityIcons
             name="phone-classic"
-            size={35}
+            size={26}
             color={Colors.ICON}
           />
 
@@ -133,51 +135,53 @@ function Customdrawer(props) {
         style={styles.gap}
       >
         <View style={styles.icon}>
-          <AntDesign name="poweroff" size={35} color={Colors.ICON} />
+        <AntDesign name="wechat" size={26} color={Colors.ICON} />
+          
           <Text style={STYLES.ICON_TEXT}>RECENT CHATS</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => {}} style={styles.gap}>
         <View style={styles.icon}>
-          <AntDesign name="poweroff" size={35} color={Colors.ICON} />
+          <AntDesign name="poweroff" size={26} color={Colors.ICON} />
           <Text style={STYLES.ICON_TEXT}>LOG OUT</Text>
         </View>
       </TouchableOpacity>
+     
     </DrawerContentScrollView>
   );
 }
 const styles = StyleSheet.create({
   
-  gap: { marginVertical: "10%" },
+  gap: { marginVertical: "6.5%" },
   circle: {
-    height: height * 0.11,
-    width: width * 0.23,
+    height: height * 0.09,
+    width: width * 0.185,
     backgroundColor: "white",
     borderRadius: 50,
     alignItems: "center",
     justifyContent: "center",elevation:30,
   },
   circle_text: {
-    fontSize: 50,
+    fontSize: 35,
     fontWeight: "500",
-    color: "#bfbfbf",
+    color: "#a9a9a9",
   },
   name_text: {
-    fontSize: 23,
+    fontSize: 18,
     fontWeight: "500",
     color: "white",
-    marginTop: "5%",
+    marginTop: "3%",
   },
   name_text2: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "500",
     color: "white",
     width: width * 0.5,
   },
   up: {
-    height: height * 0.28,
-    backgroundColor: "#666699",
+    // height: height * 0.22,
+    backgroundColor: "#506584",
   },
 
   icon: {

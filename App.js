@@ -18,6 +18,14 @@ import Related from "./src/Main/Detail_folder/Related";
 import Lead_activity from "./src/Main/Detail_folder/Lead_activity";
 import Edit_lead_detail from "./src/Main/Detail_folder/Edit_lead_detail";
 import Comments from "./src/Main/Detail_folder/Comments";
+import Appi from "./src/Services/Modal";
+import Page from "./src/Main/Detail_folder/Related_page/Page";
+import tpage from "./src/Main/Detail_folder/Related_page/Tpage";
+import Npage from "./src/Main/Detail_folder/Related_page/Npage";
+import Apage from "./src/Main/Detail_folder/Related_page/Apage";
+
+import ChatScreen from "./src/components/recent_chats/Chat";
+import Demo from "./src/components/Demo";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -41,6 +49,13 @@ export default function App() {
         <Stack.Screen name={ScreenNames.LEAD_ACTIVITY} component={Lead_activity} />
         <Stack.Screen name={ScreenNames.EDIT_LEAD_DETAIL} component={Edit_lead_detail} />
         <Stack.Screen name={ScreenNames.Comments} component={Comments} />
+        <Stack.Screen name={ScreenNames.Page} component={Page} />
+        <Stack.Screen name={ScreenNames.TPage} component={tpage} />
+        <Stack.Screen name={ScreenNames.NPage} component={Npage} />
+        <Stack.Screen name={ScreenNames.APage} component={Apage} />
+        <Stack.Screen name={"chat"} component={ChatScreen}  />
+        <Stack.Screen name={"demo"} component={Demo}  />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,31 +1,37 @@
-import React from 'react';
-
-import { View, StyleSheet, Modal, TouchableWithoutFeedback } from 'react-native';
-
-export const MyModal = ({ children, visible, onRequestClose, onPressOverlay, }) => {
+import React, { useEffect, useRef } from 'react';
+import { Animated,Easing } from 'react-native';
+const Appi = () => {
+  const translation = useRef(
+    new Animated.Value(0)
+  ).current;
+  
+  useEffect(() => {
+    Animated.timing(translation, {
+      toValue: 100,
+      delay: 0,
+      easing: Easing.bounce,
+      useNativeDriver: true,
+    }).start();
+  }, []);
+  
   return (
-     <Modal
-      visible={visible}
-      transparent
-      animationType='none'
-      onRequestClose={onRequestClose}
-     >
-       <TouchableWithoutFeedback onPress={onPressOverlay}>
+    <Animated.View
+      style={{
+        borderWidth: 1,
+        borderColor: "rgba(0,0,0,0.2)",
+        alignItems: "center",
+        justifyContent: "center",
+        width: 60,
+        position: "absolute",
         
-       </TouchableWithoutFeedback>
-       <View style={styles.container}>
-         {children}
-       </View>
-    </Modal>
+        right: "8%",
+        height: 60,
+        backgroundColor: "orange",
+        borderRadius: 30,
+        transform: [{ translateY: translation }],
+      }}
+    />
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    height: '100%',
-    width: '100%',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default Appi;

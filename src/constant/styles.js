@@ -8,24 +8,38 @@ export const STYLES = {
   back_button: {
     color: "white",
     fontWeight: "bold",
-    fontSize: 20,
-    marginTop: "7%",
+    
+    // marginTop: "8%",
     textAlign: "center",
-    flex: 0.2,
-    marginStart: "6%",
+    flex: 0.23,
+    marginStart: "4%",
   },
 
   header: {
     color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: "7%",
+    fontWeight: "normal",
+    fontSize: 19,
+    // marginTop: "7%",
     textAlign: "center",
-    flex: 0.5,
+    flex: 0.9,
+  },
+  header1: {
+    color: "white",
+    fontWeight: "500",
+    fontSize: 22,
+    // marginTop: "7%",
+    textAlign: "center",
+    flex: 0.9,
   },
 
   save_touch: {
-    marginTop: "8%",
+    // marginTop: "8%",
+    flex: 0.3,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  save_touch1: {
+    marginTop: "2%",
     flex: 0.3,
     alignItems: "center",
     justifyContent: "center",
@@ -35,25 +49,25 @@ export const STYLES = {
     color: "yellow",
     borderWidth: 1.3,
     borderColor: "yellow",
-    paddingHorizontal: "2%",
+    paddingHorizontal: "4%",
     borderRadius: 20,
-    fontWeight: "500",
-    fontSize: 16,
+    fontWeight: "normal",
+    fontSize: 14,
   },
   add_text: {
     color: "yellow",
-    borderWidth: 1.3,
+    borderWidth: 1,
     borderColor: "yellow",
-    paddingHorizontal: "13%",
-    borderRadius: 20,
+    padding: "6%",
+    borderRadius: 12,
     fontWeight: "500",
-    fontSize: 16,
+    fontSize: 14,
   },
 
   side_bar: {
     // fontSize: 16,
     marginStart: "5%",
-    marginTop: "7%",
+    marginTop: "0%",
     flex: 0.5,
   },
 
@@ -61,10 +75,10 @@ export const STYLES = {
     color: "white",
     fontWeight: "500",
     fontSize: 22,
-    marginTop: "7%",
+    marginTop: "0%",
   },
   header_box: {
-    height: height * 0.12,
+    height: height * 0.08,
     backgroundColor: Colors.MAIN_COLOR,
     alignItems: "center",
 
@@ -72,7 +86,7 @@ export const STYLES = {
     flexDirection: "row",
   },
   login_box: {
-    height: height * 0.12,
+    height: height * 0.10,
     backgroundColor: Colors.MAIN_COLOR,
     alignItems: "center",
 
@@ -81,10 +95,10 @@ export const STYLES = {
     justifyContent: "center",
   },
  ICON_TEXT: {
-    fontSize: 18,
+    fontSize: 16,
     color: "black",
-    fontWeight: "500",
-    marginStart: "1%",marginTop:"2%"
+    fontWeight: "normal",
+    marginStart: "3%",marginTop:"1%"
   },
   button: {
     height: "7%",

@@ -5,36 +5,39 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  Image,
-  ScrollView,
-  Linking,
+  
   FlatList,
   Modal,
   Pressable,
-  TextInput,
+  TextInput,Animated,Easing,SafeAreaView
 } from "react-native";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 import {
-  Entypo,
-  Feather,
-  AntDesign,
-  SimpleLineIcons,
+ 
   Ionicons,
-  Octicons,
+ 
   FontAwesome,
-  FontAwesome5,
-  EvilIcons,
-  MaterialIcons,
+  
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 
-import BouncyCheckbox from "react-native-bouncy-checkbox";
+
+import { Colors } from "../../constant/colors";
 
 export default function User_tag({ navigation }) {
   const [d, setd] = useState();
   const [modalVisible, setModalVisible] = useState(false);
+  const translation = useRef(new Animated.Value(0)).current;
+  useEffect(() => {
+    Animated.timing(translation, {
+      toValue: 100,
+      delay: 0,
+      easing:  Easing.elastic(4),
+      useNativeDriver: true,
+    }).start();
+  }, []);
 
   const DATA = [
     {
@@ -143,7 +146,6 @@ export default function User_tag({ navigation }) {
   const [notes, setmynotes] = useState("");
   const searchref = useRef();
 
-  
   const up_down = (item) => {
     const newitem = selected_data.map((val) => {
       if (val.id == item.id) {
@@ -156,7 +158,7 @@ export default function User_tag({ navigation }) {
   };
   const Delete = (i) => {
     const newPeople = selected_data.filter((person) => person.id !== i.id);
-    
+
     setSelected_data(newPeople);
     setarr(newPeople);
   };
@@ -172,32 +174,32 @@ export default function User_tag({ navigation }) {
     }
   };
 
-  const submit =()=>{
-   var newdata={
-    id:new Date(),
-    name:notes,
-    s:false
-   }
-   arr.push(newdata)
-  //  setSelected_data([...arr,newdata]);
-  }
+  const submit = () => {
+    var newdata = {
+      id: new Date(),
+      name: notes,
+      s: false,
+    };
+    arr.push(newdata);
+    //  setSelected_data([...arr,newdata]);
+  };
 
   return (
-    // <ScrollView style={{  }}>
+    <SafeAreaView style={styles.container}>
     <View style={styles.container}>
       <View style={styles.input}>
         <TextInput
-        
           ref={searchref}
-          style={{}}
+          style={{fontSize:15,}}
           onChangeText={(text) => {
             onsearch(text), setsearch(text);
           }}
           value={search}
           underlineColorAndroid="transparent"
-          placeholder="Search Here"
+          placeholder="Search Tags"
+          placeholderTextColor={"#cccccc"}
         />
-        <EvilIcons name="search" size={24} color="black" />
+        <FontAwesome name="search" size={20} color="black" />
       </View>
 
       <FlatList
@@ -207,76 +209,54 @@ export default function User_tag({ navigation }) {
         renderItem={({ item, index }) => (
           <View>
             <View
-              style={{
-                flexDirection: "row",
-                marginHorizontal: "3%",
-                marginVertical: "1%",
-              }}
+              style={styles.flat_data}
             >
               <View
-                style={{
-                  width: "100%",
-
-                  elevation: 2,
-                  alignSelf: "center",
-                  justifyContent: "center",
-                  backgroundColor: "white",
-                  borderRadius: 8,
-                }}
+                style={styles.flat_view}
               >
                 <View
                   style={{
                     flexDirection: "row",
-                    marginStart: "3%",
-                    marginTop: "2%",
-                    alignItems: "center",
+                    // marginStart: "3%",
+                    
+                    // alignItems: "center",
                     justifyContent: "space-between",
                   }}
                 >
                   <Text style={styles.name}>{item.name}</Text>
                   <View style={{ flexDirection: "row" }}>
                     <TouchableOpacity
-                      style={{ padding: 5 }}
+                      style={{  }}
                       onPress={() => {
                         setModalVisible(true);
                       }}
                     >
                       <View
-                        style={{
-                          padding: 2,
-                          borderWidth: 1,
-                          borderColor: "#808080",
-                          borderRadius: 6,
-                        }}
+                        style={styles.icn}
                       >
                         <MaterialCommunityIcons
                           name="pencil"
-                          size={20}
+                          size={24}
                           color="orange"
                         />
                       </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      style={{ padding: 5 }}
+                      style={{  }}
                       onPress={() => Delete(item)}
                     >
                       <View
-                        style={{
-                          padding: 2,
-                          borderWidth: 1,
-                          borderColor: "#808080",
-                          borderRadius: 6,
-                        }}
+                        style={styles.icn}
                       >
                         <MaterialCommunityIcons
                           name="delete-outline"
-                          size={20}
+                          size={24}
                           color="black"
                         />
                       </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                      style={{ padding: 5 }}
+                      style={{  }}
                       onPress={() => up_down(item)}
                     >
                       {item.s ? (
@@ -295,11 +275,11 @@ export default function User_tag({ navigation }) {
                     </TouchableOpacity>
                   </View>
                 </View>
-                <View style={{ flexDirection: "row", marginStart: "3%" }}>
+                <View style={{ flexDirection: "row",  }}>
                   <Text style={styles.number}>Total Leads ({item.Number})</Text>
                 </View>
                 {item.s ? (
-                  <View style={{ flexDirection: "row", marginStart: "3%" }}>
+                  <View style={{ flexDirection: "row",  }}>
                     <Text style={styles.number}>
                       Description: ({item.description})
                     </Text>
@@ -310,55 +290,179 @@ export default function User_tag({ navigation }) {
           </View>
         )}
       />
-      <TouchableOpacity 
-       onPress={() => {
-        setModalVisible(true);
-      }}
-      style={styles.floating_btn}>
-        <Ionicons name="person-add" size={40} color="white" />
-      </TouchableOpacity>
-      <View style={styles.centeredView}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={modalVisible}
-          onRequestClose={() => {
-            Alert.alert("Modal has been closed.");
-            setModalVisible(!modalVisible);
-          }}
+      
+      <Animated.View
+            style={{
+              borderWidth: 1,
+              borderColor: "rgba(0,0,0,0.2)",
+              alignItems: "center",
+              justifyContent: "center",
+              width: width * 0.18,
+              position: "absolute",
+
+              right: "8%",
+              height: height * 0.09,
+              backgroundColor: Colors.float_btn,
+              borderRadius: 50,
+              transform: [{ translateY: translation }],
+              marginTop: (height + height * 0.15) * 0.44,
+              elevation: 5,
+            }}
+          >
+            <TouchableOpacity
+              // onPress={() => navigation.navigate(ScreenNames.NEW_LEADS)}
+              onPress={() => setModalVisible(true)}
+              // style={styles.floating_btn}
+            >
+              <Ionicons name="person-add" size={40} color="white" />
+            </TouchableOpacity>
+          </Animated.View>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View
+          style={styles.main_modal}
         >
-          <View style={styles.centeredView}>
-            <View style={styles.modalView}>
-            <View style={styles.input}>
-        <TextInput
-          // ref={searchref}
-          style={{}}
-          onChangeText={(value) => {setmynotes(value)
-           ;
-          }}
-          value={notes}
-          underlineColorAndroid="transparent"
-          placeholder="Search Here"
-        />
-        <EvilIcons name="search" size={24} color="black" />
-      </View>
+          <View style={styles.modalView}>
+            <View
+              style={styles.main_view}
+            >
+              <Text style={{ fontSize: 20 }}></Text>
+              <Text style={styles.add}>
+                Add Tag
+              </Text>
               <Pressable
-                style={[styles.button, styles.buttonClose]}
-                onPress={() => {setModalVisible(!modalVisible),submit()}}
+                style={{}}
+                onPress={() => setModalVisible(!modalVisible)}
               >
-                <Text style={styles.textStyle}>Hide Modal</Text>
+                <Text style={{ fontSize: 20 }}>X</Text>
               </Pressable>
             </View>
+            <View
+              style={styles.modal_page}
+            ></View>
+            <View style={styles.modal_inner_view}>
+              <Text
+                style={styles.nam_tag}
+              >
+                Name your tag
+              </Text>
+              <TextInput
+                style={styles.input2}
+                // onChangeText={onChangeNumber}
+                // value={number}
+                placeholder=""
+                keyboardType="numeric"
+              />
+              <Text
+                style={styles.description}
+              >
+                Description
+              </Text>
+              <TextInput
+                style={styles.input2}
+                // onChangeText={onChangeNumber}
+                // value={number}
+                placeholder=""
+                keyboardType="numeric"
+              />
+              <TouchableOpacity
+                // onPress={() => setd(!d)}
+                style={styles.create}
+              >
+                <Text style={styles.create_txt}>Create Tag</Text>
+              </TouchableOpacity>
+            </View>
           </View>
-        </Modal>
-      </View>
+        </View>
+      </Modal>
     </View>
 
-    // </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  icn:{
+                         
+    borderWidth: 1,
+    borderColor: "#808080",
+    borderRadius: 6,marginEnd:5
+  },
+  flat_data:{
+    flexDirection: "row",
+    marginHorizontal: "3%",
+    marginVertical: "1%",
+  },
+  flat_view:{
+    width: "100%",
+
+    elevation: 2,
+    alignSelf: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    borderRadius: 6,padding:"3%"
+  },
+  main_modal:{
+    flex: 1,
+    backgroundColor: "rgba(52, 52, 52, 0.5)",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  main_view:{
+    flexDirection: "row",
+    justifyContent: "space-between",
+    margin: "5%",
+  },
+  add:{ fontSize: 20, color: Colors.MAIN_COLOR },
+  modal_page:{
+    height: 1,
+    width: "100%",
+    backgroundColor: "#cccccc",
+  },
+  modal_inner_view:{ marginHorizontal: "3%", marginTop: "2%" },
+  nam_tag:{
+    fontSize: 16,
+    color: Colors.MAIN_COLOR,
+    marginTop: "4%",
+    fontWeight: "400",
+  },
+  description:{
+    fontSize: 16,
+    color: Colors.MAIN_COLOR,
+    marginTop: "4%",
+    fontWeight: "400",
+  },
+  create_txt:{ color: "white", fontSize: 17 },
+  create:{
+    height: "17%",
+    width: "38%",
+    backgroundColor: "orange",
+    alignSelf: "center",
+    marginVertical: "7%",
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalText: {
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+  input2: {
+    height: height * 0.06,
+
+    borderWidth: 0.5,
+    padding: 10,
+    borderRadius: 6,
+    marginTop: "1%",
+  },
   input: {
     height: height * 0.048,
     width: width * 0.95,
@@ -367,35 +471,27 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     backgroundColor: "white",
     elevation: 1,
-    borderRadius: 6,
+    borderRadius: 20,
     color: "#808080",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    paddingHorizontal: 15,
+    paddingHorizontal: 5,borderWidth:0.7,
   },
   centeredView: {
-    flex:1,
+    flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 0,
-    backgroundColor: "rgba(52, 52, 52, 0.7)",
+    // backgroundColor: "rgba(5, 5, 52, 0.3)",
   },
   modalView: {
-    margin: 0,
+    height: height * 0.42,
+    width: "85%",
     backgroundColor: "white",
     borderRadius: 6,
-    paddingHorizontal: "20%",
-    paddingVertical: "35%",
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 10,
+
+    elevation: 15,
+    alignSelf: "center",
   },
   button: {
     borderRadius: 20,
@@ -430,37 +526,22 @@ const styles = StyleSheet.create({
     backgroundColor: "orange",
     borderRadius: 100,
   },
-  btn1: {
-    flexDirection: "row",
-    alignSelf: "center",
-    height: height * 0.045,
-    width: width * 0.32,
-    backgroundColor: "orange",
-    margin: "5%",
-    alignItems: "center",
-    justifyContent: "center",
-    borderWidth: 2,
-    borderRadius: 20,
-  },
-  phone_icon: { flex: 0.95 },
-  voice_icon: { flex: 0.14, marginStart: "5%", marginTop: "5%" },
-  email_icon: { flex: 0.16, marginStart: "5%", marginTop: "5%" },
-  icon: { marginTop: "5%" },
-  icon1: { marginTop: "5%" },
+  
+ 
   name: {
     borderRadius: 20,
-    paddingVertical: "1%",
-    fontSize: 15,
-    fontWeight: "bold",
+    
+    fontSize: 17,
+    fontWeight: "500",
     color: "black",
   },
   number: {
-    fontSize: 15,
+    fontSize: 14,
 
     fontWeight: "400",
     color: "black",
 
-    marginBottom: "3%",
+    marginBottom: "1.5%",
   },
   email: {
     fontSize: 16,
@@ -533,5 +614,5 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 
-  container: { flex: 1, marginTop: "3%" },
+  container: { flex: 1, },
 });

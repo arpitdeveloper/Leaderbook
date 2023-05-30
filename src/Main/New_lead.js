@@ -109,15 +109,19 @@ function New_lead() {
           var Array = [];
 
           var item = result.data.lead_detail.Lead;
+
           setFirst_name(item?.first_name?.field_type);
           setLast_name(item?.last_name?.field_type);
           setEmail(item?.email?.field_type);
           setCompany(item?.company_name?.field_type);
           setPhone(item?.phone?.field_type);
           setAddress(item?.address?.field_type);
+          setAssigned_value(item?.user_id?.dropdown_arr[0].label);
+          settype(item?.lead_type_id?.dropdown_arr[0].label);
           setCity(item?.city?.field_type);
           setstate(item?.state?.field_type);
-          setlogged_date(item?.new_grouped_date?.field_type);
+          setstatus_value(item?.is_grl_crea_lead?.dropdown_arr[0].label);
+          setfollow_value(item?.month?.dropdown_arr[17].label);
           setcomments(item?.comments?.field_type);
           Array.push(item);
           setdata(Array);
@@ -138,16 +142,17 @@ function New_lead() {
         first_name: First_name,
         last_name: last_name,
         lead_email: email,
+        phone: phone,
         is_grl_crea_lead: Assigned_value,
         comments: comments,
-        user_id: type_value,
+
         state: state,
         address: address,
         city: city,
-        phone: phone,
+
         company_name: company,
         address: address,
-        id: route.params.id,
+
         password: d.password,
         email: d.email,
       };
@@ -176,9 +181,9 @@ function New_lead() {
             color="white"
           />
         </TouchableOpacity>
-        <Text style={STYLES.header}>New lead</Text>
+        <Text style={STYLES.header}>New Lead</Text>
         <TouchableOpacity style={STYLES.save_touch} onPress={() => {}}>
-          <Text style={STYLES.save_text}>save</Text>
+          <Text style={STYLES.save_text}>SAVE</Text>
         </TouchableOpacity>
       </View>
 
@@ -196,7 +201,7 @@ function New_lead() {
                 <TextInput
                   placeholder="Enter first name"
                   style={styles.input}
-                  value={First_name}
+                  // value={First_name}
                   onChangeText={(txt) => setFirst_name(txt)}
                 ></TextInput>
                 {/* {console.log(First_name)} */}
@@ -204,7 +209,7 @@ function New_lead() {
                 <TextInput
                   placeholder=" Enter last name"
                   style={styles.input}
-                  value={last_name}
+                  // value={last_name}
                   onChangeText={(txt) => setLast_name(txt)}
                 ></TextInput>
 
@@ -212,7 +217,7 @@ function New_lead() {
                 <TextInput
                   placeholder="Enter email"
                   style={styles.input}
-                  value={email}
+                  // value={email}
                   onChangeText={(txt) => setEmail(txt)}
                 ></TextInput>
 
@@ -220,14 +225,14 @@ function New_lead() {
                 <TextInput
                   placeholder="Enter Phone"
                   style={styles.input}
-                  value={phone}
+                  // value={phone}
                   onChangeText={(txt) => setPhone(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}>{item.comments.label}</Text>
                 <TextInput
                   placeholder="No Comments"
                   style={styles.comments}
-                  value={comments}
+                  // value={comments}
                   onChangeText={(txt) => setcomments(txt)}
                 ></TextInput>
 
@@ -244,7 +249,7 @@ function New_lead() {
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  placeholder={assign}
+                  placeholder={Assigned_value}
                   value={Assigned_value}
                   onFocus={() => setIsFocus(true)}
                   onBlur={() => setIsFocus(false)}
@@ -309,7 +314,7 @@ function New_lead() {
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  placeholder={status}
+                  placeholder={status_value}
                   value={status_value}
                   onFocus={() => setIsFocus(true)}
                   onBlur={() => setIsFocus(false)}
@@ -340,7 +345,7 @@ function New_lead() {
                   maxHeight={300}
                   labelField="label"
                   valueField="value"
-                  placeholder={follow}
+                  placeholder={follow_value}
                   value={follow_value}
                   onFocus={() => setIsFocus(true)}
                   onBlur={() => setIsFocus(false)}
@@ -363,28 +368,28 @@ function New_lead() {
                 <TextInput
                   placeholder="Enter Company name"
                   style={styles.input}
-                  value={company}
+                  // value={company}
                   onChangeText={(txt) => setCompany(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}>{item.address.label}</Text>
                 <TextInput
                   placeholder="Enter Address"
                   style={styles.input}
-                  value={address}
+                  // value={address}
                   onChangeText={(txt) => setAddress(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}>{item.city.label}</Text>
                 <TextInput
                   placeholder="Enter City"
                   style={styles.input}
-                  value={city}
+                  // value={city}
                   onChangeText={(txt) => setCity(txt)}
                 ></TextInput>
-                <Text style={styles.name_txt}>{item.state.label}</Text>
+                <Text style={styles.name_txt}>State/Province</Text>
                 <TextInput
                   placeholder="Enter State"
                   style={styles.input}
-                  value={state}
+                  // value={state}
                   onChangeText={(txt) => setstate(txt)}
                 ></TextInput>
               </View>

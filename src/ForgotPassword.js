@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
-  SafeAreaView,
   Dimensions,
   Text,
   View,
@@ -11,7 +9,8 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Forgot_password } from "./Services";
 import { STYLES } from "./constant/styles";
@@ -38,9 +37,9 @@ function Forgot_pasword() {
               Alert.alert("Success", result.message, [
                 { text: "OK", onPress: () => navigation.navigate("Login") },
               ]);
-            }else{
-alert(result.message)
-}
+            } else {
+              alert(result.message);
+            }
           });
       } catch (error) {
         console.log("error==>" + error);
@@ -126,8 +125,8 @@ const styles = StyleSheet.create({
   login: {
     textAlign: "center",
     color: "white",
-    fontSize: 20,
-    fontWeight: "bold",
+    fontSize: 18,
+    fontWeight: "normal",
   },
   //   header: {
   //     height: height * 0.1,

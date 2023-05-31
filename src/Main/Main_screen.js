@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
 
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
   Dimensions,
   TouchableOpacity,
   Modal,
-  Image,
-  ImageBackground,
-  Alert,
+  ImageBackground
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Recent from "./Recent";
@@ -20,7 +18,6 @@ import All from "./All";
 import { Colors } from "../constant/colors";
 import { STYLES } from "../constant/styles";
 import { BackHandler } from "react-native";
-import { ScreenNames } from "../constant/ScreenNames";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
@@ -77,7 +74,7 @@ export default function Main_Screen({ navigation }) {
         >
           <Entypo name="menu" size={35} color="white" />
         </TouchableOpacity>
-        <Text style={STYLES.header1}>Leads</Text>
+        <Text style={styles.headerText}>Leads</Text>
         <TouchableOpacity
           style={STYLES.save_touch1}
           // onPress={() => backPress()}
@@ -244,6 +241,13 @@ export default function Main_Screen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+ headerText: {
+    color: "white",
+    fontWeight: "500",
+    fontSize: 22,
+    textAlign: "center",
+    flex: 1,
+  },
   closing_line: { backgroundColor: "#33d6ff", height: 2, width: "100%" },
   exit_line: {
     backgroundColor: "#d9d9d9",

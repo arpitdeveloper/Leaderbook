@@ -1,11 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigation, useRoute } from "@react-navigation/native";
-
-import base64 from "react-native-base64";
-import validator from "validator";
-
+import React, { useState } from "react";
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   TextInput,
@@ -16,6 +10,11 @@ import {
   Modal,
   Pressable,
 } from "react-native";
+
+import { useNavigation, useRoute } from "@react-navigation/native";
+import base64 from "react-native-base64";
+import { SafeAreaView } from 'react-native-safe-area-context';
+
 import { LOGIN } from "./Services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScreenNames } from "./constant/ScreenNames";
@@ -212,7 +211,7 @@ function Login_screen() {
                     setModalVisible3(!modalVisible3);
                   }}
                 >
-                  <Text style={styles.textStyle3}>Ok</Text>
+                  <Text style={styles.textStyle3}>OK</Text>
                 </Pressable>
               </View>
             </View>

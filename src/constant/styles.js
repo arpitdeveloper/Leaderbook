@@ -8,20 +8,20 @@ export const STYLES = {
   back_button: {
     color: "white",
     fontWeight: "bold",
-    
-    // marginTop: "8%",
     textAlign: "center",
-    flex: 0.23,
-    marginStart: "4%",
+   width:50,
+alignItems:'center',
+height:"100%",
+justifyContent:'center'
   },
 
   header: {
     color: "white",
     fontWeight: "normal",
     fontSize: 19,
-    // marginTop: "7%",
+    flex:1,
     textAlign: "center",
-    flex: 0.9,
+marginRight:50
   },
   header1: {
     color: "white",
@@ -40,7 +40,7 @@ export const STYLES = {
   },
   save_touch1: {
     marginTop: "2%",
-    flex: 0.3,
+    width:60,
     alignItems: "center",
     justifyContent: "center",
   },
@@ -68,7 +68,6 @@ export const STYLES = {
     // fontSize: 16,
     marginStart: "5%",
     marginTop: "0%",
-    flex: 0.5,
   },
 
   bar_header: {
@@ -81,8 +80,7 @@ export const STYLES = {
     height: height * 0.08,
     backgroundColor: Colors.MAIN_COLOR,
     alignItems: "center",
-
-    // marginTop: 25,
+justifyContent:"space-between",
     flexDirection: "row",
   },
   login_box: {

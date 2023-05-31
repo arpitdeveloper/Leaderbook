@@ -685,7 +685,7 @@ const styles = StyleSheet.create({
   },
   tag_touch: { alignItems: "center" },
   tag: { color: "white", fontSize: 18 },
-  flat: { backgroundColor: "#f2f2f2", padding: 10 },
+  flat: { backgroundColor: "#f2f2f2", padding: 10, marginBottom:40 },
   input: {
     height: height * 0.25,
     margin: 12,

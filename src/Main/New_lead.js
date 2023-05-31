@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import {
-  SafeAreaView,
   Dimensions,
   Text,
   View,
@@ -11,6 +10,7 @@ import {
   Alert,
   FlatList,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
@@ -181,9 +181,9 @@ function New_lead() {
             color="white"
           />
         </TouchableOpacity>
-        <Text style={STYLES.header}>New Lead</Text>
+        <Text style={styles.header}>New Lead</Text>
         <TouchableOpacity style={STYLES.save_touch} onPress={() => {}}>
-          <Text style={STYLES.save_text}>SAVE</Text>
+          <Text style={STYLES.save_text}> SAVE </Text>
         </TouchableOpacity>
       </View>
 
@@ -404,6 +404,13 @@ function New_lead() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+ header: {
+    color: "white",
+    fontWeight: "normal",
+    fontSize: 19,
+    // flex:1,
+    textAlign: "center",
   },
 
   dropdown: {

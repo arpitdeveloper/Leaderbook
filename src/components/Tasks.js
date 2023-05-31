@@ -1,7 +1,6 @@
 import { Entypo } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
 import {
-  SafeAreaView,
   Dimensions,
   Text,
   View,
@@ -9,11 +8,13 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Complete from "./tasks/Complete";
 import InComplete from "./tasks/Incomplete";
 import { STYLES } from "../constant/styles";
+import { Images } from "../constant/images";
+import Header from "./header";
 
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
@@ -24,15 +25,12 @@ function Tasks() {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
-      <View style={STYLES.header_box}>
-        <TouchableOpacity
-          style={STYLES.side_bar}
-          onPress={() => navigation.toggleDrawer()}
-        >
-          <Entypo name="menu" size={40} color="white" />
-        </TouchableOpacity>
-        <Text style={STYLES.bar_header}>Tasks</Text>
-      </View>
+      <Header
+        label="Tasks"
+        leftIcon={Images.menu}
+        rightIcon={Images.time}
+        onLeftPress={() => navigation.toggleDrawer()}
+      />
       <View style={{}}>
         <View>
           <View style={styles.tab}>

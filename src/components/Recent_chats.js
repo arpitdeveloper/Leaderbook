@@ -2,7 +2,6 @@ import React from "react";
 
 import { Entypo } from "@expo/vector-icons";
 import {
-  SafeAreaView,
   Dimensions,
   Text,
   View,
@@ -11,11 +10,13 @@ import {
   StyleSheet,
   FlatList,
 } from "react-native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation } from "@react-navigation/native";
 import { Colors } from "../constant/colors";
 import { ScreenNames } from "../constant/ScreenNames";
 import { STYLES } from "../constant/styles";
+import Header from "./header";
+import { Images } from "../constant/images";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -90,15 +91,13 @@ function Recent_chats() {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
-      <View style={STYLES.header_box}>
-        <TouchableOpacity
-          style={STYLES.side_bar}
-          onPress={() => navigation.toggleDrawer()}
-        >
-          <Entypo name="menu" size={40} color="white" />
-        </TouchableOpacity>
-        <Text style={STYLES.bar_header}>Recent chats</Text>
-      </View>
+<Header
+label="Recent chats"
+leftIcon={Images.menu}
+rightIcon={Images.time}
+onLeftPress={() => navigation.toggleDrawer()}
+/>
+    
       <FlatList
         style={{}}
         data={DATA}

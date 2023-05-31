@@ -12,7 +12,6 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 import {
-  SafeAreaView,
   Dimensions,
   Text,
   View,
@@ -27,10 +26,12 @@ import {
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation, useRoute } from "@react-navigation/native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 import { ScreenNames } from "../../constant/ScreenNames";
 import { STYLES } from "../../constant/styles";
+import Header from "../header";
+import { Images } from "../../constant/images";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -109,22 +110,14 @@ function Add_task() {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <View style={STYLES.header_box}>
-        <TouchableOpacity
-          style={STYLES.back_button}
-          onPress={() => navigation.navigate(ScreenNames.TASKS)}
-        >
-          <MaterialCommunityIcons
-            name="keyboard-backspace"
-            size={30}
-            color="white"
-          />
-        </TouchableOpacity>
-        <Text style={STYLES.header}>New Task</Text>
-        <TouchableOpacity style={STYLES.save_touch} onPress={() => {}}>
-          <Text style={STYLES.save_text}>SAVE</Text>
-        </TouchableOpacity>
-      </View>
+      <Header
+        label="New Task"
+        leftIcon={Images.backArrow}
+        // rightIcon={Images.search}
+        onLeftPress={() =>navigation.navigate(ScreenNames.TASKS)}
+        onRightPress={() => {}}
+        customRight={true}
+      />
       <ScrollView>
         <View
           style={{
@@ -739,9 +732,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     marginStart: "12%",
   },
-  
 
-  
   modal_btn: {
     backgroundColor: "#d9d9d9",
 

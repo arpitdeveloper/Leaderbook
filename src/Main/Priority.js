@@ -9,6 +9,7 @@ import {
   Animated,
   Easing,
   SafeAreaView,
+  Image,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation, useRoute } from "@react-navigation/native";
@@ -19,6 +20,7 @@ import { get_leads_priorities } from "../Services";
 import Loader from "../constant/Loader";
 import { ScreenNames } from "../constant/ScreenNames";
 import { Colors } from "../constant/colors";
+import { Images } from "../constant/images";
 
 export default function Priority() {
   const [DATA, setDATA] = useState([]);
@@ -114,7 +116,12 @@ export default function Priority() {
 
               // style={styles.floating_btn}
             >
-              <Ionicons name="person-add" size={40} color="white" />
+              <Image
+                source={Images.addLeads}
+                style={{ height: 60, width: 60, resizeMode: "contain" }}
+              />
+
+              {/* <Ionicons name="person-add" size={40} color="white" /> */}
             </TouchableOpacity>
           </Animated.View>
         ) : null}

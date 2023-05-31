@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
-  SafeAreaView,
   Dimensions,
   Text,
   View,
@@ -12,6 +11,7 @@ import {
   Alert,
   FlatList,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
@@ -26,6 +26,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { edit_profile, user_update } from "../../Services";
 import { ScreenNames } from "../../constant/ScreenNames";
 import { STYLES } from "../../constant/styles";
+import Header from "../header";
+import { Images } from "../../constant/images";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 function Edit_profile() {
@@ -133,22 +135,13 @@ function Edit_profile() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={STYLES.header_box}>
-        <TouchableOpacity
-          style={STYLES.back_button}
-          onPress={() => navigation.navigate(ScreenNames.HOME)}
-        >
-          <MaterialCommunityIcons
-            name="keyboard-backspace"
-            size={35}
-            color="white"
-          />
-        </TouchableOpacity>
-        <Text style={STYLES.header}>Profile</Text>
-        <TouchableOpacity style={STYLES.save_touch} onPress={() => postdata()}>
-          <Text style={STYLES.add_text}>SAVE</Text>
-        </TouchableOpacity>
-      </View>
+<Header
+        label="Profile"
+        leftIcon={Images.backArrow}
+        onLeftPress={() => navigation.navigate(ScreenNames.HOME)}
+customRight={true}
+        // onRightPress={() => navigation.navigate(ScreenNames.LAST_LOGGED_USERS)}
+      />
       <ScrollView>
         <FlatList
           style={{ backgroundColor: "#f2f2f2",  }}

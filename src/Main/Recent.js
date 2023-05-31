@@ -32,6 +32,7 @@ import { useNavigation } from "@react-navigation/native";
 import Loader from "../constant/Loader";
 import { ScreenNames } from "../constant/ScreenNames";
 import { Colors } from "../constant/colors";
+import { Images } from "../constant/images";
 
 export default function Recent() {
   const [d, setd] = useState(false);
@@ -580,8 +581,8 @@ export default function Recent() {
               // onPress={() => navigation.navigate("demo")}
               // style={styles.floating_btn}
             >
-              <Ionicons name="person-add" size={40} color="white" />
-            </TouchableOpacity>
+<Image source={Images.addLeads} style={{height:60, width:60, resizeMode:'contain'}}/>
+           </TouchableOpacity>
           </Animated.View>
         ) : null}
       </View>

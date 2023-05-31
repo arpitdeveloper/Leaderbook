@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
-  SafeAreaView,
   Dimensions,
   Text,
   View,
@@ -11,10 +10,12 @@ import {
   StyleSheet,
   Alert,
 } from "react-native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { ScreenNames } from "../../constant/ScreenNames";
 import { STYLES } from "../../constant/styles";
+import { Images } from "../../constant/images";
+import Header from "../header";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -24,19 +25,13 @@ function Most_active_users() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={STYLES.header_box}>
-        <TouchableOpacity
-          style={STYLES.side_bar}
-          onPress={() => navigation.navigate(ScreenNames.HOME)}
-        >
-          <MaterialCommunityIcons
-            name="keyboard-backspace"
-            size={30}
-            color="white"
-          />
-        </TouchableOpacity>
-        <Text style={STYLES.bar_header}>Most active users</Text>
-      </View>
+<Header
+        label="Most active users"
+        leftIcon={Images.backArrow}
+        rightIcon={Images.time}
+        onLeftPress={() => navigation.navigate(ScreenNames.HOME)}
+        // onRightPress={() => navigation.navigate(ScreenNames.LAST_LOGGED_USERS)}
+      />
       <View
         style={{
           flexDirection: "row",

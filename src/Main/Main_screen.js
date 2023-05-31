@@ -7,7 +7,7 @@ import {
   Dimensions,
   TouchableOpacity,
   Modal,
-  ImageBackground
+  ImageBackground,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Entypo, Ionicons } from "@expo/vector-icons";
@@ -18,6 +18,8 @@ import All from "./All";
 import { Colors } from "../constant/colors";
 import { STYLES } from "../constant/styles";
 import { BackHandler } from "react-native";
+import Header from "../components/header";
+import { Images } from "../constant/images";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
@@ -58,31 +60,13 @@ export default function Main_Screen({ navigation }) {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View
-        style={{
-          height: height * 0.11,
-          backgroundColor: Colors.MAIN_COLOR,
-          alignItems: "center",
-
-          // marginTop: 25,
-          flexDirection: "row",
-        }}
-      >
-        <TouchableOpacity
-          style={STYLES.back_button}
-          onPress={() => navigation.toggleDrawer()}
-        >
-          <Entypo name="menu" size={35} color="white" />
-        </TouchableOpacity>
-        <Text style={styles.headerText}>Leads</Text>
-        <TouchableOpacity
-          style={STYLES.save_touch1}
-          // onPress={() => backPress()}
-        >
-          <Ionicons name="ios-search" size={28} color="white" />
-        </TouchableOpacity>
-      </View>
-
+      <Header
+        label="Leads"
+        leftIcon={Images.menu}
+        rightIcon={Images.search}
+        onLeftPress={() => navigation.toggleDrawer()}
+        // onRightPress={}
+      />
       <View>
         <View style={styles.tab}>
           <TouchableOpacity
@@ -241,7 +225,7 @@ export default function Main_Screen({ navigation }) {
 }
 
 const styles = StyleSheet.create({
- headerText: {
+  headerText: {
     color: "white",
     fontWeight: "500",
     fontSize: 22,

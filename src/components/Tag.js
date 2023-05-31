@@ -1,7 +1,6 @@
 import { Entypo } from "@expo/vector-icons";
 import React, { useState, useEffect } from "react";
 import {
-  SafeAreaView,
   Dimensions,
   Text,
   View,
@@ -9,12 +8,14 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from "react-native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import User_tag from "./taglist/User_tag";
 import System_tag from "./taglist/System_tag";
 import { STYLES } from "../constant/styles";
 import { Colors } from "../constant/colors";
+import Header from "./header";
+import { Images } from "../constant/images";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -24,15 +25,12 @@ function Tag() {
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
-      <View style={STYLES.header_box}>
-        <TouchableOpacity
-          style={STYLES.side_bar}
-          onPress={() => navigation.toggleDrawer()}
-        >
-          <Entypo name="menu" size={35} color="white" />
-        </TouchableOpacity>
-        <Text style={STYLES.bar_header}>Tags</Text>
-      </View>
+<Header
+label="Tags"
+leftIcon={Images.menu}
+rightIcon={Images.time}
+onLeftPress={() => navigation.toggleDrawer()}
+/>
       
           <View style={styles.tab}>
             <TouchableOpacity
@@ -62,8 +60,6 @@ function Tag() {
                 >
                   SYSTEM TAGS
                 </Text>
-            
-              
             </TouchableOpacity>
             
           </View>

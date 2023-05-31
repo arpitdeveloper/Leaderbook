@@ -32,6 +32,7 @@ import { useNavigation } from "@react-navigation/native";
 import Loader from "../constant/Loader";
 import { ScreenNames } from "../constant/ScreenNames";
 import { Colors } from "../constant/colors";
+import { Images } from "../constant/images";
 
 export default function All() {
   const [d, setd] = useState(false);
@@ -567,7 +568,9 @@ export default function All() {
               // onPress={() => navigation.navigate("demo")}
               // style={styles.floating_btn}
             >
-              <Ionicons name="person-add" size={40} color="white" />
+<Image source={Images.addLeads} style={{height:60, width:60, resizeMode:'contain'}}/>
+
+              {/* <Ionicons name="person-add" size={40} color="white" /> */}
             </TouchableOpacity>
           </Animated.View>
         ) : null}

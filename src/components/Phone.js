@@ -7,16 +7,18 @@ import {
   MaterialCommunityIcons,
 } from "@expo/vector-icons";
 import {
-  SafeAreaView,
   Dimensions,
   Text,
   View,
   TouchableOpacity,
   StyleSheet,
+Image
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { STYLES } from "../constant/styles";
+import { Images } from "../constant/images";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -31,11 +33,11 @@ function Phone() {
           style={STYLES.back_button}
           onPress={() => navigation.toggleDrawer()}
         >
-          <Entypo name="menu" size={35} color="white" />
+          <Image source={Images.menu} style={styles.icon}/>
         </TouchableOpacity>
-        <Text style={STYLES.header}>Phone</Text>
+        <Text style={{...STYLES.header,alignSelf:'center', marginRight:0}}>Phone</Text>
         <TouchableOpacity style={STYLES.save_touch} onPress={() => {}}>
-          <Text style={STYLES.save_text}>SAVE</Text>
+          <Text style={STYLES.save_text}> SAVE </Text>
         </TouchableOpacity>
       </View>
       <Text
@@ -133,6 +135,11 @@ const styles = StyleSheet.create({
     textAlign: "center",
     justifyContent: "center",
     alignContent: "center",
+  },
+  icon: {
+    height: 22,
+    width: 22,
+    resizeMode: "contain",
   },
 });
 

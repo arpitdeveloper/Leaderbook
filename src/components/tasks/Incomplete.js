@@ -23,11 +23,13 @@ import {
   TouchableOpacity,
   StyleSheet,
   FlatList,
+Image
 } from "react-native";
 
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Colors } from "../../constant/colors";
 import { ScreenNames } from "../../constant/ScreenNames";
+import { Images } from "../../constant/images";
 
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
@@ -141,8 +143,7 @@ function InComplete() {
         onPress={() => navigation.navigate(ScreenNames.ADD_TASKS)}
 
       style={styles.floating_btn}>
-      {/* <Ionicons name="ios-add" size={60} color="white" /> */}
-      <Ionicons name="ios-add" size={60} color="white" />
+<Image source={Images.addNote} style={{height:60, width:60, resizeMode:'contain'}}/>
       </TouchableOpacity>
     </SafeAreaView>
   );
@@ -178,17 +179,9 @@ const styles = StyleSheet.create({
   },
 
   floating_btn: {
-    borderWidth: 1,
-    borderColor: "rgba(0,0,0,0.2)",
-    alignItems: "center",
-    justifyContent: "center",alignContent:"center",
-    width: 60,
     position: "absolute",
     bottom: "10%",alignSelf:"flex-end",
     right: "8%",
-    height: 60,
-    backgroundColor: Colors.MAIN_COLOR,
-    borderRadius: 30,elevation:10,shadowColor:"black",resizeMode:"contain"
   },
 
   text1: {

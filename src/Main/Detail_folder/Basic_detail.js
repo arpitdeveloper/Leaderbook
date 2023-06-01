@@ -616,7 +616,7 @@ function Basic_detail({ data }) {
               onPress={() => {
                 navigation.navigate(ScreenNames.LEAD_ACTIVITY, {
                   name: User_data.name,
-                  logo1: User_data.logo,
+                  logo1: User_data.name_initials,
 
                   id: User_data.id,
                 });

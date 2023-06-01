@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
@@ -10,12 +9,11 @@ import {
   FlatList,
   Modal,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Entypo,
   Ionicons,
   MaterialCommunityIcons,
-  FontAwesome5,
-  FontAwesome,
   Feather,
   MaterialIcons,
 } from "@expo/vector-icons";
@@ -25,6 +23,8 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View_lead_activity } from "../../Services";
 import { ScreenNames } from "../../constant/ScreenNames";
 import { ScrollView } from "react-native-gesture-handler";
+import Header from "../../components/header";
+import { Images } from "../../constant/images";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -73,30 +73,15 @@ function Lead_activity() {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-        <View style={STYLES.header_box}>
-          <TouchableOpacity
-            style={STYLES.back_button}
-            onPress={() => navigation.goBack()}
-          >
-            <Ionicons name="arrow-back-outline" size={35} color="white" />
-          </TouchableOpacity>
-          <Text style={STYLES.header}></Text>
-          <TouchableOpacity
-            // activeOpacity={1}
-            style={STYLES.save_touch}
-            TouchableOpacity
-            onPress={() => {
+<Header
+leftIcon={Images.backArrow}
+rightIcon={Images.filterVertical}
+onLeftPress={() => navigation.goBack()}
+onRightPress={() => {
               modalVisible ? setModalVisible(false) : setModalVisible(true);
             }}
-          >
-            <Ionicons
-              style={{ transform: [{ rotate: "270deg" }] }}
-              name="options-outline"
-              size={35}
-              color="white"
-            />
-          </TouchableOpacity>
-        </View>
+/>
+       
         <View style={styles.logo_header}>
           <View style={styles.logo}>
             <Text style={styles.logo_text}>{route.params.logo1}</Text>

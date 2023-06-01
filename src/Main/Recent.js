@@ -157,7 +157,8 @@ export default function Recent() {
                 alignItems: "center",
                 justifyContent: "center",
                 borderWidth: 0.8,
-                borderRadius: 25,borderColor:"black"
+                borderRadius: 25,
+                borderColor: "black",
               }}
             >
               <TouchableOpacity
@@ -230,8 +231,10 @@ export default function Recent() {
                                 id: item.id,
                                 logo: item.name_initials,
                               },
-                            }),
-                              AsyncStorage.setItem("user_id", item.id);
+                              index: index,
+                              DATA: DATA,
+                            })
+                              // AsyncStorage.setItem("user_id", item.id);
                           }}
                           style={styles.name}
                         >
@@ -367,7 +370,6 @@ export default function Recent() {
                       <View style={styles.modal_btn_box}>
                         {n.length > 0 ? (
                           <TouchableOpacity
-                          
                             onPress={() => {
                               setd1(3);
                             }}
@@ -515,23 +517,15 @@ export default function Recent() {
                           <Entypo name="cross" size={30} color="black" />
                         </Pressable>
                       </View>
-                      <Text
-                        style={styles.date}
-                      >
-                        {pin_date}
-                      </Text>
-                      <Text style={styles.note3}>
-                        {note}
-                      </Text>
+                      <Text style={styles.date}>{pin_date}</Text>
+                      <Text style={styles.note3}>{note}</Text>
                       <TouchableOpacity
                         onPress={() => {
                           setd1(4);
                         }}
                         style={styles.update_note}
                       >
-                        <Text style={styles.update_txt}>
-                          Update
-                        </Text>
+                        <Text style={styles.update_txt}>Update</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -581,8 +575,11 @@ export default function Recent() {
               // onPress={() => navigation.navigate("demo")}
               // style={styles.floating_btn}
             >
-<Image source={Images.addLeads} style={{height:60, width:60, resizeMode:'contain'}}/>
-           </TouchableOpacity>
+              <Image
+                source={Images.addLeads}
+                style={{ height: 60, width: 60, resizeMode: "contain" }}
+              />
+            </TouchableOpacity>
           </Animated.View>
         ) : null}
       </View>
@@ -592,9 +589,9 @@ export default function Recent() {
 }
 
 const styles = StyleSheet.create({
-  update_txt:{ color: "white", fontSize: 17 },
-  note3:{ color: "black", margin: "4%",fontSize:14 },
-  date:{
+  update_txt: { color: "white", fontSize: 17 },
+  note3: { color: "black", margin: "4%", fontSize: 14 },
+  date: {
     color: "black",
     marginLeft: "4%",
     marginVertical: "1%",
@@ -675,12 +672,12 @@ const styles = StyleSheet.create({
   },
   tag_box: {
     width: "100%",
-          height: height * 0.065,
-          backgroundColor: Colors.MAIN_COLOR,
-          justifyContent: "center",
-          alignItems: "center",
-          position: "absolute", 
-          bottom: 0,
+    height: height * 0.065,
+    backgroundColor: Colors.MAIN_COLOR,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
   },
   note: {
     height: height * 0.07,
@@ -699,7 +696,7 @@ const styles = StyleSheet.create({
   },
   tag_touch: { alignItems: "center" },
   tag: { color: "white", fontSize: 18 },
-  flat: { backgroundColor: "#f2f2f2", padding: 10, marginBottom:40 },
+  flat: { backgroundColor: "#f2f2f2", padding: 10, marginBottom: 40 },
   input: {
     height: height * 0.25,
     margin: 12,

@@ -23,6 +23,8 @@ import { STYLES } from "../constant/styles";
 import { ScreenNames } from "../constant/ScreenNames";
 import Loader from "../constant/Loader";
 import { New_lead_detail, New_lead_detail_update } from "../Services";
+import Header from "../components/header";
+import { Images } from "../constant/images";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -170,23 +172,14 @@ function New_lead() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={STYLES.header_box}>
-        <TouchableOpacity
-          style={STYLES.back_button}
-          onPress={() => navigation.goBack()}
-        >
-          <MaterialCommunityIcons
-            name="keyboard-backspace"
-            size={30}
-            color="white"
-          />
-        </TouchableOpacity>
-        <Text style={styles.header}>New Lead</Text>
-        <TouchableOpacity style={STYLES.save_touch} onPress={() => {}}>
-          <Text style={STYLES.save_text}> SAVE </Text>
-        </TouchableOpacity>
-      </View>
-
+<Header
+label={"New Lead"}
+leftIcon={Images.backArrow}
+onLeftPress={() => navigation.goBack()}
+customRight={true}
+onRightPress={() => {}}
+/>
+  
       {loading ? (
         <Loader loading={loading} />
       ) : data && data.length > 0 ? (

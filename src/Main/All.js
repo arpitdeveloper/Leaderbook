@@ -52,9 +52,6 @@ export default function All() {
   const [modalTitle2, setModalTitle2] = useState("");
   const translation = useRef(new Animated.Value(0)).current;
 
-  
-  
-
   useEffect(() => {
     (async () => {
       const user_data = await AsyncStorage.getItem("user_data");
@@ -82,7 +79,6 @@ export default function All() {
           });
           setDATA(a);
 
-         
           setd2(true);
           Animated.timing(translation, {
             toValue: 100,
@@ -123,10 +119,7 @@ export default function All() {
     setDATA(temp);
   };
 
- 
-
   return (
-    
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
         {loading ? (
@@ -144,7 +137,8 @@ export default function All() {
                 alignItems: "center",
                 justifyContent: "center",
                 borderWidth: 0.8,
-                borderRadius: 25,borderColor:"black"
+                borderRadius: 25,
+                borderColor: "black",
               }}
             >
               <TouchableOpacity
@@ -217,6 +211,8 @@ export default function All() {
                                 id: item.id,
                                 logo: item.name_initials,
                               },
+                              index: index,
+                              DATA: DATA,
                             }),
                               AsyncStorage.setItem("user_id", item.id);
                           }}
@@ -354,7 +350,6 @@ export default function All() {
                       <View style={styles.modal_btn_box}>
                         {n.length > 0 ? (
                           <TouchableOpacity
-                          
                             onPress={() => {
                               setd1(3);
                             }}
@@ -502,23 +497,15 @@ export default function All() {
                           <Entypo name="cross" size={30} color="black" />
                         </Pressable>
                       </View>
-                      <Text
-                        style={styles.date}
-                      >
-                        {pin_date}
-                      </Text>
-                      <Text style={styles.note3}>
-                        {note}
-                      </Text>
+                      <Text style={styles.date}>{pin_date}</Text>
+                      <Text style={styles.note3}>{note}</Text>
                       <TouchableOpacity
                         onPress={() => {
                           setd1(4);
                         }}
                         style={styles.update_note}
                       >
-                        <Text style={styles.update_txt}>
-                          Update
-                        </Text>
+                        <Text style={styles.update_txt}>Update</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -568,7 +555,10 @@ export default function All() {
               // onPress={() => navigation.navigate("demo")}
               // style={styles.floating_btn}
             >
-<Image source={Images.addLeads} style={{height:60, width:60, resizeMode:'contain'}}/>
+              <Image
+                source={Images.addLeads}
+                style={{ height: 60, width: 60, resizeMode: "contain" }}
+              />
 
               {/* <Ionicons name="person-add" size={40} color="white" /> */}
             </TouchableOpacity>
@@ -581,9 +571,9 @@ export default function All() {
 }
 
 const styles = StyleSheet.create({
-  update_txt:{ color: "white", fontSize: 17 },
-  note3:{ color: "black", margin: "4%",fontSize:14 },
-  date:{
+  update_txt: { color: "white", fontSize: 17 },
+  note3: { color: "black", margin: "4%", fontSize: 14 },
+  date: {
     color: "black",
     marginLeft: "4%",
     marginVertical: "1%",
@@ -668,7 +658,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.MAIN_COLOR,
     justifyContent: "center",
     alignItems: "center",
-    position: "absolute", 
+    position: "absolute",
     bottom: 0,
   },
   note: {
@@ -688,7 +678,7 @@ const styles = StyleSheet.create({
   },
   tag_touch: { alignItems: "center" },
   tag: { color: "white", fontSize: 18 },
-  flat: { backgroundColor: "#f2f2f2", padding: 10, marginBottom:40 },
+  flat: { backgroundColor: "#f2f2f2", padding: 10, marginBottom: 40 },
   input: {
     height: height * 0.25,
     margin: 12,

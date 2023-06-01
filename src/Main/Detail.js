@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import {
-  SafeAreaView,
   StyleSheet,
   Text,
   View,
@@ -9,6 +8,7 @@ import {
   TouchableOpacity,
   Image,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import {
   Entypo,
   Ionicons,
@@ -24,7 +24,7 @@ import Profile from "./Detail_folder/Profile";
 import Related from "./Detail_folder/Related";
 import { ScreenNames } from "../constant/ScreenNames";
 import { get_leads_basic_detail } from "../Services";
-
+import { Images } from "../constant/images";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -32,13 +32,13 @@ const width = Dimensions.get("window").width;
 export default function Detail({ navigation }) {
   const route = useRoute();
   const [com, setcom] = useState(false);
-
-  const [i, seti] = useState(route.params.user.id);
-  const [DATA, setDATA] = useState("");
-
+  const [ind, setInd] = useState(route.params.index);
+  const [i, seti] = useState(route?.params?.user?.id);
+  const [DATA, setDATA] = useState(route?.params?.DATA);
+  const [key, setKey] = useState(Math.random());
   const [loading, setLoading] = React.useState(true);
 
-  const User_data = route.params.user;
+  const [User_data, setUserData] = useState(route.params.DATA[ind]);
   React.useEffect(() => {
     (async () => {
       seti(route.params.user.id);
@@ -47,27 +47,9 @@ export default function Detail({ navigation }) {
   }, []);
   useEffect(() => {
     (async () => {
-      const user_data = await AsyncStorage.getItem("user_data");
-
-      const d = JSON.parse(user_data);
-
-      const data = {
-        email: d.email,
-        password: d.password,
-        id: User_data.id,
-      };
-      get_leads_basic_detail(data)
-        .then((response) => response.json())
-        .then((result) => {
-          var k = result?.data?.next_lead_id;
-
-          setDATA(k);
-          setLoading(false);
-        })
-        .catch((error) => console.log("error", error));
+      console.log(route?.params?.DATA.length);
     })();
   }, []);
-  console.log(DATA);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -76,41 +58,75 @@ export default function Detail({ navigation }) {
           style={styles.back}
           onPress={() => navigation.goBack()}
         >
-          <MaterialCommunityIcons
-            name="keyboard-backspace"
-            size={30}
-            color="white"
-          />
+          <Image source={Images.backArrow} style={styles.icon}/>
         </TouchableOpacity>
 
         <TouchableOpacity
-          style={styles.nxt}
+          style={{
+            ...styles.nxt_view,
+            display: ind > 0 ? "flex" : "none",
+            marginRight: 5,
+            paddingHorizontal: 5,
+          }}
           // onPress={() => {seti(DATA)}}
+          onPress={() => {
+            if (ind > 0) {
+              setUserData(route.params.DATA[ind - 1]);
+              setInd(ind - 1);
+              setKey(Math.random());
+            }
+          }}
         >
-          <View style={styles.nxt_view}>
-            <Text style={styles.nxt_txt}>Next Lead</Text>
-            <Text style={styles.arrow}>
-              <FontAwesome name="long-arrow-right" size={15} color="white" />
-            </Text>
-          </View>
+          <Image
+            source={Images.backArrow}
+            style={{ height: 15, width: 15, resizeMode: "contain" }}
+          />
+          <Text style={styles.nxt_txt}> Previous Lead</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={{
+            ...styles.nxt_view,
+            paddingHorizontal: 5,
+            display: DATA.length > ind + 1 ? "flex" : "none",
+          }}
+          // onPress={() => {seti(DATA)}}
+          onPress={() => {
+            if (DATA.length > ind + 1) {
+console.log(DATA[ind])
+              setUserData(route.params.DATA[ind + 1]);
+              setInd(ind + 1);
+              setKey(Math.random());
+            }
+          }}
+        >
+          <Text style={styles.nxt_txt}>Next Lead</Text>
+          <Image
+            source={Images.nextArrow}
+            style={{ height: 15, width: 15, resizeMode: "contain" }}
+          />
+
+          {/* <Text style={styles.arrow}>
+            <FontAwesome name="long-arrow-right" size={15} color="white" />
+          </Text> */}
         </TouchableOpacity>
       </View>
       <View style={styles.in_box}>
         <View style={styles.circle}>
-          <Text style={styles.circle_text}>{route.params.user.logo}</Text>
+          <Text style={styles.circle_text}>{DATA[ind].name_initials}</Text>
         </View>
-        <Text style={styles.name}>{route.params.user.name}</Text>
+        <Text style={styles.name}>{DATA[ind].name}</Text>
 
         <TouchableOpacity
           onPress={() =>
             navigation.navigate(ScreenNames.EDIT_LEAD_DETAIL, {
-              id: route.params.user.id,
+              id: DATA[ind].id,
             })
           }
         >
           <Image
             style={styles.pencil}
-            source={require("../../assets/pencil.png")}
+            source={Images.editYellow}
           />
         </TouchableOpacity>
         <TouchableOpacity
@@ -122,7 +138,7 @@ export default function Detail({ navigation }) {
         >
           <Image
             style={styles.delete}
-            source={require("../../assets/delete.png")}
+            source={Images.delete}
           />
         </TouchableOpacity>
       </View>
@@ -187,7 +203,7 @@ export default function Detail({ navigation }) {
 
       <View style={{ flex: 1 }}>
         {com == "RECENT" ? (
-          <Basic_detail data={User_data} />
+          <Basic_detail data={User_data} key={key} />
         ) : com == "PRIORITY" ? (
           <Profile />
         ) : com == "ALL" ? (
@@ -212,9 +228,14 @@ const styles = StyleSheet.create({
     width: width * 0.12,
     resizeMode: "contain",
   },
+ icon: {
+    height: 25,
+    width: 25,
+    resizeMode: "contain",
+  },
   arrow: { marginHorizontal: "3%", marginVertical: "3%" },
   nxt_txt: {
-    fontSize: 10,
+    fontSize: 12,
     color: "white",
 
     fontWeight: "normal",
@@ -228,10 +249,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     padding: 2,
-  },
-  nxt: {
-    alignItems: "center",
-    justifyContent: "center",
     marginTop: "4%",
   },
   back: {
@@ -253,6 +270,7 @@ const styles = StyleSheet.create({
 
     // marginTop: 25,
     flexDirection: "row",
+paddingBottom:8
   },
   circle: {
     height: height * 0.075,

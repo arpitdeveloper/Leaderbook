@@ -12,14 +12,7 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  FlatList,
-  SafeAreaView,
-  ActivityIndicator,
-  Modal,
-  Pressable,
-  TextInput,
-  KeyboardAvoidingView,
-} from "react-native";
+ } from "react-native";
 import Related from "./Detail_folder/Related";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { STYLES } from "../constant/styles";
@@ -31,6 +24,7 @@ import {
   FontAwesome,
 } from "@expo/vector-icons";
 import { Colors } from "../constant/colors";
+import { SafeAreaView } from "react-native-safe-area-context";
 const Tab = createMaterialTopTabNavigator();
 
 function MyTabs({ navigation }) {
@@ -48,7 +42,7 @@ function MyTabs({ navigation }) {
   }, []);
 //   console.log(id)
   return (
-    <>
+    <SafeAreaView>
       
       <View style={STYLES.header_box}>
         <TouchableOpacity
@@ -142,7 +136,7 @@ function MyTabs({ navigation }) {
         <Tab.Screen name={ScreenNames.PROFILE} component={Profile} />
         {/* <Tab.Screen name={ScreenNames.RELATED} component={Related} /> */}
       </Tab.Navigator>
-    </>
+    </SafeAreaView>
   );
 }
 export default MyTabs;

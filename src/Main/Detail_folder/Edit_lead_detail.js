@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 
 import {
-  SafeAreaView,
   Dimensions,
   Text,
   View,
@@ -11,6 +10,7 @@ import {
   Alert,
   FlatList,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { Dropdown } from "react-native-element-dropdown";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import { MaterialCommunityIcons, FontAwesome } from "@expo/vector-icons";
@@ -25,6 +25,8 @@ import {
   Edit_leads_basic_detail_update,
 } from "../../Services";
 import Loader from "../../constant/Loader";
+import Header from "../../components/header";
+import { Images } from "../../constant/images";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -138,23 +140,13 @@ function Edit_lead_detail() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={STYLES.header_box}>
-        <TouchableOpacity
-          style={STYLES.back_button}
-          onPress={() => navigation.goBack()}
-        >
-          <MaterialCommunityIcons
-            name="keyboard-backspace"
-            size={30}
-            color="white"
-          />
-        </TouchableOpacity>
-        <Text style={STYLES.header}>Edit lead</Text>
-        <TouchableOpacity style={STYLES.save_touch} onPress={() => postdata()}>
-          <Text style={STYLES.save_text}>save</Text>
-        </TouchableOpacity>
-      </View>
-
+<Header
+label={"Edit lead"}
+leftIcon={Images.backArrow}
+customRight={true}
+onLeftPress={() => navigation.goBack()}
+onRightPress={() => postdata()}
+/>
       {loading ? (
         <Loader loading={loading} />
       ) : data && data.length > 0 ? (

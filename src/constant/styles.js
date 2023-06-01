@@ -80,7 +80,7 @@ marginRight:50
     height: height * 0.08,
     backgroundColor: Colors.MAIN_COLOR,
     alignItems: "center",
-justifyContent:"space-between",
+// justifyContent:"space-between",
     flexDirection: "row",
   },
   login_box: {

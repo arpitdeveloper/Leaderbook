@@ -5,9 +5,10 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  SafeAreaView,
+  
   Image,
 } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 const height = Dimensions.get("window").height;
@@ -34,6 +35,9 @@ export default function Related({ data }) {
 
   const [loading, setLoading] = React.useState(true);
   const navigation = useNavigation();
+  const [note, setnote] = useState(data.pined_note);
+
+  // console.log(note)
 
   useEffect(() => {
     (async () => {
@@ -158,25 +162,20 @@ export default function Related({ data }) {
         onPress={() => setModalVisible(true)}
         style={styles.floating_btn}
       >
-        <Image
-          style={{
-            height: height * 0.1,
-            width: width * 0.2,
-            resizeMode: "contain",
-          }}
-          source={require("../../../assets/note1.jpg")}
-        ></Image>
+        {loading ? null : note == "Yes" ? (
+          <Image
+            style={styles.note3}
+            source={require("../../../assets/note3.png")}
+          ></Image>
+        ) : (
+          <Image
+            style={styles.note1}
+            source={require("../../../assets/note1.jpg")}
+          ></Image>
+        )}
       </TouchableOpacity>
       <View
-        style={{
-          width: "100%",
-          height: height * 0.065,
-          backgroundColor: Colors.MAIN_COLOR,
-          justifyContent: "center",
-          alignItems: "center",
-          position: "absolute", 
-          bottom: 0,
-        }}
+        style={styles.bottom_btn}
       >
         <Text
           // onPress={() => {
@@ -197,6 +196,25 @@ export default function Related({ data }) {
 }
 
 const styles = StyleSheet.create({
+  bottom_btn:{
+    width: "100%",
+    height: height * 0.065,
+    backgroundColor: Colors.MAIN_COLOR,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
+  },
+  note1:{
+    height: height * 0.1,
+    width: width * 0.2,
+    resizeMode: "contain",
+  },
+  note3:{
+    height: height * 0.085,
+    width: width * 0.2,
+    resizeMode: "contain",
+  },
   floating_btn: {
     alignItems: "center",
     justifyContent: "center",

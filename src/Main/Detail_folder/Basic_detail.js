@@ -44,7 +44,8 @@ function Basic_detail({ data }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
   const [d, setd] = useState(false);
-  // console.log(User_data)
+  const [note, setnote] = useState("");
+  console.log(User_data.pined_note)
 
   useEffect(() => {
     (async () => {
@@ -66,6 +67,7 @@ function Basic_detail({ data }) {
           var t = result?.data?.lead_detail?.Lead?.lead_tags;
           var a = result?.data?.tags?.user_tags;
           var b = result?.data?.tags?.system_tags;
+          var note = result?.data?.lead_detail.Lead.pined_note;
           var a = [];
           result?.data?.tags?.user_tags.map((i) => {
             a.push({
@@ -82,10 +84,11 @@ function Basic_detail({ data }) {
               isChecked: false,
             });
           });
-          // console.log(result?.data?.leads)
+
           setDATA(k);
           setDATA1(a);
           setDATA2(b);
+          setnote(note);
           setLoading(false);
           settag(t);
 
@@ -121,7 +124,7 @@ function Basic_detail({ data }) {
 
   // console.log(selected)
 
-  // console.log(DATA2);
+  // console.log(note);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -591,15 +594,25 @@ function Basic_detail({ data }) {
             onPress={() => setModalVisible(true)}
             style={styles.floating_btn}
           >
-            
-            <Image
-              style={{
-                height: height * 0.1,
-                width: width * 0.2,
-                resizeMode: "contain",
-              }}
-              source={require("../../../assets/note1.jpg")}
-            ></Image>
+            {note == "Yes" ? (
+              <Image
+                style={{
+                  height: height * 0.085,
+                  width: width * 0.2,
+                  resizeMode: "contain",
+                }}
+                source={require("../../../assets/note3.png")}
+              ></Image>
+            ) : (
+              <Image
+                style={{
+                  height: height * 0.1,
+                  width: width * 0.2,
+                  resizeMode: "contain",
+                }}
+                source={require("../../../assets/note1.jpg")}
+              ></Image>
+            )}
           </TouchableOpacity>
           <View
             style={{
@@ -608,7 +621,7 @@ function Basic_detail({ data }) {
               backgroundColor: Colors.MAIN_COLOR,
               justifyContent: "center",
               alignItems: "center",
-              position: "absolute", 
+              position: "absolute",
               bottom: 0,
             }}
           >

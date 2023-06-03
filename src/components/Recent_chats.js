@@ -105,7 +105,7 @@ onLeftPress={() => navigation.toggleDrawer()}
         renderItem={({ item, index }) => (
           <View>
             <TouchableOpacity
-              
+              onPress={()=>{navigation.navigate("chat",{name:item.Number})}}
             >
               <View
                 style={{

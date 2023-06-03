@@ -9,6 +9,9 @@ addNote:require('./../Images/add_note.png'),
 addLeads:require('./../Images/add-leads-bg.png'),
 filterVertical:require('./../Images/filter_vertical.png'),
 delete:require('./../Images/delete.png'),
-editYellow:require('./../Images/edit_yellow.png')
+editYellow:require('./../Images/edit_yellow.png'),
+Home:require('./../Images/home_icon.png'),
+state:require('./../Images/view_state.png'),
+people:require('./../Images/people.png'),
 }
 

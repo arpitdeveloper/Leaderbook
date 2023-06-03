@@ -207,7 +207,7 @@ console.log(DATA[ind])
         ) : com == "PRIORITY" ? (
           <Profile />
         ) : com == "ALL" ? (
-          <Related data={i} />
+          <Related data={User_data} key={key} />
         ) : (
           setcom("RECENT")
         )}

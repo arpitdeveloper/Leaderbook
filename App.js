@@ -26,6 +26,8 @@ import Apage from "./src/Main/Detail_folder/Related_page/Apage";
 
 import ChatScreen from "./src/components/recent_chats/Chat";
 import Demo from "./src/components/Demo";
+import View_saved_searches from "./src/Main/Detail_folder/Profile_page/View_saved_searches";
+import Edit_searches from "./src/Main/Detail_folder/Profile_page/Edit_searches";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
 
@@ -55,6 +57,8 @@ export default function App() {
         <Stack.Screen name={ScreenNames.APage} component={Apage} />
         <Stack.Screen name={"chat"} component={ChatScreen}  />
         <Stack.Screen name={"demo"} component={Demo}  />
+        <Stack.Screen name={"Saved_searches"} component={View_saved_searches}  />
+        <Stack.Screen name={"Edit_searches"} component={Edit_searches}  />
         
       </Stack.Navigator>
     </NavigationContainer>

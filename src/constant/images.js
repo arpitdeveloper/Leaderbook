@@ -13,5 +13,7 @@ editYellow:require('./../Images/edit_yellow.png'),
 Home:require('./../Images/home_icon.png'),
 state:require('./../Images/view_state.png'),
 people:require('./../Images/people.png'),
+user:require('./../Images/user_visit.png'),
+dropdown:require('./../Images/all-dropdown.png')
 }
 

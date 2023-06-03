@@ -16,11 +16,14 @@ import { Colors } from "../../constant/colors";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
-function Profile() {
+function Profile(data) {
+  const User_data = data
+  // console.log(User_data)
+  const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <TouchableOpacity style={styles.box}
-         onPress={() => {}}
+         onPress={() => {navigation.navigate("Saved_searches",{data:User_data})}}
       >
         <Image
           source={Images.search}
@@ -29,7 +32,7 @@ function Profile() {
         <Text style={styles.txt}>View Saved Searches</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.box}
-         onPress={() => {}}
+         onPress={() => {navigation.navigate("Edit_searches",{data:User_data})}}
       >
         <Image
           source={Images.search}
@@ -46,7 +49,7 @@ function Profile() {
         />
         <Text style={styles.txt}>View Favorite Properties</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.box}
+      <TouchableOpacity style={styles.box2}
          onPress={() => {}}
       >
         <Image
@@ -55,7 +58,7 @@ function Profile() {
         />
         <Text style={styles.txt}>Send Hot Listing Email</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.box}
+      <TouchableOpacity style={styles.box2}
          onPress={() => {}}
       >
         <Image
@@ -64,7 +67,7 @@ function Profile() {
         />
         <Text style={styles.txt}>View Number of Visits</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.box}
+      <TouchableOpacity style={styles.box2}
          onPress={() => {}}
       >
         <Image
@@ -90,6 +93,16 @@ const styles = StyleSheet.create({
     marginHorizontal: "5%",
   },
   box: {
+    height: "10%",
+    width: "90%",
+    flexDirection: "row",
+    borderRadius: 6,
+    backgroundColor: "#32b0d6",
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "flex-start",marginBottom:"3%"
+  },
+  box2: {
     height: "10%",
     width: "90%",
     flexDirection: "row",

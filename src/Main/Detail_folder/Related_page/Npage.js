@@ -5,7 +5,7 @@ import {
   Text,
   View,
   StyleSheet,
-  TouchableOpacity,TextInput
+  TouchableOpacity,TextInput,Image
 } from "react-native";
 import {
   MaterialCommunityIcons,
@@ -16,6 +16,7 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Colors } from "../../../constant/colors";
 import { STYLES } from "../../../constant/styles";
+import { Images } from "../../../constant/images";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -26,43 +27,37 @@ function Npage() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          height: height * 0.08,
-          backgroundColor: Colors.MAIN_COLOR,
-          alignItems: "center",
+      <View style={{height: height * 0.08,
+    backgroundColor: Colors.MAIN_COLOR,
+    alignItems: "center",
 
-          // marginTop: 25,
-          flexDirection: "row",
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <TouchableOpacity
-            style={{ marginStart: "5%",   }}
-            onPress={() => navigation.goBack()}
+    // marginTop: 25,
+    flexDirection: "row",justifyContent:"space-between"}}>
+      <TouchableOpacity
+            style={{ marginStart: "4%",   }}
+            onPress={() =>  navigation.goBack()}
           >
-            <MaterialCommunityIcons
-              name="keyboard-backspace"
-              size={50}
-              color="white"
-            />
+           <Image
+            source={Images.backArrow}
+            style={{ height: height*0.028, width: 30, resizeMode: "contain" }}
+          />
           </TouchableOpacity>
-          <Text
+        <Text
             style={{
               color: "white",
-              fontWeight: "500",
-              fontSize: 22,
-              flex:0.95,marginStart:10
+              fontWeight: "400",
+              fontSize: 20,
+              
             }}
           >
-            {route.params.name}
+           
           </Text>
-          <TouchableOpacity
+        <TouchableOpacity
             style={{
               
               
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: "center",marginEnd:"5%"
             }}
             onPress={() => {}}
           >
@@ -71,16 +66,15 @@ function Npage() {
                 color: "yellow",
                 borderWidth: 1,
                 borderColor: "yellow",
-                padding: "2%",
-                borderRadius: 12,
+                paddingVertical: "0.5%",
+                borderRadius: 20,
                 fontWeight: "500",
-                fontSize: 14,
+                fontSize: 15,paddingHorizontal:"1%"
               }}
             >
               SAVE
             </Text>
           </TouchableOpacity>
-        </View>
       </View>
 
       <View style={{}}>
@@ -105,8 +99,8 @@ const styles = StyleSheet.create({
     padding: 20,
     
     
-    color: "#808080",
-    fontSize: 17,
+    color: "grey",
+    fontSize: 17,fontWeight:"500"
   },
   button: {
     height: height * 0.085,

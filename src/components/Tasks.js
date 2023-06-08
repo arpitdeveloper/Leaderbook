@@ -15,6 +15,7 @@ import InComplete from "./tasks/Incomplete";
 import { STYLES } from "../constant/styles";
 import { Images } from "../constant/images";
 import Header from "./header";
+import { Colors } from "../constant/colors";
 
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
@@ -91,7 +92,7 @@ function Tasks() {
           <View
             style={{
               flexDirection: "row",
-              backgroundColor: "#003366",
+              backgroundColor: Colors.MAIN_COLOR,
               alignItems: "center",
               justifyContent: "center",
             }}
@@ -100,7 +101,7 @@ function Tasks() {
               style={{
                 height: 3,
                 width: width * 0.5,
-                backgroundColor: com == "MY ORDERS" ? "#ffcc00" : "#003366",
+                backgroundColor: com == "MY ORDERS" ? "#ffcc00" : Colors.MAIN_COLOR,
                 marginTop: "2%",
               }}
             ></View>
@@ -109,7 +110,7 @@ function Tasks() {
               style={{
                 height: 3,
                 width: width * 0.5,
-                backgroundColor: com == "MY ADDRESSES" ? "#ffcc00" : "#003366",
+                backgroundColor: com == "MY ADDRESSES" ? "#ffcc00" : Colors.MAIN_COLOR,
                 marginTop: "2%",
               }}
             ></View>
@@ -136,18 +137,18 @@ const styles = StyleSheet.create({
 
   tab: {
     flexDirection: "row",
-    backgroundColor: "#003366",
+    backgroundColor: Colors.MAIN_COLOR,
     alignItems: "center",
     justifyContent: "center",
   },
   ord: {
-    backgroundColor: "#003366",
+    backgroundColor: Colors.MAIN_COLOR,
     marginTop: "0%",
     marginStart: "5%",
     flex: 0.5,
   },
   add: {
-    backgroundColor: "#003366",
+    backgroundColor: Colors.MAIN_COLOR,
     marginTop: "0%",
     flex: 0.55,
   },

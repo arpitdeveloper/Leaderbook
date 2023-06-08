@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useCallback} from "react";
 
 import {
   StyleSheet,
@@ -22,6 +22,9 @@ import Header from "../components/header";
 import { Images } from "../constant/images";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+import * as SplashScreen from 'expo-splash-screen';
 
 export default function Main_Screen({ navigation }) {
   const [com, setcom] = useState(false);
@@ -29,6 +32,14 @@ export default function Main_Screen({ navigation }) {
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
   const hasUnsavedChanges = Boolean(true);
+  
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
 
   React.useEffect(() => {
     (async () => {
@@ -36,7 +47,7 @@ export default function Main_Screen({ navigation }) {
       const user = await AsyncStorage.getItem("fm");
       console.log(user);
       if (user == 1) {
-        setModalVisible(true);
+        // setModalVisible(true);
       }
     })();
   }, []);
@@ -51,15 +62,24 @@ export default function Main_Screen({ navigation }) {
 
         // Prevent default behavior of leaving the screen
 
-        e.preventDefault();
+        // e.preventDefault();
 
-        setModalVisible1(true);
+        // setModalVisible1(true);
       }),
     [navigation, hasUnsavedChanges]
   );
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 }} onLayout={onLayoutRootView}>
       <Header
         label="Leads"
         leftIcon={Images.menu}
@@ -76,7 +96,11 @@ export default function Main_Screen({ navigation }) {
             }}
           >
             <View style={styles.home_text}>
-              <Text style={styles.text}>RECENT</Text>
+            <Text style={{ fontSize: 15,
+    fontFamily:com == "RECENT" ? "Inter-Black3" : "Inter-Black2",
+    color: "white",
+    marginBottom: "2%",
+    marginTop: "4%",}}>RECENT</Text>
             </View>
           </TouchableOpacity>
 
@@ -87,7 +111,11 @@ export default function Main_Screen({ navigation }) {
             }}
           >
             <View style={styles.home_text}>
-              <Text style={styles.text}>PRIORITY</Text>
+            <Text style={{ fontSize: 15,
+    fontFamily:com == "PRIORITY" ? "Inter-Black3" : "Inter-Black2",
+    color: "white",
+    marginBottom: "2%",
+    marginTop: "4%",}}>PRIORITY</Text>
             </View>
           </TouchableOpacity>
           <TouchableOpacity
@@ -97,7 +125,11 @@ export default function Main_Screen({ navigation }) {
             }}
           >
             <View style={styles.home_text}>
-              <Text style={styles.text}>ALL</Text>
+              <Text style={{ fontSize: 15,
+    fontFamily:com == "All" ? "Inter-Black3" : "Inter-Black2",
+    color: "white",
+    marginBottom: "2%",
+    marginTop: "4%",}}>ALL</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -159,7 +191,7 @@ export default function Main_Screen({ navigation }) {
         <View style={styles.centeredView}>
           <ImageBackground
             style={styles.modalView}
-            source={require("../../assets/sms.png")}
+            source={require("../../assets/sms1.png")}
           >
             <Text style={{ fontSize: 12, color: "white" }}>
               Press and hold any lead for multi calling
@@ -316,8 +348,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   text: {
-    fontSize: 14,
-    fontWeight: "500",
+    fontSize: 15,
+    fontFamily:"Inter-Black2",
     color: "white",
     marginBottom: "2%",
     marginTop: "4%",
@@ -329,7 +361,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.MAIN_COLOR,
 
     flex: 0.48,
-    marginStart: "7%",
+    marginStart: "5%",
   },
   add: {
     backgroundColor: Colors.MAIN_COLOR,

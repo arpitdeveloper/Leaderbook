@@ -30,7 +30,7 @@ function View_saved_searches() {
   const route = useRoute();
   const [mark, setmark] = useState(false);
   const [mark1, setmark1] = useState(false);
-  //   console.log(route.params.data.data.email)
+    // console.log(route.params.data.email)
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.header_box}>
@@ -48,7 +48,7 @@ function View_saved_searches() {
         <View style={styles.box1}>
           <Text style={styles.txt1}>Lead User:</Text>
           <Text style={styles.txt2}>
-            {route.params.data.data.name} ({route.params.data.data.email} -
+            {route.params.data.name} ({route.params.data.email} -
           </Text>
         </View>
         <View style={styles.box2}>

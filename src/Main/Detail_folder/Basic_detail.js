@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useFonts } from 'expo-font';
 import {
   StyleSheet,
   Text,
@@ -31,8 +32,16 @@ import { get_leads_basic_detail } from "../../Services";
 import Loader from "../../constant/Loader";
 import { Colors } from "../../constant/colors";
 import { ScreenNames } from "../../constant/ScreenNames";
+import { Images } from "../../constant/images";
 
 function Basic_detail({ data }) {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const User_data = data;
   const navigation = useNavigation();
 
@@ -43,12 +52,18 @@ function Basic_detail({ data }) {
   const [loading, setLoading] = React.useState(true);
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible1, setModalVisible1] = useState(false);
-  const [d, setd] = useState(false);
-  const [note, setnote] = useState("");
-  console.log(User_data.pined_note)
+  const [d, setd] = useState(data?.pined_note == "Yes" ? 3 : 0);
+  const [note, setnote] = useState(data?.pined_note_text);
+  const [n, setn] = useState("");
+  const [pin_date, setpin_date] = useState(data?.pinned_date);
+  const [icon_note, seticon_note] = useState(data?.pined_note);
+  const [modalTitle2, setModalTitle2] = useState(data?.pinned_by);
+
+  console.log(note)
 
   useEffect(() => {
     (async () => {
+      // user_data.pined_note == "Yes" ? setd(3) : setd(0);
       const user_data = await AsyncStorage.getItem("user_data");
 
       const d = JSON.parse(user_data);
@@ -88,7 +103,8 @@ function Basic_detail({ data }) {
           setDATA(k);
           setDATA1(a);
           setDATA2(b);
-          setnote(note);
+         
+          
           setLoading(false);
           settag(t);
 
@@ -134,6 +150,7 @@ function Basic_detail({ data }) {
         <>
           <FlatList
             data={DATA}
+            style={{marginBottom:"12%"}}
             // keyExtractor={(item) => item.id}
             renderItem={({ item, index }) => (
               <>
@@ -196,10 +213,10 @@ function Basic_detail({ data }) {
                       <Image
                         style={{
                           height: height * 0.032,
-                          width: width * 0.15,
+                          width: width * 0.13,
                           resizeMode: "contain",
                         }}
-                        source={require("../../../assets/sms.jpg")}
+                        source={Images.sms}
                       ></Image>
                     </TouchableOpacity>
                   </View>
@@ -327,103 +344,209 @@ function Basic_detail({ data }) {
                   </Text>
                 </View>
                 <View style={styles.line}></View>
+                
               </>
             )}
           />
           <View style={styles.centeredView}>
-            {d ? (
-              <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                  Alert.alert("Modal has been closed.");
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <View style={styles.modal_page}>
-                  <View style={styles.modalView1}>
-                    <View style={styles.pin2}>
-                      <Text style={styles.modalText1}>Pin Note</Text>
-                      <Pressable
-                        onPress={() => (
-                          setModalVisible(!modalVisible), setd(false)
-                        )}
-                      >
-                        <Entypo name="cross" size={30} color="black" />
-                      </Pressable>
-                    </View>
-                    <View style={styles.line}></View>
-                    <KeyboardAvoidingView enabled>
-                      <View style={styles.input}>
-                        <TextInput
-                          // onChangeText={onChangeNumber}
-                          // value={number}
-                          placeholder=""
-                        />
+          {d == 1 ? (
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <View style={styles.modal_page}>
+                    <View style={styles.modalView1}>
+                      <View style={styles.pin2}>
+                        <Text style={styles.modalText1}>{modalTitle2}</Text>
+                        <Pressable
+                          onPress={() => (
+                            setModalVisible(!modalVisible), setd(0)
+                          )}
+                        >
+                          <Entypo name="cross" size={30} color="black" />
+                        </Pressable>
                       </View>
-                    </KeyboardAvoidingView>
-                    <View style={styles.modal_btn_box}>
-                      <TouchableOpacity
-                        onPress={() => {}}
-                        style={styles.modal_btn_txt1}
+                      <View style={styles.line2}></View>
+
+                      <KeyboardAvoidingView enabled>
+                        <View style={styles.input}>
+                          <TextInput
+                            //  value={""}
+                            onChangeText={(txt) => (setnote(txt), setn(txt))}
+                          />
+                        </View>
+                      </KeyboardAvoidingView>
+                      <View style={styles.modal_btn_box}>
+                        {n.length > 0 ? (
+                          <TouchableOpacity
+                            onPress={() => {
+                              setd(3);
+                            }}
+                            style={styles.modal_btn}
+                          >
+                            <Text style={styles.modal_btn_txt}>Save</Text>
+                          </TouchableOpacity>
+                        ) : (
+                          <TouchableOpacity
+                            onPress={() => {}}
+                            activeOpacity={1}
+                            style={styles.modal_btn}
+                          >
+                            <Text style={styles.modal_btn_txt}>Save</Text>
+                          </TouchableOpacity>
+                        )}
+
+                        <TouchableOpacity
+                          onPress={() => {
+                            {
+                              setd(0);
+                            }
+                          }}
+                          style={styles.modal_btn}
+                        >
+                          <Text style={styles.modal_btn_txt}>Close</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </Modal>
+              ) : d == 4 ? (
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <View style={styles.modal_page}>
+                    <View style={styles.modalView1}>
+                      <View style={styles.pin2}>
+                        <Text style={styles.modalText1}>Pin Note</Text>
+                        <Pressable onPress={() => setd(3)}>
+                          <Entypo name="cross" size={30} color="black" />
+                        </Pressable>
+                      </View>
+                      <View style={styles.line2}></View>
+
+                      <KeyboardAvoidingView enabled>
+                        <View style={styles.input}>
+                          <TextInput
+                            value={note}
+                            onChangeText={(txt) => setnote(txt)}
+                          />
+                        </View>
+                      </KeyboardAvoidingView>
+                      <View style={styles.modal_btn_box}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            setd(3);
+                          }}
+                          style={styles.modal_btn}
+                        >
+                          <Text style={styles.modal_btn_txt}>Save</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            {
+                              setd(3);
+                            }
+                          }}
+                          style={styles.modal_btn}
+                        >
+                          <Text style={styles.modal_btn_txt}>Close</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </Modal>
+              ) : d == 0 ? (
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <View style={styles.modal_page}>
+                    <View style={styles.modalView}>
+                      <View style={styles.pin}>
+                        <Text style={styles.modalText}>Pin note</Text>
+                        <Pressable
+                          style={{}}
+                          onPress={() => setModalVisible(!modalVisible)}
+                        >
+                          <Entypo name="cross" size={30} color="black" />
+                        </Pressable>
+                      </View>
+
+                      <Text
+                        style={{
+                          color: "black",
+                          marginLeft: "4%",
+                          marginTop: "12%",
+                        }}
                       >
-                        <Text style={styles.modal_btn_txt}>Save</Text>
-                      </TouchableOpacity>
+                        No note added yet.
+                      </Text>
                       <TouchableOpacity
                         onPress={() => {
-                          setd(!d);
+                          setd(1);
                         }}
-                        style={styles.modal_btn}
+                        style={styles.add_note}
                       >
-                        <Text style={styles.modal_btn_txt}>Close</Text>
+                        <Text style={{ color: "white" }}>Add Note</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
-                </View>
-              </Modal>
-            ) : (
-              <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                  Alert.alert("Modal has been closed.");
-                  setModalVisible(!modalVisible);
-                }}
-              >
-                <View style={styles.modal_page}>
-                  <View style={styles.modalView}>
-                    <View style={styles.pin}>
-                      <Text style={styles.modalText}>Pin Note</Text>
-                      <Pressable
-                        style={{}}
-                        onPress={() => (
-                          setModalVisible(!modalVisible), setd(false)
-                        )}
+                </Modal>
+              ) : d == 3 ? (
+                <Modal
+                  animationType="slide"
+                  transparent={true}
+                  visible={modalVisible}
+                  onRequestClose={() => {
+                    Alert.alert("Modal has been closed.");
+                    setModalVisible(!modalVisible);
+                  }}
+                >
+                  <View style={styles.modal_page}>
+                    <View style={styles.modalView2}>
+                      <View style={styles.pin}>
+                        <Text style={styles.modalText}>{modalTitle2}</Text>
+                        <Pressable
+                          style={{}}
+                          onPress={() => (
+                            setModalVisible(!modalVisible)
+                            // , 
+                            // setd(0), setn("")
+                          )}
+                        >
+                          <Entypo name="cross" size={30} color="black" />
+                        </Pressable>
+                      </View>
+                      <Text style={styles.date}>{pin_date}</Text>
+                      <Text style={styles.note3}>{note}</Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          setd(4);
+                        }}
+                        style={styles.update_note}
                       >
-                        <Entypo name="cross" size={30} color="black" />
-                      </Pressable>
+                        <Text style={styles.update_txt}>Update</Text>
+                      </TouchableOpacity>
                     </View>
-                    <Text
-                      style={{
-                        color: "black",
-                        marginLeft: "4%",
-                        marginTop: "12%",
-                      }}
-                    >
-                      No note added yet.
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => setd(!d)}
-                      style={styles.add_note}
-                    >
-                      <Text style={{ color: "white" }}>Add Note</Text>
-                    </TouchableOpacity>
                   </View>
-                </View>
-              </Modal>
-            )}
+                </Modal>
+              ) : null}
           </View>
           <View style={styles.centeredView}>
             <Modal
@@ -442,7 +565,7 @@ function Basic_detail({ data }) {
                   marginTop: "8%",
                 }}
               >
-                <View style={styles.modalView2}>
+                <View style={styles.modal_tag_view}>
                   <View
                     style={{
                       flexDirection: "row",
@@ -451,22 +574,24 @@ function Basic_detail({ data }) {
                       alignItems: "center",
                     }}
                   >
-                    <Text style={styles.modalText2}>Add Tags To Leads</Text>
+                    <Text style={styles.modal_tagText2}>Add Tags To Leads</Text>
 
                     <Pressable
                       style={{}}
                       onPress={() => setModalVisible1(!modalVisible1)}
                     >
-                      <Text style={styles.modalText3}>X</Text>
+                      <Text style={styles.modal_tagText3}>X</Text>
                     </Pressable>
                   </View>
                   <View style={styles.line}></View>
                   <KeyboardAvoidingView enabled>
-                    <View style={styles.input2}>
+                    <View style={styles.tag_input2}>
                       <TextInput
                         // onChangeText={onChangeNumber}
                         // value={number}
                         placeholder="Search Tags"
+                        style={{fontFamily:"Inter-Black4",fontSize:16}}
+                        placeholderTextColor={"#cccccc"}
                       />
                     </View>
                   </KeyboardAvoidingView>
@@ -478,7 +603,7 @@ function Basic_detail({ data }) {
                         style={{
                           fontWeight: "400",
                           fontSize: 20,
-                          margin: "3%",
+                          margin: "3%",fontFamily:"Inter-Black"
                         }}
                       >
                         {title}
@@ -506,7 +631,7 @@ function Basic_detail({ data }) {
                               style={{
                                 fontSize: 16,
                                 fontWeight: "normal",
-                                marginBottom: "5%",
+                                marginBottom: "5%",fontFamily:"Inter-Black"
                               }}
                             >
                               {item.label}
@@ -571,20 +696,9 @@ function Basic_detail({ data }) {
                   />
 
                   <TouchableOpacity
-                    style={{
-                      height: height * 0.045,
-
-                      backgroundColor: Colors.float_btn,
-                      alignSelf: "center",
-                      marginTop: "5%",
-                      borderRadius: 25,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      marginBottom: 10,
-                      padding: 3,
-                    }}
+                    style={styles.save_lead_tag}
                   >
-                    <Text style={{ color: "white" }}>Save Lead To Tag</Text>
+                    <Text style={{ color: "white",fontFamily:"Inter-Black2" }}>Save Lead To Tag</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -594,23 +708,23 @@ function Basic_detail({ data }) {
             onPress={() => setModalVisible(true)}
             style={styles.floating_btn}
           >
-            {note == "Yes" ? (
+            {icon_note == "Yes" ? (
               <Image
                 style={{
-                  height: height * 0.085,
+                  height: height * 0.07,
                   width: width * 0.2,
                   resizeMode: "contain",
                 }}
-                source={require("../../../assets/note3.png")}
+                source={Images.pencil_box}
               ></Image>
             ) : (
               <Image
                 style={{
-                  height: height * 0.1,
+                  height: height * 0.07,
                   width: width * 0.2,
                   resizeMode: "contain",
                 }}
-                source={require("../../../assets/note1.jpg")}
+                source={Images.plus_box}
               ></Image>
             )}
           </TouchableOpacity>
@@ -634,7 +748,7 @@ function Basic_detail({ data }) {
                   id: User_data.id,
                 });
               }}
-              style={{ color: "white", fontSize: 20 }}
+              style={{ color: "white", fontSize: 20,fontFamily:"Inter-Black" }}
             >
               View Lead Activity
             </Text>
@@ -646,10 +760,42 @@ function Basic_detail({ data }) {
 }
 
 const styles = StyleSheet.create({
-  pin: {
+  save_lead_tag:{
+    height: height * 0.045,
+
+    backgroundColor: Colors.float_btn,
+    alignSelf: "center",
+    marginTop: "5%",
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
+    padding: 3,
+  },
+  update_txt: { color: "white", fontSize: 17,fontFamily:"Inter-Black" },
+  note3: { color: "black", margin: "4%", fontSize: 14,fontFamily:"Inter-Black" },
+  date: {
+    color: "black",
+    marginLeft: "4%",
+    marginVertical: "1%",
+    fontSize: 15,fontFamily:"Inter-Black4",fontFamily:"Inter-Black"
+  },
+  set: {
     flexDirection: "row",
-    justifyContent: "space-between",
-    margin: "4%",
+    padding: "3%",
+    alignItems: "center",
+   
+  },
+  circle_box: {
+    flexDirection: "row",
+    paddingVertical: "2%",
+    alignItems: "center",
+    
+  },
+  flat_view: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-end",
   },
   pin2: {
     flexDirection: "row",
@@ -664,11 +810,11 @@ const styles = StyleSheet.create({
     marginHorizontal: "10%",
     marginVertical: "4%",
   },
-  modal_btn_txt: { color: "white", fontSize: 17 },
-  modal_btn_txt1: {
+  modal_btn_txt: { color: "white", fontSize: 17,fontFamily:"Inter-Black" },
+  modal_btn: {
     height: height * 0.05,
     width: "45%",
-    backgroundColor: "#347ab6",
+    backgroundColor: "#d8524f",
     alignSelf: "center",
 
     borderRadius: 25,
@@ -680,15 +826,10 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(52, 52, 52, 0.7)",
     marginTop: "10%",
   },
-  modal_btn: {
-    height: height * 0.05,
-    width: "45%",
-    backgroundColor: "#d8524f",
-    alignSelf: "center",
-
-    borderRadius: 25,
-    justifyContent: "center",
-    alignItems: "center",
+  pin: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    margin: "4%",
   },
   add_note: {
     height: height * 0.05,
@@ -701,65 +842,78 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 10,
   },
-  item: {
-    backgroundColor: "#f9c2ff",
-    padding: 5,
-    marginVertical: 4,
+  update_note: {
+    height: height * 0.05,
+    width: width * 0.3,
+    backgroundColor: "#5bbfdf",
+    alignSelf: "center",
+    marginTop: "48%",
+    borderRadius: 25,
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 10,
   },
-  header: {
-    fontSize: 32,
-    backgroundColor: "#fff",
+  tag_box: {
+    width: "100%",
+    height: height * 0.065,
+    backgroundColor: Colors.MAIN_COLOR,
+    justifyContent: "center",
+    alignItems: "center",
+    position: "absolute",
+    bottom: 0,
   },
-  title: {
-    fontSize: 24,
+  note: {
+    height: height * 0.07,
+    width: width * 0.2,
+    resizeMode: "contain",
   },
-  pad: { paddingVertical: "3%", paddingHorizontal: "5%" },
+  note2: {
+    height: height * 0.057,
+    width: width * 0.11,
+    resizeMode: "contain",  
+
+    
+  },
+  tag_view: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  tag_touch: { alignItems: "center" },
+  tag: { color: "white", fontSize: 18,fontFamily:"Inter-Black" },
+  flat: { backgroundColor: "#f2f2f2", padding: 10, marginBottom: 40 },
   input: {
     height: height * 0.25,
     margin: 12,
 
     padding: 10,
     backgroundColor: "#f2f2f2",
-    borderRadius: 8,
-  },
-  input2: {
-    height: height * 0.05,
-    margin: "2%",
-
-    padding: 10,
-    borderWidth: 1,
-    borderRadius: 20,
+    borderRadius: 8,fontFamily:"Inter-Black"
   },
   modalText: {
     fontSize: 20,
-    fontWeight: "bold",
-  },
-  modalText3: {
-    fontSize: 18,
-    fontWeight: "normal",
-    color: "#666666",
-  },
-  modalText2: {
-    fontSize: 18,
-    fontWeight: "normal",
-    flex: 0.95,
-    marginStart: "25%",
-    color: "#666666",
+    fontWeight: "500",fontFamily:"Inter-Black"
   },
   modalText1: {
-    fontSize: 18,
-    marginHorizontal: "25%",
+    fontSize: 20,
+    marginHorizontal: "30%",fontFamily:"Inter-Black4"
   },
   centeredView: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "rgba(52, 52, 52, 0.3)",
   },
   modalView: {
     // height: height * 0.44,
     width: "90%",
     backgroundColor: "#fcf5bf",
+    borderRadius: 10,
+
+    elevation: 5,
+    alignSelf: "center",
+  },
+  modalView2: {
+    // height: height * 0.44,
+    width: "90%",
+    backgroundColor: "#feb6c1",
     borderRadius: 10,
 
     elevation: 5,
@@ -774,7 +928,55 @@ const styles = StyleSheet.create({
     elevation: 20,
     alignSelf: "center",
   },
-  modalView2: {
+  
+  item: {
+    backgroundColor: "#f9c2ff",
+    padding: 5,
+    marginVertical: 4,fontFamily:"Inter-Black"
+  },
+  header: {
+    fontSize: 32,
+    backgroundColor: "#fff",fontFamily:"Inter-Black"
+  },
+  title: {
+    fontSize: 24,fontFamily:"Inter-Black"
+  },
+  pad: { paddingVertical: "3%", paddingHorizontal: "5%" },
+  
+  tag_input2: {
+    height: height * 0.05,
+    margin: "2%",
+
+    padding: 10,
+    borderWidth: 1,
+    borderRadius: 20,
+  },
+  modalText: {
+    fontSize: 20,
+    fontFamily:"Inter-Black2"
+  },
+  modal_tagText3: {
+    fontSize: 18,
+    
+    color: "#666666",fontFamily:"Inter-Black"
+  },
+  modal_tagText2: {
+    fontSize: 18,
+    fontWeight: "normal",
+    flex: 0.95,
+    marginStart: "25%",
+    color: Colors.blue_txt,fontFamily:"Inter-Black"
+  },
+ 
+  centeredView: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(52, 52, 52, 0.3)",
+  },
+  
+  
+  modal_tag_view: {
     // height: height*0.55,
     width: "95%",
     backgroundColor: "white",
@@ -789,7 +991,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
 
     position: "absolute",
-    bottom: "8%",
+    bottom: "10%",
     right: "1%",
   },
   tag: { fontSize: 18, marginLeft: 5, color: "white", fontWeight: "300" },
@@ -816,13 +1018,13 @@ const styles = StyleSheet.create({
     color: "#808080",
 
     marginTop: "2%",
-    fontWeight: "300",
+    fontWeight: "300",fontFamily:"Inter-Black4"
   },
   number: {
     fontSize: 15,
 
-    fontWeight: "400",
-    color: Colors.MAIN_COLOR,
+    // fontWeight: "400",
+    color: Colors.blue_txt,fontFamily:"Inter-Black"
   },
 
   line: {

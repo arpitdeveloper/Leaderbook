@@ -25,10 +25,19 @@ import Loader from "../constant/Loader";
 import { New_lead_detail, New_lead_detail_update } from "../Services";
 import Header from "../components/header";
 import { Images } from "../constant/images";
+import { Colors } from "../constant/colors";
+import { useFonts } from 'expo-font';
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 function New_lead() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const navigation = useNavigation();
   const route = useRoute();
   const [data, setdata] = useState([]);
@@ -172,14 +181,14 @@ function New_lead() {
 
   return (
     <SafeAreaView style={styles.container}>
-<Header
-label={"New Lead"}
-leftIcon={Images.backArrow}
-onLeftPress={() => navigation.goBack()}
-customRight={true}
-onRightPress={() => {}}
-/>
-  
+      <Header
+        label={"New Lead"}
+        leftIcon={Images.backArrow}
+        onLeftPress={() => navigation.goBack()}
+        customRight={true}
+        onRightPress={() => {}}
+      />
+
       {loading ? (
         <Loader loading={loading} />
       ) : data && data.length > 0 ? (
@@ -192,7 +201,7 @@ onRightPress={() => {}}
               <View style={{ paddingHorizontal: "6%", marginBottom: "20%" }}>
                 <Text style={styles.name_txt}>{item.first_name.label}</Text>
                 <TextInput
-                  placeholder="Enter first name"
+                  // placeholder="Enter first name"
                   style={styles.input}
                   // value={First_name}
                   onChangeText={(txt) => setFirst_name(txt)}
@@ -200,15 +209,46 @@ onRightPress={() => {}}
                 {/* {console.log(First_name)} */}
                 <Text style={styles.name_txt}>{item.last_name.label}</Text>
                 <TextInput
-                  placeholder=" Enter last name"
+                  // placeholder=" Enter last name"
                   style={styles.input}
                   // value={last_name}
                   onChangeText={(txt) => setLast_name(txt)}
                 ></TextInput>
+                   <Text style={styles.name_txt}>Choose Site</Text>
+                {/* {renderLabel()} */}
+                <Dropdown
+                  style={[styles.dropdown, isFocus && { borderColor: "blue" }]}
+                  placeholderStyle={styles.placeholderStyle}
+                  selectedTextStyle={styles.selectedTextStyle}
+                  // inputSearchStyle={styles.inputSearchStyle}
+                  // iconStyle={styles.iconStyle}
+                  data={item.lead_type_id.dropdown_arr}
+                  search={false}
+                  maxHeight={300}
+                  labelField="label"
+                  valueField="value"
+                  placeholder={"Test2"}
+                  value={type_value}
+                  onFocus={() => setIsFocus(true)}
+                  onBlur={() => setIsFocus(false)}
+                  onChange={(i) => {
+                    settype_value(i.value);
+                    AsyncStorage.setItem("Type", JSON.stringify(i.label));
+                    setIsFocus(false);
+                  }}
+                  renderRightIcon={() => (
+                    <AntDesign
+                      style={styles.icon}
+                      color="#003366"
+                      name="downsquare"
+                      size={30}
+                    />
+                  )}
+                />
 
                 <Text style={styles.name_txt}>{item.email.label}</Text>
                 <TextInput
-                  placeholder="Enter email"
+                  // placeholder="Enter email"
                   style={styles.input}
                   // value={email}
                   onChangeText={(txt) => setEmail(txt)}
@@ -216,14 +256,14 @@ onRightPress={() => {}}
 
                 <Text style={styles.name_txt}>{item.phone.label}</Text>
                 <TextInput
-                  placeholder="Enter Phone"
+                  // placeholder="Enter Phone"
                   style={styles.input}
                   // value={phone}
                   onChangeText={(txt) => setPhone(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}>{item.comments.label}</Text>
                 <TextInput
-                  placeholder="No Comments"
+                  // placeholder="No Comments"
                   style={styles.comments}
                   // value={comments}
                   onChangeText={(txt) => setcomments(txt)}
@@ -359,28 +399,28 @@ onRightPress={() => {}}
 
                 <Text style={styles.name_txt}>{item.company_name.label}</Text>
                 <TextInput
-                  placeholder="Enter Company name"
+                  // placeholder="Enter Company name"
                   style={styles.input}
                   // value={company}
                   onChangeText={(txt) => setCompany(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}>{item.address.label}</Text>
                 <TextInput
-                  placeholder="Enter Address"
+                  // placeholder="Enter Address"
                   style={styles.input}
                   // value={address}
                   onChangeText={(txt) => setAddress(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}>{item.city.label}</Text>
                 <TextInput
-                  placeholder="Enter City"
+                  // placeholder="Enter City"
                   style={styles.input}
                   // value={city}
                   onChangeText={(txt) => setCity(txt)}
                 ></TextInput>
                 <Text style={styles.name_txt}>State/Province</Text>
                 <TextInput
-                  placeholder="Enter State"
+                  // placeholder="Enter State"
                   style={styles.input}
                   // value={state}
                   onChangeText={(txt) => setstate(txt)}
@@ -398,12 +438,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
- header: {
+  header: {
     color: "white",
     fontWeight: "normal",
     fontSize: 19,
     // flex:1,
-    textAlign: "center",
+    textAlign: "center",fontFamily:"Inter-Black"
   },
 
   dropdown: {
@@ -426,12 +466,12 @@ const styles = StyleSheet.create({
     // fontSize: 14,
   },
   placeholderStyle: {
-    fontSize: 16,
-    color: "#808080",
+    fontSize: 15,
+    color: "#808080",fontFamily:"Inter-Black"
   },
   selectedTextStyle: {
-    fontSize: 16,
-    color: "#808080",
+    fontSize: 15,
+    color: "#808080",fontFamily:"Inter-Black"
   },
   iconStyle: {
     width: 20,
@@ -442,14 +482,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  name_txt: { fontSize: 17, marginBottom: "2%", paddingTop: "5%" },
+  name_txt: { fontSize: 17, marginBottom: "2%", paddingTop: "5%",color:Colors.blue_txt ,fontFamily:"Inter-Black4",marginStart:"2%"},
   input: {
     backgroundColor: "white",
-    color: "#808080",
+    color: Colors.txt,
     paddingHorizontal: "2%",
-    fontSize: 17,
+    fontSize: 16,
     height: height * 0.06,
-    borderRadius: 6,
+    borderRadius: 6,fontFamily:"Inter-Black"
   },
   comments: {
     backgroundColor: "white",
@@ -457,7 +497,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: "2%",
     fontSize: 17,
     height: "5%",
-    borderRadius: 6,
+    borderRadius: 6,fontFamily:"Inter-Black"
   },
 });
 

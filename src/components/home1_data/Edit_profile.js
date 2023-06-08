@@ -27,7 +27,9 @@ import { edit_profile, user_update } from "../../Services";
 import { ScreenNames } from "../../constant/ScreenNames";
 import { STYLES } from "../../constant/styles";
 import Header from "../header";
+import { useFonts } from 'expo-font';
 import { Images } from "../../constant/images";
+import { Colors } from "../../constant/colors";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 function Edit_profile() {
@@ -48,6 +50,13 @@ function Edit_profile() {
   const [address, setAddress] = React.useState("");
   const [drop, setDrop] = React.useState("");
   const [id, setId] = React.useState("");
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
 
   useEffect(() => {
     (async () => {
@@ -311,10 +320,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  name_txt: { fontSize: 17, marginBottom: "2%", paddingTop: "5%" },
+  name_txt: { fontSize: 17, marginBottom: "2%", paddingTop: "5%",color:Colors.blue_txt ,fontFamily:"Inter-Black4" },
   input: {
     backgroundColor: "white",
-    color: "black",
+    color: Colors.txt,
     paddingHorizontal: "2%",
     fontSize: 17,
     height: 50,

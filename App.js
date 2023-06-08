@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState, useEffect ,useCallback} from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login_screen from "./src/Login";
@@ -30,12 +30,47 @@ import View_saved_searches from "./src/Main/Detail_folder/Profile_page/View_save
 import Edit_searches from "./src/Main/Detail_folder/Profile_page/Edit_searches";
 LogBox.ignoreLogs(["Warning: ..."]); // Ignore log notification by message
 LogBox.ignoreAllLogs(); //Ignore all log notifications
+import * as SplashScreen from 'expo-splash-screen';
+
+SplashScreen.preventAutoHideAsync();
+
+
 
 const Stack = createStackNavigator();
 
 export default function App() {
+  const [appIsReady, setAppIsReady] = useState(false);
+
+  useEffect(() => {
+    async function prepare() {
+      try {
+       
+        await new Promise(resolve => setTimeout(resolve, 1000));
+      } catch (e) {
+        console.warn(e);
+      } finally {
+        
+        setAppIsReady(true);
+      }
+    }
+
+    prepare();
+  }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (appIsReady) {
+     
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  if (!appIsReady) {
+    return null;
+  }
+
+
   return (
-    <NavigationContainer>
+    <NavigationContainer  onLayout={onLayoutRootView}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name={ScreenNames.LOGIN} component={Login_screen} />
         <Stack.Screen name={ScreenNames.FORGOT_PASSWORD} component={Forgot_pasword}/>

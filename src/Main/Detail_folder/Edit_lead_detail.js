@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import { useFonts } from 'expo-font';
 import {
   Dimensions,
   Text,
@@ -8,7 +8,7 @@ import {
   TouchableOpacity,
   StyleSheet,
   Alert,
-  FlatList,
+  FlatList,Image
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Dropdown } from "react-native-element-dropdown";
@@ -27,10 +27,18 @@ import {
 import Loader from "../../constant/Loader";
 import Header from "../../components/header";
 import { Images } from "../../constant/images";
+import { Colors } from "../../constant/colors";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 function Edit_lead_detail() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const navigation = useNavigation();
   const route = useRoute();
   const [data, setdata] = useState([]);
@@ -141,7 +149,7 @@ function Edit_lead_detail() {
   return (
     <SafeAreaView style={styles.container}>
 <Header
-label={"Edit lead"}
+label={"Edit Lead"}
 leftIcon={Images.backArrow}
 customRight={true}
 onLeftPress={() => navigation.goBack()}
@@ -315,12 +323,10 @@ onRightPress={() => postdata()}
                     setIsFocus(false);
                   }}
                   renderRightIcon={() => (
-                    <FontAwesome
-                      style={styles.icon}
-                      name="calendar"
-                      size={30}
-                      color="grey"
-                    />
+                    <Image
+                      style={styles.img}
+                      source={Images.calender}
+                    ></Image>
                   )}
                 />
                 <Text style={styles.name_txt}>
@@ -373,6 +379,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  img:{height:25,width:25,resizeMode:"contain",},
 
   dropdown: {
     height: height * 0.06,
@@ -395,11 +402,11 @@ const styles = StyleSheet.create({
   },
   placeholderStyle: {
     fontSize: 16,
-    color: "#808080",
+    color: "#808080",fontFamily:"Inter-Black"
   },
   selectedTextStyle: {
     fontSize: 16,
-    color: "#808080",
+    color: "#808080",fontFamily:"Inter-Black"
   },
   iconStyle: {
     width: 20,
@@ -407,17 +414,17 @@ const styles = StyleSheet.create({
   },
   inputSearchStyle: {
     height: 40,
-    fontSize: 16,
+    fontSize: 16,fontFamily:"Inter-Black"
   },
 
-  name_txt: { fontSize: 17, marginBottom: "2%", paddingTop: "5%" },
+  name_txt: { fontSize: 16, marginBottom: "2%", paddingTop: "5%",color:Colors.blue_txt,fontFamily:"Inter-Black4" },
   input: {
     backgroundColor: "white",
-    color: "#808080",
+    color: Colors.txt,
     paddingHorizontal: "2%",
     fontSize: 17,
     height: height * 0.06,
-    borderRadius: 6,
+    borderRadius: 6,fontFamily:"Inter-Black"
   },
   comments: {
     backgroundColor: "white",
@@ -425,7 +432,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: "2%",
     fontSize: 17,
     height: "5%",
-    borderRadius: 6,
+    borderRadius: 6,fontFamily:"Inter-Black"
   },
 });
 

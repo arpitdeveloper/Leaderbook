@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState ,useCallback} from "react";
 import {
   StyleSheet,
   Text,
@@ -18,6 +18,9 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { LOGIN } from "./Services";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { ScreenNames } from "./constant/ScreenNames";
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+import * as SplashScreen from 'expo-splash-screen';
 import { STYLES } from "./constant/styles";
 import { Colors } from "./constant/colors";
 
@@ -26,6 +29,13 @@ const width = Dimensions.get("window").width;
 
 function Login_screen() {
   const navigation = useNavigation();
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [loading, setLoading] = React.useState(false);
@@ -81,8 +91,19 @@ function Login_screen() {
     }
   };
 
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={styles.container} onLayout={onLayoutRootView}>
       <View>
         <View style={STYLES.login_box}>
           <Text style={styles.login}>Login</Text>
@@ -267,7 +288,7 @@ const styles = StyleSheet.create({
     
     borderRadius: 6,
     color: "black",
-    fontSize: 19,
+    fontSize: 19, fontFamily:"Inter-Black4",
   },
   button: {
     height: height * 0.095,
@@ -285,23 +306,23 @@ const styles = StyleSheet.create({
     textAlign: "center",
     color: "white",
     fontSize: 24,
-    fontWeight: "normal",
+    fontWeight: "normal", fontFamily:"Inter-Black",
     
   },
   login1: {
     textAlign: "center",
     color: "white",
     fontSize: 24,
-    fontWeight: "normal",
+    fontWeight: "normal", fontFamily:"Inter-Black",
   },
 
   fp_text: {
     fontSize: 12,
     color:Colors.MAIN_COLOR,
     textAlign: "right",
-    fontWeight: "normal",
+    
     paddingHorizontal: 20,
-    paddingVertical: 15,
+    paddingVertical: 15, fontFamily:"Inter-Black",
   },
 });
 

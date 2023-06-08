@@ -3,6 +3,9 @@ import React from "react";
 import { Entypo, Ionicons } from "@expo/vector-icons";
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+import * as SplashScreen from 'expo-splash-screen';
 
 import { useNavigation } from "@react-navigation/native";
 import { ScreenNames } from "../constant/ScreenNames";
@@ -12,38 +15,28 @@ import Header from "./header";
 import { Images } from "../constant/images";
 
 function Home() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../assets/fonts/Mulish-Bold.ttf'),
+   
+  });
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <Header
         label="Home"
         leftIcon={Images.menu}
-        rightIcon={Images.search}
+        rightIcon={{}}
         onLeftPress={() => navigation.toggleDrawer()}
         onRightPress={() => navigation.navigate(ScreenNames.LAST_LOGGED_USERS)}
       />
-      <View
-        style={{
-          ...STYLES.header_box,
-          width: Dimensions.get("window").width,
-          display: "none",
-        }}
-      >
-        <TouchableOpacity
-          style={{ ...STYLES.side_bar, flex: 1 }}
-          onPress={() => navigation.toggleDrawer()}
-        >
-          <Entypo name="menu" size={35} color="white" />
-        </TouchableOpacity>
-        <Text style={{ ...STYLES.bar_header, flex: 1 }}>Home</Text>
-        <Text style={{ flex: 1 }}></Text>
-      </View>
+      
       <TouchableOpacity
         onPress={() => navigation.navigate(ScreenNames.LAST_LOGGED_USERS)}
         style={STYLES.button}
       >
         <View style={{ flexDirection: "row", marginStart: "2%" }}>
-          <Ionicons name="md-person-sharp" size={30} color="white" />
+          <Ionicons name="md-person-sharp" size={25} color="white" />
           <Text style={styles.login}>Last Logged Users</Text>
         </View>
       </TouchableOpacity>
@@ -52,7 +45,7 @@ function Home() {
         style={STYLES.button}
       >
         <View style={{ flexDirection: "row", marginStart: "2%" }}>
-          <Ionicons name="md-person-sharp" size={30} color="white" />
+          <Ionicons name="md-person-sharp" size={25} color="white" />
           <Text style={styles.login}>Most Active Users</Text>
         </View>
       </TouchableOpacity>
@@ -61,7 +54,7 @@ function Home() {
         style={STYLES.button}
       >
         <View style={{ flexDirection: "row", marginStart: "2%" }}>
-          <Ionicons name="md-person-sharp" size={30} color="white" />
+          <Ionicons name="md-person-sharp" size={25} color="white" />
           <Text style={styles.login}>Recent Leads</Text>
         </View>
       </TouchableOpacity>
@@ -70,7 +63,7 @@ function Home() {
         style={STYLES.button}
       >
         <View style={{ flexDirection: "row", marginStart: "2%" }}>
-          <Ionicons name="md-person-sharp" size={30} color="white" />
+          <Ionicons name="md-person-sharp" size={25} color="white" />
           <Text style={styles.login}>Edit Profile</Text>
         </View>
       </TouchableOpacity>
@@ -84,11 +77,11 @@ const styles = StyleSheet.create({
   },
 
   login: {
-    textAlign: "center",
+    
     color: "white",
-    fontSize: 21,
+    fontSize: 18,
     marginStart: "3%",
-    fontWeight: "400",
+    fontFamily:"Inter-Black",
   },
 });
 

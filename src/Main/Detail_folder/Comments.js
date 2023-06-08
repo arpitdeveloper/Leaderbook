@@ -22,11 +22,21 @@ import { Colors } from "../../constant/colors";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View_lead_activity_comments } from "../../Services";
 import { ScreenNames } from "../../constant/ScreenNames";
+import Header from "../../components/header";
+import { Images } from "../../constant/images";
+import { useFonts } from 'expo-font';
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 function Comments() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black3': require('../../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const navigation = useNavigation();
   const route = useRoute();
   const [data, setdata] = useState([]);
@@ -66,7 +76,7 @@ function Comments() {
   // console.log(a[0])
   return (
     <SafeAreaView style={styles.container}>
-      <View style={STYLES.header_box}>
+      {/* <View style={STYLES.header_box}>
         <TouchableOpacity
           style={STYLES.side_bar}
           onPress={() => navigation.goBack()}
@@ -78,7 +88,15 @@ function Comments() {
           />
         </TouchableOpacity>
         <Text style={STYLES.bar_header}>eMail Sent Comments</Text>
-      </View>
+      </View> */}
+       <Header
+        label={route.params.user.title+" Comments"}
+        leftIcon={Images.backArrow}
+        rightIcon={{}}
+        onLeftPress={() => navigation.goBack()}
+        onRightPress={() => {}}
+        // customRight={true}
+      />
 
       <FlatList
         style={{ backgroundColor: "white" }}
@@ -219,7 +237,7 @@ const styles = StyleSheet.create({
   },
   circle_text: {
     fontSize: 30,
-    fontWeight: "600",
+    fontFamily:"Inter-Black3",
     color: "#bfbfbf",
     marginEnd: "10%",
   },
@@ -243,8 +261,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 17,
-    fontWeight: "600",
-
+    fontFamily:"Inter-Black2",
     marginHorizontal: "4%",
     color: "#666666",
   },
@@ -256,7 +273,7 @@ const styles = StyleSheet.create({
     color: "white",
 
     fontSize: 15,
-    fontWeight: "500",
+    fontFamily:"Inter-Black2"
   },
   box: {
     height: height * 0.15,
@@ -273,7 +290,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: "2%",
     paddingTop: "2%",
     fontSize: 15,
-    fontWeight: "500",
+    fontFamily:"Inter-Black4"
   },
   button: {
     height: height * 0.085,

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { Entypo } from "@expo/vector-icons";
+import { useFonts } from 'expo-font';
 import {
   Dimensions,
   Text,
@@ -88,6 +89,13 @@ const DATA = [
 ];
 
 function Recent_chats() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
@@ -105,7 +113,7 @@ onLeftPress={() => navigation.toggleDrawer()}
         renderItem={({ item, index }) => (
           <View>
             <TouchableOpacity
-              onPress={()=>{navigation.navigate("chat",{name:item.Number})}}
+              // onPress={()=>{navigation.navigate("chat",{name:item.Number})}}
             >
               <View
                 style={{
@@ -116,7 +124,7 @@ onLeftPress={() => navigation.toggleDrawer()}
               >
                 <View style={{ flex: 0.35 }}>
                   <View style={styles.circle}>
-                    <Text style={styles.circle_text}>T</Text>
+                    <Text style={styles.circle_text}>JT</Text>
                   </View>
                 </View>
 
@@ -147,8 +155,8 @@ const styles = StyleSheet.create({
   text1: {
     fontSize: 15,
     marginTop: "2%",
-    color: "#8c8c8c",
-    fontWeight: "500",
+    color: "#b3b3b3",
+    fontFamily:"Inter-Black",
 
     // color: "black",
   },
@@ -156,8 +164,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginTop: "2%",
     // color: "#808080",
-    fontWeight: "900",
-
+    fontFamily:"Inter-Black3",
     color: "black",
     width: width * 0.355,
   },
@@ -166,8 +173,8 @@ const styles = StyleSheet.create({
     marginTop: "2%",
     // color: "#808080",
 
-    color: "#8c8c8c",
-    fontWeight: "400",
+    color: "#b3b3b3",
+    fontFamily:"Inter-Black",
   },
 
   circle: {
@@ -180,8 +187,8 @@ const styles = StyleSheet.create({
     marginStart: 20,
   },
   circle_text: {
-    fontSize: 30,
-    fontWeight: "600",
+    fontSize: 24,
+    fontFamily:"Inter-Black3",
     color: "white",
   },
 

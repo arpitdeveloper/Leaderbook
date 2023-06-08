@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { useFonts } from 'expo-font';
 import {
   Entypo,
   Ionicons,
@@ -19,33 +19,39 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { STYLES } from "../constant/styles";
 import { Images } from "../constant/images";
+import Header from "./header";
+import { Colors } from "../constant/colors";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 function Phone() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../assets/fonts/Mulish-Regular.ttf'),
+    
+   
+  });
   const navigation = useNavigation();
   const [com, setcom] = useState("");
   return (
     <SafeAreaView style={styles.container}>
-      <View style={STYLES.header_box}>
-        <TouchableOpacity
-          style={STYLES.back_button}
-          onPress={() => navigation.toggleDrawer()}
-        >
-          <Image source={Images.menu} style={styles.icon}/>
-        </TouchableOpacity>
-        <Text style={{...STYLES.header,alignSelf:'center', marginRight:0}}>Phone</Text>
-        <TouchableOpacity style={STYLES.save_touch} onPress={() => {}}>
-          <Text style={STYLES.save_text}> SAVE </Text>
-        </TouchableOpacity>
-      </View>
+      <Header
+        label="Phone"
+        leftIcon={Images.menu}
+        // rightIcon={Images.search}
+        onLeftPress={() => navigation.toggleDrawer()}
+        onRightPress={() => {}}
+        customRight={true}
+      />
       <Text
         style={{
-          color: "black",
-          fontSize: 19,
+          color: Colors.blue_txt,
+          fontSize: 18,
           marginTop: "10%",
-          marginHorizontal: "6%",
+          marginHorizontal: "6%",  fontFamily:"Inter-Black4",
         }}
       >
         Choose Calling Method
@@ -62,7 +68,7 @@ function Phone() {
             <MaterialCommunityIcons
               name="checkbox-marked-circle"
               size={31}
-              color="black"
+              color={Colors.blue_txt}
             />
           </Text>
         ) : (
@@ -83,7 +89,7 @@ function Phone() {
             <MaterialCommunityIcons
               name="checkbox-marked-circle"
               size={31}
-              color="black"
+              color={Colors.blue_txt}
             />
           </Text>
         ) : (
@@ -114,17 +120,17 @@ const styles = StyleSheet.create({
   },
   login: {
     textAlign: "center",
-    color: "black",
-    fontSize: 19,
+    color: Colors.blue_txt,
+    fontSize: 18,
     marginStart: "5%",
-    fontWeight: "500",
+    fontFamily:"Inter-Black",
   },
   circle: {
     marginStart: "3%",
     height: height * 0.034,
     width: "8%",
     borderWidth: 1,
-    borderRadius: 15,
+    borderRadius: 15,borderColor:Colors.blue_txt
   },
   circle2: {
     marginStart: "3%",
@@ -134,7 +140,7 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     textAlign: "center",
     justifyContent: "center",
-    alignContent: "center",
+    alignContent: "center",borderColor:Colors.blue_txt
   },
   icon: {
     height: 22,

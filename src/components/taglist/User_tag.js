@@ -25,8 +25,16 @@ import {
 
 
 import { Colors } from "../../constant/colors";
+import { useFonts } from 'expo-font';
 
 export default function User_tag({ navigation }) {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const [d, setd] = useState();
   const [modalVisible, setModalVisible] = useState(false);
   const translation = useRef(new Animated.Value(0)).current;
@@ -293,8 +301,7 @@ export default function User_tag({ navigation }) {
       
       <Animated.View
             style={{
-              borderWidth: 1,
-              borderColor: "rgba(0,0,0,0.2)",
+             
               alignItems: "center",
               justifyContent: "center",
               width: width * 0.18,
@@ -421,7 +428,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     margin: "5%",
   },
-  add:{ fontSize: 20, color: Colors.MAIN_COLOR },
+  add:{ fontSize: 20, color: Colors.MAIN_COLOR,fontFamily:"Inter-Black", },
   modal_page:{
     height: 1,
     width: "100%",
@@ -432,15 +439,15 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: Colors.MAIN_COLOR,
     marginTop: "4%",
-    fontWeight: "400",
+    fontFamily:"Inter-Black",
   },
   description:{
     fontSize: 16,
     color: Colors.MAIN_COLOR,
     marginTop: "4%",
-    fontWeight: "400",
+    fontFamily:"Inter-Black",
   },
-  create_txt:{ color: "white", fontSize: 17 },
+  create_txt:{ color: "white", fontSize: 17,fontFamily:"Inter-Black", },
   create:{
     height: "17%",
     width: "38%",
@@ -453,7 +460,7 @@ const styles = StyleSheet.create({
   },
   modalText: {
     fontSize: 25,
-    fontWeight: "bold",
+    fontFamily:"Inter-Black2",
   },
   input2: {
     height: height * 0.06,
@@ -532,14 +539,14 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     
     fontSize: 17,
-    fontWeight: "500",
-    color: "black",
+    fontFamily:"Inter-Black2",
+    color: Colors.blue_txt,
   },
   number: {
     fontSize: 14,
 
-    fontWeight: "400",
-    color: "black",
+    fontFamily:"Inter-Black",
+    color: Colors.blue_txt,
 
     marginBottom: "1.5%",
   },

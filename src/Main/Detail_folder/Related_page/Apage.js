@@ -9,11 +9,12 @@ import {
   AntDesign,
   FontAwesome,
   MaterialIcons,
-  Octicons,FontAwesome5
+  Octicons,
 } from "@expo/vector-icons";
+import { useFonts } from 'expo-font';
 import {
-  SafeAreaView,
   Dimensions,
+  Image,
   Text,
   View,
   TouchableOpacity,
@@ -27,12 +28,14 @@ import {
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation, useRoute } from "@react-navigation/native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
 import { ScreenNames } from "../../../constant/ScreenNames";
-import { STYLES } from "../../../constant/styles";
-import { Colors } from "../../../constant/colors";
 
+import { Colors } from "../../../constant/colors";
+import { STYLES } from "../../../constant/styles";
+import { Images } from "../../../constant/images";
+import Header2 from "../../../components/header";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -43,6 +46,13 @@ const dt = [
 ];
 
 function Apage() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const navigation = useNavigation();
   const [value1, setValue1] = useState();
   const [value2, setValue2] = useState();
@@ -53,11 +63,29 @@ function Apage() {
   const [istimePickerVisible, settimePickerVisibility] = useState(false);
   const [date, setdate] = useState("");
   const [date1, setdate1] = useState("");
+  const [date_time, setdate_time] = useState("");
   const [modalVisible, setModalVisible] = useState(false);
   const [modalVisible2, setModalVisible2] = useState(false);
+  const [modalVisible3, setModalVisible3] = useState(false);
   const [com, setcom] = useState(false);
 
-  
+  const showDatePicker2 = () => {
+    setDatePickerVisibility(true);
+  };
+
+  const hideDatePicker2 = () => {
+    setDatePickerVisibility(false);
+  };
+
+  const time_date_confirm = (i) => {
+    setdate_time(
+      moment(i).format("YYYY-MM-DD ") +
+        moment().utcOffset("+05:30").format(" HH:mm") +
+        ":00"
+    );
+
+    hideDatePicker2();
+  };
   const showDatePicker = () => {
     setDatePickerVisibility(true);
   };
@@ -66,13 +94,13 @@ function Apage() {
     setDatePickerVisibility(false);
   };
 
-  const handleConfirm = (i) => {
+  const start_date_confirm = (i) => {
     setdate(moment(i).format("YYYY-MM-DD "));
 
     // console.warn("A date has been picked: ", date);
     hideDatePicker();
   };
-  const handleConfirm3 = (i) => {
+  const End_date_confirm = (i) => {
     setdate1(moment(i).format("YYYY-MM-DD "));
 
     // console.warn("A date has been picked: ", date);
@@ -93,61 +121,18 @@ function Apage() {
   };
   return (
     <SafeAreaView style={styles.container}>
-      
-      <View style={{height: height * 0.08,
-    backgroundColor: Colors.MAIN_COLOR,
-    alignItems: "center",
-
-    // marginTop: 25,
-    flexDirection: "row",justifyContent:"space-between"}}>
-      <TouchableOpacity
-            style={{ marginStart: "4%",   }}
-            onPress={() => navigation.goBack()}
-          >
-            <MaterialCommunityIcons
-              name="keyboard-backspace"
-              size={28}
-              color="white"
-            />
-          </TouchableOpacity>
-        <Text
-            style={{
-              color: "white",
-              fontWeight: "400",
-              fontSize: 20,
-              
-            }}
-          >
-            Add appointment
-          </Text>
-        <TouchableOpacity
-            style={{
-              
-              
-              alignItems: "center",
-              justifyContent: "center",marginEnd:"5%"
-            }}
-            onPress={() => {}}
-          >
-            <Text
-              style={{
-                color: "yellow",
-                borderWidth: 1,
-                borderColor: "yellow",
-                padding: "1%",
-                borderRadius: 8,
-                fontWeight: "500",
-                fontSize: 14,paddingHorizontal:"6%"
-              }}
-            >
-              Add
-            </Text>
-          </TouchableOpacity>
-      </View>
-      <ScrollView >
+      <Header2
+        label="Add Appointment"
+        leftIcon={Images.backArrow}
+        // rightIcon={Images.search}
+        onLeftPress={() => navigation.goBack()}
+        onRightPress={() => {}}
+        customRight={true}
+      />
+      <ScrollView>
         <View
           style={{
-            paddingHorizontal: "5%",
+            paddingHorizontal: "2%",
             marginBottom: "5%",
             // paddingStart: "15%",
           }}
@@ -158,7 +143,9 @@ function Apage() {
             style={styles.input}
             //   value={text_sign}
             //   onChangeText={(txt) => setText_sign(txt)}
+            placeholderTextColor={"#cccccc"}
           ></TextInput>
+
           <View style={styles.line2}></View>
           <Text style={styles.name_txt}>Location</Text>
           <TextInput
@@ -166,21 +153,13 @@ function Apage() {
             style={styles.input}
             //   value={text_sign}
             //   onChangeText={(txt) => setText_sign(txt)}
+            placeholderTextColor={"#cccccc"}
           ></TextInput>
-          
+
           <View style={styles.line2}></View>
           <Text style={styles.name_txt}>Site</Text>
-          <TextInput
-            placeholder="Test"
-            style={styles.input}
-            //   value={text_sign}
-            //   onChangeText={(txt) => setText_sign(txt)}
-          ></TextInput>
-         
-          <View style={styles.line2}></View>
-          <Text style={styles.name_txt}>All Day Event</Text>
           <Dropdown
-            style={[styles.dropdown]}
+            style={[styles.dropdown2]}
             placeholderStyle={styles.placeholderStyle}
             selectedTextStyle={styles.selectedTextStyle}
             // inputSearchStyle={styles.inputSearchStyle}
@@ -190,12 +169,59 @@ function Apage() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value2}
-            value={value2}
+            placeholder={""}
+            value={value1}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
             onChange={(i) => {
-              setValue2(i.value);
+              setValue1(i.value);
+            }}
+            renderRightIcon={() => (
+              <AntDesign
+                style={{ paddingHorizontal: "5%" }}
+                color="#003366"
+                name="downsquare"
+                size={30}
+              />
+            )}
+          />
+          <View style={styles.line2}></View>
+          <Text style={styles.name_txt}>Search Lead</Text>
+          <TextInput
+            placeholder="Search Lead"
+            style={styles.input}
+            //   value={text_sign}
+            //   onChangeText={(txt) => setText_sign(txt)}
+            placeholderTextColor={"#cccccc"}
+          ></TextInput>
+          <View style={styles.line2}></View>
+          <Text style={styles.name_txt}>Selected Lead</Text>
+          <TextInput
+            // placeholder="Subject"
+            style={styles.input}
+            //   value={text_sign}
+            //   onChangeText={(txt) => setText_sign(txt)}
+          ></TextInput>
+
+          <View style={styles.line2}></View>
+          <Text style={styles.name_txt}>All Day Event</Text>
+          <Dropdown
+            style={[styles.dropdown2]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            // inputSearchStyle={styles.inputSearchStyle}
+            // iconStyle={styles.iconStyle}
+            data={dt}
+            search={false}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={""}
+            value={value1}
+            //   onFocus={() => setIsFocus(true)}
+            //   onBlur={() => setIsFocus(false)}
+            onChange={(i) => {
+              setValue1(i.value);
             }}
             renderRightIcon={() => (
               <AntDesign
@@ -208,96 +234,68 @@ function Apage() {
           />
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <FontAwesome
-              style={styles.icon2}
-              color="#8c8c8c"
-              name="calendar"
-              size={24}
-            />
-            <Text style={styles.name_txt2}>Start Date</Text>
+            <Image style={styles.icon2} source={Images.calender}></Image>
+            <Text style={styles.name_txt2}>Start Time</Text>
           </View>
           <View style={[styles.press]}>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <TouchableOpacity
+            style={{width:"60%",}}
+            onPress={() => setModalVisible(true)}>
               <TextInput
-                style={{ color: "grey", fontSize: 17 }}
+                style={{ color: "grey", fontSize: 16,fontFamily:"Inter-Black4", }}
                 placeholder={"Start Date"}
                 showSoftInputOnFocus={false}
                 // editable={false}
                 value={date}
                 onPressIn={() => setModalVisible(true)}
+                placeholderTextColor={"#cccccc"}
               ></TextInput>
             </TouchableOpacity>
-            <Text
+            <TouchableOpacity
               onPress={() => {
                 setdate("");
               }}
-              style={{ marginEnd: "3%" }}
+              style={{ marginEnd: "5%" }}
             >
-              <MaterialIcons
-                name="highlight-remove"
-                size={40}
-                color="#8c8c8c"
-              />
-            </Text>
+              <Image style={styles.cancel} source={Images.cancel}></Image>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <FontAwesome
-              style={styles.icon2}
-              color="#8c8c8c"
-              name="calendar"
-              size={24}
-            />
-            <Text style={styles.name_txt2}>End Date</Text>
+            <Image style={styles.icon2} source={Images.calender}></Image>
+            <Text style={styles.name_txt2}>End Time</Text>
           </View>
 
           <View style={[styles.press]}>
-            <TouchableOpacity onPress={() => setModalVisible2(true)}>
+            <TouchableOpacity
+            style={{width:"60%",}}
+            onPress={() => setModalVisible2(true)}>
               <TextInput
-                style={{ color: "grey", fontSize: 17 }}
+                style={{ color: "grey", fontSize: 16,fontFamily:"Inter-Black4", }}
                 placeholder={"Due Date"}
                 showSoftInputOnFocus={false}
                 // editable={false}
                 value={date1}
                 onPressIn={() => setModalVisible2(true)}
+                placeholderTextColor={"#cccccc"}
               ></TextInput>
             </TouchableOpacity>
-            <Text
+            <TouchableOpacity
               onPress={() => {
                 setdate1("");
               }}
-              style={{ marginEnd: "3%" }}
+              style={{ marginEnd: "5%" }}
             >
-              
-              <MaterialIcons
-                name="highlight-remove"
-                size={40}
-                color="#8c8c8c"
-              />
-            </Text>
+              <Image style={styles.cancel} source={Images.cancel}></Image>
+            </TouchableOpacity>
           </View>
           <View style={styles.line2}></View>
-          
-          
           <View style={{ flexDirection: "row" }}>
-            <Octicons
-              style={styles.icon2}
-              color="#8c8c8c"
-              name="clock"
-              size={24}
-            />
+            <Image style={styles.icon2} source={Images.set_alarm}></Image>
             <Text style={styles.name_txt2}>Reminder</Text>
           </View>
 
-          <TextInput
-            placeholder="Reminder"
-            style={styles.input2}
-            //   value={text_sign}
-            //   onChangeText={(txt) => setText_sign(txt)}
-          ></TextInput>
-          <View style={styles.line2}></View>
-          <Text style={styles.name_txt}>Time Unit</Text>
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
@@ -309,7 +307,43 @@ function Apage() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value4}
+            placeholder={""}
+            value={value3}
+            //   onFocus={() => setIsFocus(true)}
+            //   onBlur={() => setIsFocus(false)}
+            onChange={(i) => {
+              setValue3(i.value);
+            }}
+            renderRightIcon={() => (
+              <AntDesign
+                style={{ paddingHorizontal: "5%" }}
+                color="#003366"
+                name="downsquare"
+                size={30}
+              />
+            )}
+          />
+          
+          
+
+         
+          <View style={styles.line2}></View>
+          <View style={{ flexDirection: "row" }}>
+            {/* <Image style={styles.icon2} source={Images.graph}></Image> */}
+            <Text style={styles.name_txt}>Time Unit</Text>
+          </View>
+          <Dropdown
+            style={[styles.dropdown]}
+            placeholderStyle={styles.placeholderStyle}
+            selectedTextStyle={styles.selectedTextStyle}
+            // inputSearchStyle={styles.inputSearchStyle}
+            // iconStyle={styles.iconStyle}
+            data={dt}
+            search={false}
+            maxHeight={300}
+            labelField="label"
+            valueField="value"
+            placeholder={""}
             value={value4}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
@@ -326,9 +360,10 @@ function Apage() {
             )}
           />
           <View style={styles.line2}></View>
-          <Text style={styles.name_txt}
-            onPress={() => {}}
-          >Show Time As</Text>
+          <View style={{ flexDirection: "row" }}>
+            {/* <Image style={styles.icon2} source={Images.warning}></Image> */}
+            <Text style={styles.name_txt}>Show Time As</Text>
+          </View>
           <Dropdown
             style={[styles.dropdown]}
             placeholderStyle={styles.placeholderStyle}
@@ -340,7 +375,7 @@ function Apage() {
             maxHeight={300}
             labelField="label"
             valueField="value"
-            placeholder={value5}
+            placeholder={""}
             value={value5}
             //   onFocus={() => setIsFocus(true)}
             //   onBlur={() => setIsFocus(false)}
@@ -356,27 +391,27 @@ function Apage() {
               />
             )}
           />
-          <View style={styles.line2}></View>
 
-          <Text style={styles.name_txt}>Notes</Text>
           
-          <View style={{ flexDirection: "row" ,marginTop:"5%"}}>
-            
-            <FontAwesome5 style={styles.icon_notes} name="bars" size={24}  color="#8c8c8c" />
-            <TextInput
-            placeholder=""
-            style={styles.input4}
+          <View style={styles.line2}></View>
+          <View style={{ flexDirection: "row" }}>
+            <Image style={styles.icon2} source={Images.task_note}></Image>
+            <Text style={styles.name_txt2}>Notes</Text>
+          </View>
+          <TextInput
+            // placeholder="Reminder"
+            style={styles.input2}
             //   value={text_sign}
             //   onChangeText={(txt) => setText_sign(txt)}
           ></TextInput>
-            
-          </View>
           <View style={styles.line3}></View>
         </View>
       </ScrollView>
-      {com  ? <View style={{height:150,width:'100%',backgroundColor:"red",}}>
-
-</View>:null }
+      {/* {com ? (
+        <View
+          style={{ height: 150, width: "100%", backgroundColor: "red" }}
+        ></View>
+      ) : null} */}
 
       <Modal
         animationType="slide"
@@ -419,7 +454,7 @@ function Apage() {
               <DateTimePickerModal
                 isVisible={isDatePickerVisible}
                 mode="date"
-                onConfirm={handleConfirm}
+                onConfirm={start_date_confirm}
                 onCancel={hideDatePicker}
                 pickerStyleIOS
               />
@@ -464,15 +499,70 @@ function Apage() {
                   {moment().utcOffset("+05:30").format("DD-MMM-YYYY ")}
                 </Text>
               </TouchableOpacity>
-             
+
               <DateTimePickerModal
                 isVisible={isDatePickerVisible}
                 mode="date"
-                onConfirm={handleConfirm3}
+                onConfirm={End_date_confirm}
                 onCancel={hideDatePicker}
                 pickerStyleIOS
               />
-             
+            </View>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible3}
+        onRequestClose={() => {
+          setModalVisible3(!modalVisible3);
+        }}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={styles.modal_top}>
+              <Text style={{ flex: 0.9 }}></Text>
+              <Text style={styles.date}>Start Date</Text>
+              <TouchableOpacity
+                onPress={() => setModalVisible3(!modalVisible3)}
+                style={styles.done}
+              >
+                <Text style={{ fontSize: 18, fontWeight: "600" }}>Done</Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{ flexDirection: "row" }}>
+              <TouchableOpacity
+                style={styles.modal_btn}
+                onPress={showDatePicker2}
+              >
+                <Text style={{ fontSize: 16, fontWeight: "500" }}>
+                  {moment().utcOffset("+05:30").format("DD-MMM-YYYY ")}
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={styles.modal_btn}
+                onPress={showtimePicker}
+              >
+                <Text style={{ fontSize: 16, fontWeight: "500" }}>
+                  {moment().utcOffset("+05:30").format(" hh:mm a")}
+                </Text>
+              </TouchableOpacity>
+              <DateTimePickerModal
+                isVisible={isDatePickerVisible}
+                mode="date"
+                onConfirm={time_date_confirm}
+                onCancel={hideDatePicker2}
+                pickerStyleIOS
+              />
+              <DateTimePickerModal
+                isVisible={istimePickerVisible}
+                mode="time"
+                onConfirm={handleConfirm2}
+                onCancel={hidetimePicker}
+                pickerStyleIOS
+                pickerComponentStyleIOS
+              />
             </View>
           </View>
         </View>
@@ -485,9 +575,9 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  
-  done: { flex: 0.4, fontSize: 18, fontWeight: "bold" },
-  date: { flex: 0.8, fontSize: 14, color: "#cccccc" },
+
+  done: { flex: 0.4, fontSize: 18, fontFamily:"Inter-Black2" },
+  date: { flex: 0.8, fontSize: 14, color: "#cccccc",fontFamily:"Inter-Black4" },
   datePickerStyle: {
     width: 200,
     marginTop: 20,
@@ -500,9 +590,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  textStyle1: { fontSize: 17, fontWeight: "bold" },
-  textStyle2: { fontSize: 14 },
-  textStyle3: { fontSize: 17, color: "blue" },
+  textStyle1: { fontSize: 17, fontFamily:"Inter-Black2" },
+  textStyle2: { fontSize: 14 },fontFamily:"Inter-Black4",
+  textStyle3: { fontSize: 17, color: "blue",fontFamily:"Inter-Black4" },
 
   centeredView: {
     flex: 1,
@@ -541,31 +631,48 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 5,
     alignItems: "center",
-    
-    
+
     position: "absolute",
     bottom: "0%",
-   
-   
-    
-     justifyContent: "flex-end",
+
+    justifyContent: "flex-end",
     alignItems: "center",
     marginTop: 0,
-    marginBottom: -20, height: "50%",width:"100%"
+    marginBottom: -20,
+    height: "50%",
+    width: "100%",
   },
-  selectedTextStyle: { color: "#8c8c8c" },
-  icon2: { marginTop: "8%", flex: 0.15 },
-  icon3: { marginTop: "8%", flex: 0.19 },
+  selectedTextStyle: { color: "#8c8c8c",fontFamily:"Inter-Black4" },
+  icon2: {
+    marginTop: "8%",
+    height: 25,
+    width: 25,
+    resizeMode: "contain",
+    marginHorizontal: "2.5%",
+  },
+  cancel: {
+    height: 25,
+    width: 25,
+    resizeMode: "contain",
+  },
+  icon4: { marginTop: "8%", flex: 0.15, fontSize: 28, marginStart: "-1%" },
+  icon3: {
+    marginTop: "8%",
+    flex: 0.2,
+    height: 25,
+    width: 25,
+    resizeMode: "contain",
+  },
+  icon5: { marginTop: "8%", flex: 0.17, fontSize: 22 },
   icon_notes: {},
   dropdown: {
     height: "2.6%",
-    marginStart: "12%",
-    marginTop: "4%",
+    marginStart: "14%",
   },
   dropdown2: {
     height: "2.6%",
     marginStart: "12%",
-    marginTop: "1%",
+    marginTop: "5%",
   },
   line: {
     backgroundColor: "grey",
@@ -573,44 +680,45 @@ const styles = StyleSheet.create({
     marginTop: "2%",
 
     width: "90%",
-    marginStart: "12%",
+    marginStart: "14%",
   },
   line3: {
-    backgroundColor: "black",
-    height: 2,
-    marginTop: "2%",
+    backgroundColor: "grey",
+    height: 1,
 
-    width: "85%",
-    marginStart: "13%",
+    width: "86%",
+    marginStart: "14%",
+    marginTop: "8%",
   },
   line2: {
-    backgroundColor: "black",
-    height: 2,
-    marginTop: "2%",
+    backgroundColor: "grey",
+    height: 1,
 
     width: "86%",
     marginStart: "12%",
+    marginTop: "1%",
   },
   name_txt: {
-    fontSize: 17,
+    fontSize: 16,
     paddingTop: "5%",
     paddingStart: "12%",
-    color: "#595959",
+    color: Colors.blue_txt,
+    fontFamily:"Inter-Black4"
   },
-  name_txt2: { fontSize: 17, paddingTop: "5%", color: "#595959" },
+  name_txt2: { fontSize: 16, marginTop: "5%", color: Colors.blue_txt,fontFamily:"Inter-Black4" },
   input: {
     color: "#8c8c8c",
 
-    fontSize: 17,
-    marginTop: "4%",
-    marginStart: "12%",
+    fontSize: 16,
+    marginTop: "3%",
+    marginStart: "12%",fontFamily:"Inter-Black4"
   },
   press: {
-    color: "#8c8c8c",
+    
 
-    fontSize: 17,
+    
 
-    marginStart: "12%",
+    marginStart: "12.5%",
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -619,75 +727,15 @@ const styles = StyleSheet.create({
     color: "#8c8c8c",
 
     fontSize: 17,
+    marginStart: "14%",fontFamily:"Inter-Black4"
   },
   input2: {
     color: "#8c8c8c",
 
     fontSize: 17,
-    marginStart: "12%",
-    marginTop: "-1%",
-  },
-  input4: {
-    color: "#8c8c8c",
-
-    fontSize: 17,
-    marginStart: "6%",
-    marginTop: "-1%",
-  },
-  button: {
-    height: height * 0.075,
-    width: width * 0.9,
-    marginTop: "5%",
-
-    alignSelf: "center",
-    backgroundColor: "#003366",
-    elevation: 1,
-    borderRadius: 8,
-    justifyContent: "center",
+    marginStart: "14%",fontFamily:"Inter-Black4"
   },
 
-  header: {
-    height: height * 0.12,
-    backgroundColor: "#003366",
-    alignItems: "center",
-
-    // marginTop: 25,
-    flexDirection: "row",
-    marginBottom: "3%",
-  },
-  headertxt3: {
-    marginTop: "8%",
-    flex: 0.3,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  headertxt2: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: "7%",
-    textAlign: "center",
-    flex: 0.5,
-  },
-  headertxt1: {
-    color: "white",
-    fontWeight: "bold",
-    fontSize: 20,
-    marginTop: "7%",
-    textAlign: "center",
-    flex: 0.2,
-    marginStart: "8%",
-  },
-  add: {
-    color: "yellow",
-    borderWidth: 1.3,
-    borderColor: "yellow",
-    paddingHorizontal: "13%",
-    borderRadius: 20,
-    fontWeight: "500",
-    fontSize: 16,
-  },
   modal_btn: {
     backgroundColor: "#d9d9d9",
 

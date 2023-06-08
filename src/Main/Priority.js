@@ -21,8 +21,17 @@ import Loader from "../constant/Loader";
 import { ScreenNames } from "../constant/ScreenNames";
 import { Colors } from "../constant/colors";
 import { Images } from "../constant/images";
+import { useFonts } from 'expo-font';
 
 export default function Priority() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../assets/fonts/Mulish-Regular.ttf'),
+    'Inter-Black5': require('../../assets/fonts/Mulish-Light.ttf'),
+   
+  });
   const [DATA, setDATA] = useState([]);
   const [loading, setLoading] = React.useState(true);
   const navigation = useNavigation();
@@ -96,8 +105,7 @@ export default function Priority() {
         {d1 ? (
           <Animated.View
             style={{
-              borderWidth: 1,
-              borderColor: "rgba(0,0,0,0.2)",
+             
               alignItems: "center",
               justifyContent: "center",
               width: width * 0.18,
@@ -163,21 +171,21 @@ const styles = StyleSheet.create({
     color: "#808080",
     flex: 0.95,
     marginTop: "1%",
-    fontWeight: "300",
+    fontFamily: 'Inter-Black5',
   },
   name: {
     fontSize: 18,
 
     fontWeight: "400",
     color: "#737373",
-    marginLeft: "5%",
+    marginLeft: "5%",fontFamily: 'Inter-Black',
   },
   email: {
     fontSize: 16,
     flex: 0.9,
     marginTop: "5%",
-    fontWeight: "600",
-    color: "#808080",
+    
+    color: "#808080",fontFamily: 'Inter-Black5',
   },
   voicemail: {
     fontSize: 17,

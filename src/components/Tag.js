@@ -19,77 +19,72 @@ import { Images } from "../constant/images";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
+import { useFonts } from 'expo-font';
+
 
 function Tag() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const [com, setcom] = useState(false);
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
-<Header
-label="Tags"
-leftIcon={Images.menu}
-rightIcon={Images.time}
-onLeftPress={() => navigation.toggleDrawer()}
-/>
-      
-          <View style={styles.tab}>
-            <TouchableOpacity
-              style={styles.ord}
-              onPress={() => {
-                setcom("User_tag");
-              }}
-            >
-             
-                <Text
-                  style={styles.home_text}
-                >
-                  USER TAGS
-                </Text>
-             
-            </TouchableOpacity>
+      <Header
+        label="Tags"
+        leftIcon={Images.menu}
+        rightIcon={Images.time}
+        onLeftPress={() => navigation.toggleDrawer()}
+      />
 
-            <TouchableOpacity
-              style={styles.ord}
-              onPress={() => {
-                setcom("System_tag");
-              }}
-            >
-              
-                <Text
-                  style={styles.home_text}
-                >
-                  SYSTEM TAGS
-                </Text>
-            </TouchableOpacity>
-            
-          </View>
-          <View
-            style={{
-              flexDirection: "row",
-              
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <View
-              style={{
-                height: 3,
-                width: width * 0.5,
-                backgroundColor: com == "User_tag" ? "#ffcc00" : "#003366",
-                
-              }}
-            ></View>
+      <View style={styles.tab}>
+        <TouchableOpacity
+          style={styles.ord}
+          onPress={() => {
+            setcom("User_tag");
+          }}
+        >
+          <Text style={styles.home_text}>USER TAGS</Text>
+        </TouchableOpacity>
 
-            <View
-              style={{
-                height: 3,
-                width: width * 0.5,
-                backgroundColor: com == "System_tag" ? "#ffcc00" : "#003366",
-                
-              }}
-            ></View>
-          </View>
-       
+        <TouchableOpacity
+          style={styles.ord}
+          onPress={() => {
+            setcom("System_tag");
+          }}
+        >
+          <Text style={styles.home_text}>SYSTEM TAGS</Text>
+        </TouchableOpacity>
+      </View>
+      <View
+        style={{
+          flexDirection: "row",
+
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <View
+          style={{
+            height: 3,
+            width: width * 0.5,
+            backgroundColor: com == "User_tag" ? "#ffcc00" : "#003366",
+          }}
+        ></View>
+
+        <View
+          style={{
+            height: 3,
+            width: width * 0.5,
+            backgroundColor: com == "System_tag" ? "#ffcc00" : "#003366",
+          }}
+        ></View>
+      </View>
+
       <View style={{ flex: 1 }}>
         {com == "User_tag" ? (
           <User_tag />
@@ -107,18 +102,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  home_text:{
+  home_text: {
     fontSize: 17,
-    fontWeight: "600",
+    fontFamily:"Inter-Black2",
     color: "white",
-    textAlign: "center",paddingVertical:"3%"
+    textAlign: "center",
+    paddingVertical: "3%",
   },
 
   tab: {
     flexDirection: "row",
     backgroundColor: Colors.MAIN_COLOR,
     alignItems: "center",
-    justifyContent: "space-between",paddingHorizontal:"10%"
+    justifyContent: "space-between",
+    paddingHorizontal: "10%",
   },
   ord: {
     backgroundColor: Colors.MAIN_COLOR,
@@ -129,9 +126,7 @@ const styles = StyleSheet.create({
   add: {
     backgroundColor: Colors.MAIN_COLOR,
     marginTop: "0%",
-    
   },
-  
 });
 
 export default Tag;

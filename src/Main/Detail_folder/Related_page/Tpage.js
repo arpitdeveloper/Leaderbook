@@ -12,8 +12,8 @@ import {
   Octicons,
 } from "@expo/vector-icons";
 import {
-  SafeAreaView,
   Dimensions,
+  Image,
   Text,
   View,
   TouchableOpacity,
@@ -27,12 +27,15 @@ import {
 } from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 import { useNavigation, useRoute } from "@react-navigation/native";
-
+import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
-import { STYLES } from "../../../constant/styles";
-import { ScreenNames } from "../../../constant/ScreenNames";
-import { Colors } from "../../../constant/colors";
 
+
+import { Colors } from "../../../constant/colors";
+import { STYLES } from "../../../constant/styles";
+import { Images } from "../../../constant/images";
+import Header from "../../../components/header";
+import { useFonts } from 'expo-font';
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -43,6 +46,13 @@ const dt = [
 ];
 
 function Tpage() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const navigation = useNavigation();
   const [value1, setValue1] = useState();
   const [value2, setValue2] = useState();
@@ -111,60 +121,18 @@ function Tpage() {
   };
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{height: height * 0.08,
-    backgroundColor: Colors.MAIN_COLOR,
-    alignItems: "center",
-
-    // marginTop: 25,
-    flexDirection: "row",justifyContent:"space-between"}}>
-      <TouchableOpacity
-            style={{ marginStart: "4%",   }}
-            onPress={() => navigation.goBack()}
-          >
-            <MaterialCommunityIcons
-              name="keyboard-backspace"
-              size={28}
-              color="white"
-            />
-          </TouchableOpacity>
-        <Text
-            style={{
-              color: "white",
-              fontWeight: "400",
-              fontSize: 20,
-              
-            }}
-          >
-           New Task
-          </Text>
-        <TouchableOpacity
-            style={{
-              
-              
-              alignItems: "center",
-              justifyContent: "center",marginEnd:"5%"
-            }}
-            onPress={() => {}}
-          >
-            <Text
-              style={{
-                color: "yellow",
-                borderWidth: 1,
-                borderColor: "yellow",
-                padding: "1%",
-                borderRadius: 8,
-                fontWeight: "500",
-                fontSize: 14,paddingHorizontal:"4.5%"
-              }}
-            >
-              SAVE
-            </Text>
-          </TouchableOpacity>
-      </View>
+      <Header
+        label="New Task"
+        leftIcon={Images.backArrow}
+        // rightIcon={Images.search}
+        onLeftPress={() => navigation.goBack()}
+        onRightPress={() => {}}
+        customRight={true}
+      />
       <ScrollView>
         <View
           style={{
-            paddingHorizontal: "5%",
+            paddingHorizontal: "2%",
             marginBottom: "5%",
             // paddingStart: "15%",
           }}
@@ -175,6 +143,7 @@ function Tpage() {
             style={styles.input}
             //   value={text_sign}
             //   onChangeText={(txt) => setText_sign(txt)}
+            placeholderTextColor={"#cccccc"}
           ></TextInput>
 
           <View style={styles.line2}></View>
@@ -213,6 +182,7 @@ function Tpage() {
             style={styles.input}
             //   value={text_sign}
             //   onChangeText={(txt) => setText_sign(txt)}
+            placeholderTextColor={"#cccccc"}
           ></TextInput>
           <View style={styles.line2}></View>
           <Text style={styles.name_txt}>Selected Lead</Text>
@@ -225,77 +195,65 @@ function Tpage() {
 
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <FontAwesome style={styles.icon2} color="#8c8c8c" name="calendar" />
+            <Image style={styles.icon2} source={Images.calender}></Image>
             <Text style={styles.name_txt2}>Start Date</Text>
           </View>
           <View style={[styles.press]}>
-            <TouchableOpacity onPress={() => setModalVisible(true)}>
+            <TouchableOpacity
+            style={{width:"60%",}}
+            onPress={() => setModalVisible(true)}>
               <TextInput
-                style={{ color: "grey", fontSize: 17 }}
+                style={{ color: "grey", fontSize: 16,fontFamily:"Inter-Black", }}
                 placeholder={"Start Date"}
                 showSoftInputOnFocus={false}
                 // editable={false}
                 value={date}
                 onPressIn={() => setModalVisible(true)}
+                placeholderTextColor={"#cccccc"}
               ></TextInput>
             </TouchableOpacity>
-            <Text
+            <TouchableOpacity
               onPress={() => {
                 setdate("");
               }}
               style={{ marginEnd: "5%" }}
             >
-              <MaterialIcons
-                name="highlight-remove"
-                size={30}
-                color="#8c8c8c"
-              />
-            </Text>
+              <Image style={styles.cancel} source={Images.cancel}></Image>
+            </TouchableOpacity>
           </View>
 
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <FontAwesome
-              style={styles.icon2}
-              color="#8c8c8c"
-              name="calendar"
-              size={24}
-            />
-            <Text style={styles.name_txt2}>End Date</Text>
+            <Image style={styles.icon2} source={Images.calender}></Image>
+            <Text style={styles.name_txt2}>Due Date</Text>
           </View>
 
           <View style={[styles.press]}>
-            <TouchableOpacity onPress={() => setModalVisible2(true)}>
+            <TouchableOpacity
+            style={{width:"60%",}}
+            onPress={() => setModalVisible2(true)}>
               <TextInput
-                style={{ color: "grey", fontSize: 17 }}
+                style={{ color: "grey", fontSize: 17,fontFamily:"Inter-Black", }}
                 placeholder={"Due Date"}
                 showSoftInputOnFocus={false}
                 // editable={false}
                 value={date1}
                 onPressIn={() => setModalVisible2(true)}
+                placeholderTextColor={"#cccccc"}
               ></TextInput>
             </TouchableOpacity>
-            <Text
+            <TouchableOpacity
               onPress={() => {
                 setdate1("");
               }}
               style={{ marginEnd: "5%" }}
             >
-              <MaterialIcons
-                name="highlight-remove"
-                size={30}
-                color="#8c8c8c"
-              />
-            </Text>
+              <Image style={styles.cancel} source={Images.cancel}></Image>
+            </TouchableOpacity>
           </View>
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <MaterialIcons
-              style={styles.icon3}
-              color="#8c8c8c"
-              name="alarm"
-              size={28}
-            />
+            <Image style={styles.icon2} source={Images.set_alarm}></Image>
             <Text style={styles.name_txt2}>Enable Reminder</Text>
           </View>
 
@@ -328,46 +286,36 @@ function Tpage() {
           />
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <Octicons
-              style={styles.icon3}
-              color="#8c8c8c"
-              name="clock"
-              size={24}
-            />
+            <Image style={styles.icon2} source={Images.clock_circular}></Image>
             <Text style={styles.name_txt2}>Reminder Time</Text>
           </View>
 
           <View style={[styles.press]}>
-            <TouchableOpacity onPress={() => setModalVisible3(true)}>
+            <TouchableOpacity 
+             style={{width:"80%",}}
+            onPress={() => setModalVisible3(true)}>
               <TextInput
-                style={{ color: "grey", fontSize: 17 }}
+               style={{ color: "grey", fontSize: 17,fontFamily:"Inter-Black", }}
                 placeholder={"Reminder Date and Time"}
                 showSoftInputOnFocus={false}
                 // editable={false}
                 value={date_time}
                 onPressIn={() => setModalVisible3(true)}
+                placeholderTextColor={"#cccccc"}
               ></TextInput>
             </TouchableOpacity>
-            <Text
+            <TouchableOpacity
               onPress={() => {
                 setdate_time("");
               }}
               style={{ marginEnd: "5%" }}
             >
-              <MaterialIcons
-                name="highlight-remove"
-                size={30}
-                color="#8c8c8c"
-              />
-            </Text>
+              <Image style={styles.cancel} source={Images.cancel}></Image>
+            </TouchableOpacity>
           </View>
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <MaterialCommunityIcons
-              name="signal-cellular-3"
-              style={styles.icon4}
-              color="#8c8c8c"
-            />
+            <Image style={styles.icon2} source={Images.graph}></Image>
             <Text style={styles.name_txt2}>Status</Text>
           </View>
           <Dropdown
@@ -399,11 +347,7 @@ function Tpage() {
           />
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <Ionicons
-              name="alert-circle"
-              style={styles.icon4}
-              color="#8c8c8c"
-            />
+            <Image style={styles.icon2} source={Images.warning}></Image>
             <Text style={styles.name_txt2}>Priority</Text>
           </View>
           <Dropdown
@@ -436,14 +380,8 @@ function Tpage() {
 
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <Octicons
-              style={styles.icon5}
-              color="#8c8c8c"
-              name="clock"
-              size={24}
-            />
-
-            <Text style={styles.name_txt2}>Complete (%)</Text>
+            <Image style={styles.icon2} source={Images.percentage}></Image>
+            <Text style={styles.name_txt2}>Complete(%)</Text>
           </View>
           <TextInput
             // placeholder="Reminder"
@@ -453,7 +391,7 @@ function Tpage() {
           ></TextInput>
           <View style={styles.line2}></View>
           <View style={{ flexDirection: "row" }}>
-            <MaterialIcons name="notes" style={styles.icon4} color="#8c8c8c" />
+            <Image style={styles.icon2} source={Images.task_note}></Image>
             <Text style={styles.name_txt2}>Notes</Text>
           </View>
           <TextInput
@@ -634,8 +572,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
 
-  done: { flex: 0.4, fontSize: 18, fontWeight: "bold" },
-  date: { flex: 0.8, fontSize: 14, color: "#cccccc" },
+  done: { flex: 0.4, fontSize: 18, fontFamily:"Inter-Black2" },
+  date: { flex: 0.8, fontSize: 14, color: "#cccccc",fontFamily:"Inter-Black4" },
   datePickerStyle: {
     width: 200,
     marginTop: 20,
@@ -648,9 +586,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  textStyle1: { fontSize: 17, fontWeight: "bold" },
-  textStyle2: { fontSize: 14 },
-  textStyle3: { fontSize: 17, color: "blue" },
+  textStyle1: { fontSize: 17, fontFamily:"Inter-Black2" },
+  textStyle2: { fontSize: 14 },fontFamily:"Inter-Black4",
+  textStyle3: { fontSize: 17, color: "blue",fontFamily:"Inter-Black4" },
 
   centeredView: {
     flex: 1,
@@ -700,15 +638,32 @@ const styles = StyleSheet.create({
     height: "50%",
     width: "100%",
   },
-  selectedTextStyle: { color: "#8c8c8c" },
-  icon2: { marginTop: "8%", flex: 0.15, fontSize: 22 },
+  selectedTextStyle: { color: "#8c8c8c",fontFamily:"Inter-Black4" },
+  icon2: {
+    marginTop: "8%",
+    height: 25,
+    width: 25,
+    resizeMode: "contain",
+    marginHorizontal: "3%",
+  },
+  cancel: {
+    height: 25,
+    width: 25,
+    resizeMode: "contain",
+  },
   icon4: { marginTop: "8%", flex: 0.15, fontSize: 28, marginStart: "-1%" },
-  icon3: { marginTop: "8%", flex: 0.2, marginStart: "-1%" },
+  icon3: {
+    marginTop: "8%",
+    flex: 0.2,
+    height: 25,
+    width: 25,
+    resizeMode: "contain",
+  },
   icon5: { marginTop: "8%", flex: 0.17, fontSize: 22 },
   icon_notes: {},
   dropdown: {
     height: "2.6%",
-    marginStart: "12%",
+    marginStart: "14%",
   },
   dropdown2: {
     height: "2.6%",
@@ -721,14 +676,14 @@ const styles = StyleSheet.create({
     marginTop: "2%",
 
     width: "90%",
-    marginStart: "12%",
+    marginStart: "14%",
   },
   line3: {
     backgroundColor: "grey",
     height: 1,
 
     width: "86%",
-    marginStart: "12%",
+    marginStart: "14%",
     marginTop: "8%",
   },
   line2: {
@@ -740,44 +695,43 @@ const styles = StyleSheet.create({
     marginTop: "1%",
   },
   name_txt: {
-    fontSize: 17,
+    fontSize: 16,
     paddingTop: "5%",
     paddingStart: "12%",
-    color: "#595959",
+    color: Colors.blue_txt,
+    fontFamily:"Inter-Black4"
   },
-  name_txt2: { fontSize: 17, paddingTop: "5%", color: "#595959" },
+  name_txt2: { fontSize: 16, marginTop: "5%", color: Colors.blue_txt,fontFamily:"Inter-Black4" },
   input: {
     color: "#8c8c8c",
 
-    fontSize: 17,
-    marginTop: "4%",
-    marginStart: "12%",
+    fontSize: 16,
+    marginTop: "3%",
+    marginStart: "12%",fontFamily:"Inter-Black4"
   },
   press: {
     color: "#8c8c8c",
 
     fontSize: 17,
 
-    marginStart: "12%",
+    marginStart: "13.5%",
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "space-between",fontFamily:"Inter-Black4"
   },
   input3: {
     color: "#8c8c8c",
 
     fontSize: 17,
-    marginStart: "12%",
+    marginStart: "14%",fontFamily:"Inter-Black4"
   },
   input2: {
     color: "#8c8c8c",
 
     fontSize: 17,
-    marginStart: "12%",
+    marginStart: "14%",fontFamily:"Inter-Black4"
   },
-  
 
-  
   modal_btn: {
     backgroundColor: "#d9d9d9",
 

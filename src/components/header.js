@@ -7,6 +7,8 @@ import {
 } from "react-native-responsive-screen";
 import { Colors } from "../constant/colors";
 import { STYLES } from "../constant/styles";
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
 
 export default function Header({
   label,
@@ -18,6 +20,12 @@ export default function Header({
   showRightIconBorder,
   customRight,
 }) {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../assets/fonts/Mulish-Bold.ttf'),
+   
+  });
+  
   return (
     <View style={styles.headerView}>
       {leftIcon ? (
@@ -43,13 +51,13 @@ export default function Header({
           <Image
             source={rightIcon}
             style={[
-              showRightIconBorder == false && { height: 35, width: 35 },
-              styles.icon,
+              showRightIconBorder == false && { height: 30, width: 30 },
+              styles.icon2,
             ]}
           />
         </TouchableOpacity>
       ) : customRight ? (
-        <TouchableOpacity style={{...STYLES.save_touch}} onPress={onRightPress}>
+        <TouchableOpacity style={{alignItems:"center",justifyContent:"center"}} onPress={onRightPress}>
           <Text style={STYLES.save_text}> SAVE </Text>
         </TouchableOpacity>
       ) : (
@@ -74,7 +82,7 @@ const styles = StyleSheet.create({
     fontSize: wp("5.61%"),
     color: "white",
     flex: 1,
-    textAlign: "center",
+    textAlign: "center",fontFamily:"Inter-Black2"
   },
   penIconView: {
     // backgroundColor: '#4E4E50',
@@ -85,8 +93,13 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   icon: {
-    height: 22,
-    width: 22,
+    height: 25,
+    width: 25,
+    resizeMode: "contain",
+  },
+  icon2: {
+    height: 23,
+    width: 23,
     resizeMode: "contain",
   },
 });

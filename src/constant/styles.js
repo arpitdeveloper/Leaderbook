@@ -46,26 +46,27 @@ marginRight:50
   },
 
   save_text: {
-    color: "yellow",
-    borderWidth: 1.3,
-    borderColor: "yellow",
-    paddingHorizontal: "4%",
-    borderRadius: 20,
-    fontWeight: "normal",
-    fontSize: 14,
+    // color: "yellow",
+    // borderWidth: 1.3,
+    // borderColor: "yellow",
+    // // paddingHorizontal: "6%",
+    // borderRadius: 20,
+    
+    // fontSize: 14, fontFamily:"Inter-Black2",
+    fontSize:14,borderColor:"yellow",borderWidth:1.3,borderRadius:20,color:"yellow",fontFamily:"Inter-Black2",
   },
   add_text: {
     color: "yellow",
-    borderWidth: 1,
-    borderColor: "yellow",
-    padding: "6%",
-    borderRadius: 12,
-    fontWeight: "500",
-    fontSize: 14,
+                borderWidth: 1.3,
+                borderColor: "yellow",
+                paddingVertical: "1%",
+                borderRadius: 20,
+                fontFamily:"Inter-Black2",
+                fontSize: 15,paddingHorizontal:"12%"
   },
 
   side_bar: {
-    // fontSize: 16,
+    fontSize: 16,
     marginStart: "5%",
     marginTop: "0%",
   },
@@ -99,12 +100,12 @@ marginRight:50
     marginStart: "3%",marginTop:"1%"
   },
   button: {
-    height: "7%",
+    height: "6%",
     width: "90%",
     marginTop: "5%",
 
     alignSelf: "center",
-    backgroundColor: "#003366",
+    backgroundColor: "#28608f",
     elevation: 1,
     borderRadius: 8,
     justifyContent: "center",

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useFonts } from 'expo-font';
 import {
   StyleSheet,
   Text,
@@ -30,6 +31,12 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 export default function Detail({ navigation }) {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../assets/fonts/Mulish-ExtraBold.ttf'),
+   
+  });
   const route = useRoute();
   const [com, setcom] = useState(false);
   const [ind, setInd] = useState(route.params.index);
@@ -79,7 +86,7 @@ export default function Detail({ navigation }) {
         >
           <Image
             source={Images.backArrow}
-            style={{ height: 15, width: 15, resizeMode: "contain" }}
+            style={{ height: 15, width: 15, resizeMode: "contain",marginStart:5,marginEnd:10 }}
           />
           <Text style={styles.nxt_txt}> Previous Lead</Text>
         </TouchableOpacity>
@@ -103,7 +110,7 @@ console.log(DATA[ind])
           <Text style={styles.nxt_txt}>Next Lead</Text>
           <Image
             source={Images.nextArrow}
-            style={{ height: 15, width: 15, resizeMode: "contain" }}
+            style={{ height: 15, width: 15, resizeMode: "contain",marginStart:7 }}
           />
 
           {/* <Text style={styles.arrow}>
@@ -150,7 +157,11 @@ console.log(DATA[ind])
             setcom("RECENT");
           }}
         >
-          <Text style={styles.text}>BASIC DETAIL</Text>
+          <Text style={{ fontSize: 14,
+    fontFamily:com == "RECENT" ? "Inter-Black3" : "Inter-Black2",
+    color: "white",
+    marginBottom: "2%",marginStart:"5%",
+    marginTop: "4%",}}>BASIC DETAIL</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
@@ -159,7 +170,11 @@ console.log(DATA[ind])
             setcom("PRIORITY");
           }}
         >
-          <Text style={styles.text}>PROFILE</Text>
+          <Text style={{ fontSize: 14,
+    fontFamily:com == "PRIORITY" ? "Inter-Black3" : "Inter-Black2",
+    color: "white",
+    marginBottom: "2%",
+    marginTop: "4%",}}>PROFILE</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.setting}
@@ -167,7 +182,11 @@ console.log(DATA[ind])
             setcom("ALL");
           }}
         >
-          <Text style={styles.text}>RELATED</Text>
+          <Text style={{ fontSize: 14,
+    fontFamily:com == "ALL" ? "Inter-Black3" : "Inter-Black2",
+    color: "white",
+    marginBottom: "2%",
+    marginTop: "4%",}}>RELATED</Text>
         </TouchableOpacity>
       </View>
       <View style={styles.line_box}>
@@ -235,11 +254,11 @@ const styles = StyleSheet.create({
   },
   arrow: { marginHorizontal: "3%", marginVertical: "3%" },
   nxt_txt: {
-    fontSize: 12,
+    fontSize: 9,
     color: "white",
 
     fontWeight: "normal",
-    marginEnd: 2,
+    fontFamily:"Inter-Black",
   },
   nxt_view: {
     flexDirection: "row",
@@ -248,7 +267,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     alignItems: "center",
     justifyContent: "center",
-    padding: 2,
+    padding: 4,
     marginTop: "4%",
   },
   back: {
@@ -257,7 +276,7 @@ const styles = StyleSheet.create({
 
     marginTop: "3%",
     textAlign: "center",
-    flex: 0.95,
+    flex: 0.9,
     marginStart: "3%",
   },
   in_box: {
@@ -283,18 +302,18 @@ paddingBottom:8
     backgroundColor: "#666699",
     marginBottom: "3%",
   },
-  circle_text: { fontSize: 28, fontWeight: "bold", color: "white" },
+  circle_text: { fontSize: 28,  color: "white",fontFamily:"Inter-Black3" },
   name: {
     fontSize: 20,
     marginStart: "3%",
-    fontWeight: "bold",
-    color: "white",
+    // fontWeight: "bold",
+    color: "white",fontFamily:"Inter-Black2"
   },
   text: {
     fontSize: 14,
-    fontWeight: "500",
+    // fontWeight: "500",
     color: "white",
-    marginStart: "3%",
+    marginStart: "3%",fontFamily:"Inter-Black2"
     // textAlign: "center",
   },
 
@@ -302,7 +321,7 @@ paddingBottom:8
   ord: {
     backgroundColor: Colors.MAIN_COLOR,
 
-    flex: 0.48,
+    flex: 0.5,
   },
   add: {
     backgroundColor: Colors.MAIN_COLOR,

@@ -25,7 +25,7 @@ import {
   FlatList,
 Image
 } from "react-native";
-
+import { useFonts } from 'expo-font';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Colors } from "../../constant/colors";
 import { ScreenNames } from "../../constant/ScreenNames";
@@ -102,6 +102,13 @@ const DATA = [
 ];
 
 function InComplete() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
@@ -116,11 +123,14 @@ function InComplete() {
               style={{
                 flexDirection: "row",
                 marginBottom: "8%",
-                marginTop: "5%",
+                marginTop: "1%",
               }}
             >
               <View style={styles.circle}>
-              <MaterialIcons name="check-box-outline-blank" size={35} color="grey" />
+              <Image
+                      style={styles.img}
+                      source={Images.task_cicle}
+                    ></Image>
               </View>
               <View>
                 <Text style={styles.text1}>{item.name}</Text>
@@ -154,6 +164,7 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "white",
   },
+  img:{height:25,width:25,resizeMode:"contain",marginEnd:"1%"},
 
   header: {
     height: height * 0.12,
@@ -186,41 +197,41 @@ const styles = StyleSheet.create({
 
   text1: {
     fontSize: 16,
-    marginTop: "0%",
+    
     // color: "#808080",
-    fontWeight: "500",
+    fontFamily:"Inter-Black2",
     marginStart: "2%",
-    color: "black",
+    color: "black",marginTop:"0%"
   },
   text2: {
-    fontSize: 14,
+    fontSize: 13,
     marginTop: "2%",
     // color: "#808080",
     marginStart: "2%",
-    color: "black",
-    fontWeight: "400",
+    color: Colors.blue_txt,
+    fontFamily:"Inter-Black"
   },
   text3: {
-    fontSize: 14,
+    fontSize: 13,
     // marginTop: "2%",
     // // color: "#808080",
     // marginStart: "5%",
-    color: "#8c8c8c",
-    fontWeight: "400",
+    color: Colors.txt,
+    fontFamily:"Inter-Black"
   },
   text4: {
     fontSize: 15,
     marginTop: "2%",
     // color: "#808080",
     marginStart: "5%",
-    color: "#666666",
+    color: "#666666",fontFamily:"Inter-Black"
   },
   text5: {
     fontSize: 18,
    
     // color: "#808080",
     marginStart: "3%",
-    color: "#8c8c8c",fontWeight:"400"
+    color: "#8c8c8c",fontFamily:"Inter-Black"
   },
 
   circle: {

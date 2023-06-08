@@ -8,6 +8,7 @@ import {
   
   FlatList,SafeAreaView
 } from "react-native";
+import { useFonts } from 'expo-font';
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -16,6 +17,7 @@ import {
   Ionicons,
   
 } from "@expo/vector-icons";
+import { Colors } from "../../constant/colors";
 
 
 
@@ -126,6 +128,13 @@ export default function System_tag() {
     });
     setSelected_data(temp)
    }
+   const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
 // console.log((selected_data))
   return (
     <SafeAreaView style={styles.container}>
@@ -210,14 +219,14 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     paddingVertical: "0.5%",
     fontSize: 15,
-    fontWeight: "500",
+    fontFamily:"Inter-Black2",
     color: "white",
   },
   number: {
     fontSize: 14,
 
-    fontWeight: "400",
-    color: "black",
+    fontFamily:"Inter-Black",
+    color: Colors.blue_txt,
     
     marginBottom: "1.5%",marginStart:"2%"
   },

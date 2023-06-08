@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState ,useCallback} from "react";
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -7,6 +7,9 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
+import { useFonts } from 'expo-font';
+import AppLoading from 'expo-app-loading';
+import * as SplashScreen from 'expo-splash-screen';
 
 import {
   Feather,
@@ -22,13 +25,21 @@ import {
   Text,
   View,
   Dimensions,
-  TouchableOpacity,
+  TouchableOpacity,Image
 } from "react-native";
 import { ScreenNames } from "../constant/ScreenNames";
 import { Colors } from "../constant/colors";
 import { STYLES } from "../constant/styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Images } from "../constant/images";
 function Customdrawer(props) {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../assets/fonts/Mulish-Regular.ttf'),
+   
+  });
   const navigation = useNavigation();
   const [First_name, setFirst_name] = React.useState("");
   const [last_name, setLast_name] = React.useState("");
@@ -45,9 +56,20 @@ function Customdrawer(props) {
       //  console.log(d)
     })();
   }, []);
+
+  const onLayoutRootView = useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   // console.log(company)
   return (
-    <DrawerContentScrollView style={{marginTop:"-1.5%",backgroundColor:"#f5f5f5",}} {...props}>
+    <DrawerContentScrollView style={{marginTop:"-1.5%",backgroundColor:"#f5f5f5",}} {...props}onLayout={onLayoutRootView}>
       <View style={styles.up}>
         <View style={{ marginTop: "8%", marginStart: "6%" }}>
           <View style={styles.circle}>
@@ -70,8 +92,8 @@ function Customdrawer(props) {
       >
         <View style={styles.icon}>
         
-        <AntDesign name="home" size={26} color={Colors.ICON} />
-          <Text style={STYLES.ICON_TEXT}>HOME</Text>
+        <Image style={styles.icon2} source={Images.home_navigation}></Image>
+          <Text style={styles.ICON_TEXT}>HOME</Text>
         </View>
       </TouchableOpacity>
 
@@ -80,8 +102,8 @@ function Customdrawer(props) {
         style={styles.gap}
       >
         <View style={styles.icon}>
-          <SimpleLineIcons name="people" size={26} color={Colors.ICON} />
-          <Text style={STYLES.ICON_TEXT}>LEADS</Text>
+        <Image style={styles.icon2} source={Images.lead}></Image>
+          <Text style={styles.ICON_TEXT}>LEADS</Text>
         </View>
       </TouchableOpacity>
 
@@ -90,8 +112,8 @@ function Customdrawer(props) {
         style={styles.gap}
       >
         <View style={styles.icon}>
-          <FontAwesome5 name="tags" size={20} color={Colors.ICON} />
-          <Text style={STYLES.ICON_TEXT}>TAG SEARCH</Text>
+        <Image style={styles.icon2} source={Images.tags}></Image>
+          <Text style={styles.ICON_TEXT}>TAG SEARCH</Text>
         </View>
       </TouchableOpacity>
 
@@ -100,8 +122,8 @@ function Customdrawer(props) {
         style={styles.gap}
       >
         <View style={styles.icon}>
-          <Feather name="shopping-bag" size={26} color={Colors.ICON} />
-          <Text style={STYLES.ICON_TEXT}>TASKS</Text>
+        <Image style={styles.icon2} source={Images.tasks_navigation}></Image>
+          <Text style={styles.ICON_TEXT}>TASKS</Text>
         </View>
       </TouchableOpacity>
 
@@ -110,8 +132,8 @@ function Customdrawer(props) {
         style={styles.gap}
       >
         <View style={styles.icon}>
-          <Fontisto name="date" size={26} color={Colors.ICON} />
-          <Text style={STYLES.ICON_TEXT}>APPOINTMENTS</Text>
+        <Image style={styles.icon2} source={Images.calender}></Image>
+          <Text style={styles.ICON_TEXT}>APPOINTMENTS</Text>
         </View>
       </TouchableOpacity>
 
@@ -120,13 +142,9 @@ function Customdrawer(props) {
         style={styles.gap}
       >
         <View style={styles.icon}>
-          <MaterialCommunityIcons
-            name="phone-classic"
-            size={26}
-            color={Colors.ICON}
-          />
+        <Image style={styles.icon2} source={Images.settings}></Image>
 
-          <Text style={STYLES.ICON_TEXT}>PHONE</Text>
+          <Text style={styles.ICON_TEXT}>PHONE</Text>
         </View>
       </TouchableOpacity>
 
@@ -137,14 +155,14 @@ function Customdrawer(props) {
         <View style={styles.icon}>
         <AntDesign name="wechat" size={26} color={Colors.ICON} />
           
-          <Text style={STYLES.ICON_TEXT}>RECENT CHATS</Text>
+          <Text style={styles.ICON_TEXT}>RECENT CHATS</Text>
         </View>
       </TouchableOpacity>
 
       <TouchableOpacity onPress={() => {}} style={styles.gap}>
         <View style={styles.icon}>
-          <AntDesign name="poweroff" size={26} color={Colors.ICON} />
-          <Text style={STYLES.ICON_TEXT}>LOG OUT</Text>
+        <Image style={styles.icon2} source={Images.logout}></Image>
+          <Text style={styles.ICON_TEXT}>LOG OUT</Text>
         </View>
       </TouchableOpacity>
      
@@ -164,20 +182,26 @@ const styles = StyleSheet.create({
   },
   circle_text: {
     fontSize: 35,
-    fontWeight: "500",
-    color: "#a9a9a9",
+  
+    color: "#a9a9a9",fontFamily:"Inter-Black3"
   },
   name_text: {
     fontSize: 18,
-    fontWeight: "500",
+    fontFamily:"Inter-Black2",
     color: "white",
     marginTop: "3%",
   },
   name_text2: {
     fontSize: 16,
-    fontWeight: "500",
+    
     color: "white",
-    width: width * 0.5,
+    width: width * 0.5,fontFamily:"Inter-Black2"
+  },
+  ICON_TEXT: {
+    fontSize: 16,
+    color: "black",
+    fontWeight: "normal",
+    marginStart: "3%",marginTop:"1%",fontFamily:"Inter-Black"
   },
   up: {
     // height: height * 0.22,
@@ -187,6 +211,13 @@ const styles = StyleSheet.create({
   icon: {
     flexDirection: "row",
     marginStart: "7%",
+  },
+  icon2: {
+    
+    height: 25,
+    width: 25,
+    resizeMode: "contain",
+   
   },
 });
 

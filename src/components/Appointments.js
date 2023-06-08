@@ -16,6 +16,8 @@ import { ScreenNames } from "../constant/ScreenNames";
 import { STYLES } from "../constant/styles";
 import Header from "./header";
 import { Images } from "../constant/images";
+import { useFonts } from 'expo-font';
+
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -87,6 +89,14 @@ const DATA = [
 ];
 
 function Appointments() {
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../assets/fonts/Mulish-ExtraBold.ttf'),
+    'Inter-Black4': require('../../assets/fonts/Mulish-Regular.ttf'),
+    
+   
+  });
   const navigation = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
@@ -177,7 +187,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     marginTop: "0%",
     // color: "#808080",
-    fontWeight: "500",
+    fontFamily:"Inter-Black2",
     marginStart: "5%",
     color: "black",
   },
@@ -185,24 +195,24 @@ const styles = StyleSheet.create({
     fontSize: 19,
     marginTop: "2%",
     // color: "#808080",
-    fontWeight: "500",
+    fontFamily:"Inter-Black2",
     marginStart: "5%",
     color: "grey",
   },
   text3: {
-    fontSize: 16,
-    marginTop: "2%",
-    // color: "#808080",
-    marginStart: "5%",
-    color: "#8c8c8c",
-    fontWeight: "400",
-  },
-  text4: {
     fontSize: 15,
     marginTop: "2%",
     // color: "#808080",
     marginStart: "5%",
-    color: "#666666",
+    color: "#8c8c8c",
+    fontFamily:"Inter-Black",
+  },
+  text4: {
+    fontSize: 14,
+    marginTop: "2%",
+    // color: "#808080",
+    marginStart: "5%",
+    color: "#666666",fontFamily:"Inter-Black4",
   },
   text5: {
     fontSize: 18,
@@ -210,7 +220,7 @@ const styles = StyleSheet.create({
     // color: "#808080",
     marginStart: "3%",
     color: "#8c8c8c",
-    fontWeight: "400",
+    fontFamily:"Inter-Black",
   },
 
   circle: {

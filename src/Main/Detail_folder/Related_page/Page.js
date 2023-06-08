@@ -5,7 +5,7 @@ import {
   Text,
   View,
   StyleSheet,
-  TouchableOpacity,
+  TouchableOpacity,Image
 } from "react-native";
 import {
   MaterialCommunityIcons,
@@ -15,6 +15,8 @@ import {
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { STYLES } from "../../../constant/styles";
 import { Colors } from "../../../constant/colors";
+import { Images } from "../../../constant/images";
+import Header from "../../../components/header";
 // import Icon from 'react-native-vector-icons/FontAwesome';
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
@@ -24,39 +26,14 @@ function Page() {
   const route = useRoute();
   return (
     <SafeAreaView style={styles.container}>
-      <View
-        style={{
-          height: height * 0.08,
-          backgroundColor: Colors.MAIN_COLOR,
-          alignItems: "center",
-
-          // marginTop: 25,
-          flexDirection: "row",
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <TouchableOpacity
-            style={{ marginStart: "5%",  flex: 0.5 }}
-            onPress={() => navigation.goBack()}
-          >
-            <MaterialCommunityIcons
-              name="keyboard-backspace"
-              size={50}
-              color="white"
-            />
-          </TouchableOpacity>
-          <Text
-            style={{
-              color: "white",
-              fontWeight: "500",
-              fontSize: 22,
-              
-            }}
-          >
-            {route.params.name}
-          </Text>
-        </View>
-      </View>
+      <Header
+        label={route.params.name}
+        leftIcon={Images.backArrow}
+        rightIcon={{}}
+        onLeftPress={() => navigation.goBack()}
+        onRightPress={() => {}}
+        // customRight={true}
+      />
       <TouchableOpacity
         onPress={() => navigation.navigate(route.params.n,{name:route.params.name})}
         style={styles.floating_btn}
@@ -77,7 +54,7 @@ const styles = StyleSheet.create({
         alignContent: "center",
         width: 60,
         position: "absolute",
-        bottom: "5%",
+        bottom: "10%",
         alignSelf: "flex-end",
         right: "8%",
         height: 60,

@@ -4,10 +4,11 @@
     "slug": "LeadBooker",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-    "userInterfaceStyle": "automatic",
+    "platforms": [ "android"], 
+    "icon": "./assets/image/icon.png",
+    "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.jpg",
+      "image": "./assets/image/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -19,17 +20,16 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/image/icon.png",
         "backgroundColor": "#ffffff"
-      },
-      "package": "com.prafullmishra.LeadBooker"
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
     },
     "extra": {
       "eas": {
-        "projectId": "87076d24-cad6-408d-9cb1-20801d80d21c"
+        "projectId": "7cde4041-9fb8-4913-8d45-568959ee1a47"
       }
     }
   }

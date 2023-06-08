@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useFonts } from 'expo-font';
 import {
   StyleSheet,
   Text,
@@ -7,7 +8,7 @@ import {
   Dimensions,
   TouchableOpacity,
   FlatList,
-  Modal,
+  Modal,Image
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import {
@@ -31,6 +32,13 @@ const width = Dimensions.get("window").width;
 
 function Lead_activity() {
   const navigation = useNavigation();
+  const [fontsLoaded] = useFonts({
+    'Inter-Black': require('../../../assets/fonts/Mulish-SemiBold.ttf'),
+    'Inter-Black2': require('../../../assets/fonts/Mulish-Bold.ttf'),
+    'Inter-Black3': require('../../../assets/fonts/Mulish-ExtraBold.ttf'),
+   
+  });
+
 
   const route = useRoute();
   const [com, setcom] = useState(false);
@@ -73,15 +81,15 @@ function Lead_activity() {
   return (
     <SafeAreaView>
       <View style={styles.container}>
-<Header
-leftIcon={Images.backArrow}
-rightIcon={Images.filterVertical}
-onLeftPress={() => navigation.goBack()}
-onRightPress={() => {
-              modalVisible ? setModalVisible(false) : setModalVisible(true);
-            }}
-/>
-       
+        <Header
+          leftIcon={Images.backArrow}
+          rightIcon={Images.filterVertical}
+          onLeftPress={() => navigation.goBack()}
+          onRightPress={() => {
+            modalVisible ? setModalVisible(false) : setModalVisible(true);
+          }}
+        />
+
         <View style={styles.logo_header}>
           <View style={styles.logo}>
             <Text style={styles.logo_text}>{route.params.logo1}</Text>
@@ -104,21 +112,25 @@ onRightPress={() => {
                 renderItem={({ item, index }) => (
                   <View>
                     <View style={styles.first}>
-                      <View style={styles.circle_email}>
-                        <MaterialCommunityIcons
-                          name="email-outline"
-                          size={24}
-                          color="white"
-                        />
-                      </View>
+                    
+
+{item.title == "eMail Sent" ? (
+                     <Image
+                     style={styles.img}
+                     source={Images.email_white}
+                   ></Image>
+                    ) : (
+                      <Image
+                      style={styles.img}
+                      source={Images.sms_sent}
+                    ></Image>
+                    )}
                       <Text style={styles.title}>{item.title}</Text>
                       <View style={{ flexDirection: "row" }}>
-                        <Feather
-                          style={{ marginRight: 2, marginTop: 2 }}
-                          name="clock"
-                          size={15}
-                          color="black"
-                        />
+                      <Image
+                              style={styles.time_img}
+                              source={Images.time}
+                            ></Image>
                         <Text style={styles.created}>{item.created}</Text>
                       </View>
                     </View>
@@ -173,6 +185,7 @@ onRightPress={() => {
                             lead_activity_id: item.id,
                             lead_id: route.params.id,
                             activity_type: item.activity_type,
+                            title:item.title
                           },
                         });
                       }}
@@ -385,6 +398,20 @@ onRightPress={() => {
 }
 
 const styles = StyleSheet.create({
+  img: {
+    height: height * 0.057,
+    width: width * 0.11,
+    resizeMode: "contain",  
+
+    
+  },
+  time_img: {
+    height: height * 0.019,
+    width: width * 0.05,
+    resizeMode: "contain",  marginTop:"2%"
+
+    
+  },
   flat_data1: {
     backgroundColor: "white",
     height: height * 0.35,
@@ -401,8 +428,8 @@ const styles = StyleSheet.create({
   },
   icon_row: { flexDirection: "row" },
   sub: { width: width * 0.54, height: height * 0.07 },
-  comment_txt: { paddingHorizontal: "1%", fontSize: 15 },
-  txt: { fontSize: 14 },
+  comment_txt: { paddingHorizontal: "1%", fontSize: 15,color:"#284162",fontFamily:"Inter-Black" },
+  txt: { fontSize: 14 ,color:"#284162"},
   flat_data: {
     backgroundColor: "white",
     marginHorizontal: "3%",
@@ -412,7 +439,7 @@ const styles = StyleSheet.create({
     elevation: 10,
     height: height * 0.77,
   },
-  show: { alignItems: "center", justifyContent: "center", flex: 1 },
+  show: { alignItems: "center", justifyContent: "center", flex: 1 ,fontFamily:"Inter-Black"},
   floating_btn: {
     borderWidth: 1,
     borderColor: "rgba(0,0,0,0.2)",
@@ -429,10 +456,10 @@ const styles = StyleSheet.create({
   modal_icn: { marginHorizontal: 10 },
   modal_txt: {
     fontSize: 12,
-    fontWeight: "400",
+    
     marginTop: "3%",
     color: "#666666",
-    width: width * 0.5,
+    width: width * 0.5,fontFamily:"Inter-Black"
   },
   modal_top: {
     flexDirection: "row",
@@ -465,8 +492,8 @@ const styles = StyleSheet.create({
   logo_name: {
     fontSize: 21,
     marginStart: "3%",
-    fontWeight: "500",
-    color: "white",
+    
+    color: "white",fontFamily:"Inter-Black2"
   },
   logo_header: {
     flexDirection: "row",
@@ -484,8 +511,8 @@ const styles = StyleSheet.create({
     backgroundColor: "#666699",
     marginBottom: "1%",
   },
-  logo_text: { fontSize: 28, fontWeight: "bold", color: "white" },
-  act_text: { color: "white", fontSize: 20, marginStart: "5%" },
+  logo_text: { fontSize: 28,  color: "white" ,fontFamily:"Inter-Black3"},
+  act_text: { color: "white", fontSize: 20, marginStart: "5%",fontFamily:"Inter-Black" },
   act: {
     height: "6%",
     backgroundColor: "#b3b3b3",
@@ -503,21 +530,21 @@ const styles = StyleSheet.create({
     borderRadius: 15,
     alignItems: "center",
     justifyContent: "center",
-    marginEnd: "3%",
+    marginEnd: "3%",borderColor:"#284162"
   },
-  created: { fontSize: 11, color: "black" },
-  rec_val: { fontSize: 15, color: "#666666" },
-  sub_val: { fontSize: 14, color: "#666666" },
-  sent_by_value: { fontSize: 15, width: width * 0.53, color: "#666666" },
-  user_id: { fontSize: 15, color: "#666666" },
+  created: { fontSize: 11, color: "#284162",fontWeight:"400" ,fontFamily:"Inter-Black"},
+  rec_val: { fontSize: 14, color: "#878787",fontFamily:"Inter-Black" },
+  sub_val: { fontSize: 13, color: "#878787",fontFamily:"Inter-Black" },
+  sent_by_value: { fontSize: 14, width: width * 0.53, color: "#878787",fontFamily:"Inter-Black" },
+  user_id: { fontSize: 14, color: "#878787",fontFamily:"Inter-Black" },
   title: {
-    fontSize: 15,
+    fontSize: 14,
     flex: 0.9,
-    marginTop: "2%",
-    marginStart: "2%",
-    color: "#666666",
+    marginTop: "3%",
+    marginStart: "2.5%",
+    color: "#808080",fontFamily:"Inter-Black"
   },
-  first: { flexDirection: "row", marginTop: "3%" },
+  first: { flexDirection: "row", padding:"2%" },
   second: { flexDirection: "row", marginLeft: "17%" },
 
   line: {
